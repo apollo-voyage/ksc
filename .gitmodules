@@ -1,0 +1,3 @@
+[submodule "kOS"]
+	path = kOS
+	url = https://github.com/KSP-KOS/KOS
