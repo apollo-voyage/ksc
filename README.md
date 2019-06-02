@@ -4,7 +4,7 @@
 
 **A CLI to streamline development on Kerboscript projects.**
 
-> **DISCLAIMER:** This project is still in very early development I will add instructions on how to install and use it as soon as the features are set.
+> **DISCLAIMER:** This project is still in very early in development, I will add instructions on how to install and use it as soon as the feature set is final and implemented.
 
 ## Table Of Content
 
@@ -20,7 +20,8 @@
 ## 1. Idea and Use Case
 
 This project started out with me working on my open source educational project called [*Project Artemis*](https://github.com/mrbandler/project-artemis) where I will try to completely automate a space program with [Kerbal Space Program](https://www.kerbalspaceprogram.com/) and the mod [kOS](http://ksp-kos.github.io/KOS_DOC/index.html). While writting my first few lines of Kerboscript it became very cumbersome and error prone to see if the written code is compilable without a lot of copying and running KSP. I just wanted to keep productive without a context switch.
-This is the solution I came up with, a CLI for managing Kerboscript projects with features to compile, run and deploy Kerboscript with just a simple command, and even with your custom compile and deployment scripts written in entirely in Kerboscript!  
+
+This is the solution I came up with, a CLI for managing Kerboscript projects with features to compile, run and deploy Kerboscript with just a simple command, and even with your custom compile and deployment scripts written in entirely in Kerboscript! 
 
 ## 2. Installation
 
