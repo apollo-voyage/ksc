@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "ks-compiler": {
-      "commandName": "Project",
-      "commandLineArgs": "-i ./scripts/src/test.ks"
-    }
-  }
-}
