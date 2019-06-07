@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kOS.Cli", "kOS.Cli\kOS.Cli.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kOS.Safe", "kOS\src\kOS.Safe\kOS.Safe.csproj", "{590FFDA8-7B44-4BC3-A12A-5FFE2BB7D8FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kOS.Cli.Tests", "kOS.Cli.Tests\kOS.Cli.Tests.csproj", "{B62397AB-75D6-4A76-8F39-8E66A249CD33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,12 @@ Global
 		{590FFDA8-7B44-4BC3-A12A-5FFE2BB7D8FD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{590FFDA8-7B44-4BC3-A12A-5FFE2BB7D8FD}.Shell|Any CPU.ActiveCfg = Shell|Any CPU
 		{590FFDA8-7B44-4BC3-A12A-5FFE2BB7D8FD}.Shell|Any CPU.Build.0 = Shell|Any CPU
+		{B62397AB-75D6-4A76-8F39-8E66A249CD33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B62397AB-75D6-4A76-8F39-8E66A249CD33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B62397AB-75D6-4A76-8F39-8E66A249CD33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B62397AB-75D6-4A76-8F39-8E66A249CD33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B62397AB-75D6-4A76-8F39-8E66A249CD33}.Shell|Any CPU.ActiveCfg = Release|Any CPU
+		{B62397AB-75D6-4A76-8F39-8E66A249CD33}.Shell|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

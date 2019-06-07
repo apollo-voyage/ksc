@@ -10,11 +10,11 @@ namespace kOS.Cli
         {
             return Parser.Default.ParseArguments<CompileOptions, WatchOptions, DeployOptions, RunOptions, InitOptions>(args)
                 .MapResult(
-                    (CompileOptions options) => ExecuteCompile(options),
-                    (WatchOptions options)   => ExecuteWatch(options),
-                    (DeployOptions options)  => ExecuteDeploy(options),
-                    (RunOptions options)     => ExecuteRun(options),
-                    (InitOptions options)    => ExecuteInit(options),
+                    (CompileOptions options) => Compile(options),
+                    (WatchOptions options)   => Watch(options),
+                    (DeployOptions options)  => Deploy(options),
+                    (RunOptions options)     => Run(options),
+                    (InitOptions options)    => Init(options),
                     error                    => 1
                 );
 
@@ -22,29 +22,34 @@ namespace kOS.Cli
             //Console.Write(str);
         }
 
-        private static int ExecuteCompile(CompileOptions options)
+        private static int Compile(CompileOptions options)
         {
             return 1;
         }
 
-        private static int ExecuteWatch(WatchOptions options)
+        private static int Watch(WatchOptions options)
         {
             return 1;
         }
 
-        private static int ExecuteDeploy(DeployOptions options)
+        private static int Deploy(DeployOptions options)
         {
             return 1;
         }
 
-        private static int ExecuteRun(RunOptions options)
+        private static int Run(RunOptions options)
         {
             return 1;
         }
 
-        private static int ExecuteInit(InitOptions options)
+        private static int Init(InitOptions options)
         {
-            return 1;
+            Initializer initializer = new Initializer(options);
+            int result = initializer.Run();
+
+            Console.Read();
+
+            return result;
         }
     }
 }
