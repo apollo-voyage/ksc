@@ -1,5 +1,6 @@
 ﻿using System;
 using CommandLine;
+using kOS.Cli.Actions;
 using kOS.Cli.Options;
 
 namespace kOS.Cli
@@ -17,9 +18,6 @@ namespace kOS.Cli
                     (InitOptions options)    => Init(options),
                     error                    => 1
                 );
-
-            //string str = Directory.GetCurrentDirectory();
-            //Console.Write(str);
         }
 
         private static int Compile(CompileOptions options)

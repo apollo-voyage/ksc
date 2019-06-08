@@ -4,7 +4,7 @@ using kOS.Cli.IO;
 using kOS.Cli.Models;
 using kOS.Cli.Options;
 
-namespace kOS.Cli
+namespace kOS.Cli.Actions
 {
     public class Initializer
     {
