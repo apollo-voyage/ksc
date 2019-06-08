@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using NUnit.Framework;
 using kOS.Cli.Options;
 using kOS.Cli.Models;
@@ -40,7 +41,7 @@ namespace kOS.Cli.Tests
             Assert.AreEqual(1, config.Volumes.Count);
             Assert.AreEqual(0, config.Volumes[0].Index);
             Assert.AreEqual(expectedName, config.Volumes[0].Name);
-            Assert.AreEqual("./src", config.Volumes[0].Path);
+            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[0].Path);
 
             // Scripts asserts.
             Assert.IsNotNull(config.Scripts);
@@ -53,7 +54,7 @@ namespace kOS.Cli.Tests
         }
 
         [Test]
-        public void InitConfigWithProjectName([Values("test", "prj-test", "no_op")] string ProjectName)
+        public void InitConfigWithProjectName([Values("foobar", "foo-bar", "foo_bar")] string ProjectName)
         {
             // Build up.
             InitOptions options = new InitOptions { ProjectName = ProjectName, ProjectPath = "", Yes = true };
@@ -83,7 +84,7 @@ namespace kOS.Cli.Tests
             Assert.AreEqual(1, config.Volumes.Count);
             Assert.AreEqual(0, config.Volumes[0].Index);
             Assert.AreEqual(ProjectName, config.Volumes[0].Name);
-            Assert.AreEqual("./src", config.Volumes[0].Path);
+            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[0].Path);
 
             // Scripts asserts.
             Assert.IsNotNull(config.Scripts);
@@ -98,7 +99,7 @@ namespace kOS.Cli.Tests
         [Test]
         public void InitConfigWithProjectNameAndPath(
             [Values("project-name")] string ProjectName,
-            [Values("./test/noop", "./test")] string ProjectPath
+            [Values("./foo/bar", "./foobar", "./foo/bar/test/dasfasdf")] string ProjectPath
         )
         {
             // Build up.
@@ -129,7 +130,7 @@ namespace kOS.Cli.Tests
             Assert.AreEqual(1, config.Volumes.Count);
             Assert.AreEqual(0, config.Volumes[0].Index);
             Assert.AreEqual(ProjectName, config.Volumes[0].Name);
-            Assert.AreEqual("./src", config.Volumes[0].Path);
+            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[0].Path);
 
             // Scripts asserts.
             Assert.IsNotNull(config.Scripts);
@@ -139,7 +140,18 @@ namespace kOS.Cli.Tests
 
             // Tear down.
             File.Delete(configFilePath);
-            Directory.Delete(Path.GetFullPath(ProjectPath), true);
+
+            DirectoryInfo dirInfo = new DirectoryInfo(Path.GetFullPath(ProjectPath));
+            int count = ProjectPath.Count(s => s == '/');
+            if (count > 1)
+            {
+                for(int i = count - 1; i > 0; i--)
+                {
+                    dirInfo = Directory.GetParent(dirInfo.FullName);
+                }
+            }
+
+            Directory.Delete(dirInfo.FullName, true);
         }
     }
 }

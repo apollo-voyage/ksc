@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using kOS.Cli.IO;
 using kOS.Cli.Models;
 using kOS.Cli.Options;
 
@@ -27,6 +28,7 @@ namespace kOS.Cli
         /// <returns>Returns the CLI return code.</returns>
         public int Run()
         {
+            // Create the configuration based on given options.
             Configuration config;
             if (_options.Yes == false)
             {
@@ -37,7 +39,15 @@ namespace kOS.Cli
                 config = CreateDefaultConfig();
             }
 
-            return WriteConfigFile(config, _options.ProjectPath);
+            // Write the configuration to disk based on given options.
+            if (_options.ProjectPath != string.Empty)
+            {
+                return ConfigIO.WriteConfigFile(config, Path.Combine(_options.ProjectPath, _options.ProjectName), true);
+            }
+            else
+            {
+                return ConfigIO.WriteConfigFile(config, ".", true);
+            }
         }
 
         #region Private
@@ -67,7 +77,7 @@ namespace kOS.Cli
             Volume volume = new Volume();
             volume.Index = 0;
             volume.Name = Ask("Project volume name (volume with your code)", GetProjectNameDefault());
-            volume.Path = Ask("Project volume source directory", "./src");
+            volume.Path = Ask("Project volume source directory", Constants.DefaultVolumePath);
             Console.WriteLine("You can add more volumes later in the created config file!");
             result.Volumes.Add(volume);
 
@@ -95,7 +105,7 @@ namespace kOS.Cli
             {
                 Index = 0,
                 Name = GetProjectNameDefault(),
-                Path = "./src"
+                Path = Constants.DefaultVolumePath
             });
 
             // Scripts.
@@ -110,8 +120,8 @@ namespace kOS.Cli
         /// <param name="Config">Configuration to add it to.</param>
         private void AddDefaultScripts(Configuration Config)
         {
-            Config.Scripts.Add(new Script { Name = "compile", Content = "ksc run ./src/compile.ks" });
-            Config.Scripts.Add(new Script { Name = "deploy", Content = "ksc run compile && ksc run ./src/deploy.ks" });
+            Config.Scripts.Add(new Script { Name = "compile", Content = "ksc run " + Constants.DefaultVolumePath + "/compile.ks" });
+            Config.Scripts.Add(new Script { Name = "deploy", Content = "ksc run compile && ksc run " + Constants.DefaultVolumePath + "/deploy.ks" });
         }
 
         #endregion // Config Creation
@@ -162,42 +172,6 @@ namespace kOS.Cli
         }
 
         #endregion // User Interaction
-
-        #region File IO
-
-        /// <summary>
-        /// Writes the configuration to a JSON file.
-        /// </summary>
-        /// <param name="config"></param>
-        private int WriteConfigFile(Configuration Config, string DirectoryPath = "")
-        {
-            int result = Config != null ? 0 : 1;
-            if (result == 1)
-            {
-                Console.WriteLine("Something went wrong; unable to create config file.");
-                return result;
-            }
-
-            string filePath;
-            DirectoryPath = DirectoryPath == null ? string.Empty : DirectoryPath;
-            if (DirectoryPath == string.Empty)
-            {
-                filePath = Path.Combine(Directory.GetCurrentDirectory(), Constants.ConfigFileName);
-            }
-            else
-            {
-                DirectoryPath = Path.GetFullPath(DirectoryPath);
-                DirectoryInfo dirInfo = Directory.CreateDirectory(Path.Combine(DirectoryPath, _options.ProjectName));
-                filePath = Path.Combine(dirInfo.FullName, Constants.ConfigFileName);
-            }
-            
-            File.WriteAllText(filePath, Config.ToJson());
-            Console.WriteLine("Config file created at: {0}", filePath);
-
-            return result;
-        }
-
-        #endregion // File IO
 
         #region Utils
 

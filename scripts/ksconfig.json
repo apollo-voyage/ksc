@@ -1,0 +1,22 @@
+{
+    "name": "scripts",
+    "description": "Scripts test project for development and unit testing.",
+    "archive": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Kerbal Space Program",
+    "volumes": [
+        {
+            "index": 0,
+            "name": "scripts",
+            "path": "./src"
+        }
+    ],
+    "scripts": [
+        {
+            "name": "compile",
+            "content": "ksc run ./src/compile.ks"
+        },
+        {
+            "name": "deploy",
+            "content": "ksc run compile && ksc run ./src/deploy.ks"
+        }
+    ]
+}

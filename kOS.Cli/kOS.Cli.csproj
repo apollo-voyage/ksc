@@ -88,6 +88,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Initializer.cs" />
+    <Compile Include="IO\ConfigIO.cs" />
     <Compile Include="Models\Configuration.cs" />
     <Compile Include="Options\Base\InputOuputOptions.cs" />
     <Compile Include="Options\CompileOptions.cs" />
