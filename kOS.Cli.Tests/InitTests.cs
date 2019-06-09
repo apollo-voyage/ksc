@@ -1,8 +1,9 @@
 ﻿using System.IO;
 using System.Linq;
 using NUnit.Framework;
+using kOS.Cli.Models; 
 using kOS.Cli.Options;
-using kOS.Cli.Models;
+using kOS.Cli.Actions;
 
 namespace kOS.Cli.Tests
 {
@@ -41,7 +42,7 @@ namespace kOS.Cli.Tests
             Assert.AreEqual(1, config.Volumes.Count);
             Assert.AreEqual(0, config.Volumes[0].Index);
             Assert.AreEqual(expectedName, config.Volumes[0].Name);
-            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[0].Path);
+            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[0].InputPath);
 
             // Scripts asserts.
             Assert.IsNotNull(config.Scripts);
@@ -84,7 +85,7 @@ namespace kOS.Cli.Tests
             Assert.AreEqual(1, config.Volumes.Count);
             Assert.AreEqual(0, config.Volumes[0].Index);
             Assert.AreEqual(ProjectName, config.Volumes[0].Name);
-            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[0].Path);
+            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[0].InputPath);
 
             // Scripts asserts.
             Assert.IsNotNull(config.Scripts);
@@ -130,7 +131,7 @@ namespace kOS.Cli.Tests
             Assert.AreEqual(1, config.Volumes.Count);
             Assert.AreEqual(0, config.Volumes[0].Index);
             Assert.AreEqual(ProjectName, config.Volumes[0].Name);
-            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[0].Path);
+            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[0].InputPath);
 
             // Scripts asserts.
             Assert.IsNotNull(config.Scripts);

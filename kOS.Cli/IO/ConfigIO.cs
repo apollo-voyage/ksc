@@ -77,5 +77,22 @@ namespace kOS.Cli.IO
 
             return result;
         }
+
+        /// <summary>
+        /// Reads the config file from the current directory.
+        /// </summary>
+        /// <returns>Read configuration.</returns>
+        public static Configuration ReadConfigFileFromCurrentDirectory()
+        {
+            Configuration result = null;
+
+            string configFilepath = Path.Combine(Directory.GetCurrentDirectory(), Constants.ConfigFileName);
+            if (File.Exists(configFilepath) == true)
+            {
+                result = ConfigIO.ReadConfigFile(configFilepath);
+            }
+
+            return result;
+        }
     }
 }

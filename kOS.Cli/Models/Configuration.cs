@@ -41,6 +41,15 @@
 
     public partial class Volume
     {
+        public Volume() { }
+        public Volume(string InputPath, string OutputPath)
+        {
+            this.Index = 0;
+            this.Name = "Archive";
+            this.InputPath = InputPath;
+            this.OutputPath = OutputPath;
+        }
+
         [JsonProperty("index")]
         public long Index { get; set; }
 
@@ -48,7 +57,10 @@
         public string Name { get; set; }
 
         [JsonProperty("path")]
-        public string Path { get; set; }
+        public string InputPath { get; set; }
+
+        [JsonProperty("output")]
+        public string OutputPath { get; set; }
     }
 
     public partial class Configuration

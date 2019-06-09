@@ -1,0 +1,23 @@
+{
+  "name": "ks-cli",
+  "description": "",
+  "archive": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Kerbal Space Program",
+  "volumes": [
+    {
+      "index": 0,
+      "name": "ks-cli",
+      "path": ".\\src",
+      "output": ".\\dist"
+    }
+  ],
+  "scripts": [
+    {
+      "name": "compile",
+      "content": "ksc run .\\src/compile.ks"
+    },
+    {
+      "name": "deploy",
+      "content": "ksc run compile && ksc run .\\src/deploy.ks"
+    }
+  ]
+}

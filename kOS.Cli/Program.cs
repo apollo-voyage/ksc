@@ -1,6 +1,7 @@
 ﻿using System;
 using CommandLine;
 using kOS.Cli.Actions;
+using kOS.Cli.Logging;
 using kOS.Cli.Options;
 
 namespace kOS.Cli
@@ -22,22 +23,47 @@ namespace kOS.Cli
 
         private static int Compile(CompileOptions options)
         {
-            return 1;
+            Compiler compiler = new Compiler(options);
+            int result = compiler.Run();
+
+            #if DEBUG
+                Console.Read();
+            #endif
+
+            return result;
         }
 
         private static int Watch(WatchOptions options)
         {
-            return 1;
+            int result = 1;
+
+            #if DEBUG
+                Console.Read();
+            #endif
+
+            return result;
         }
 
         private static int Deploy(DeployOptions options)
         {
-            return 1;
+            int result = 1;
+
+            #if DEBUG
+                Console.Read();
+            #endif
+
+            return result;
         }
 
         private static int Run(RunOptions options)
         {
-            return 1;
+            int result = 1;
+
+            #if DEBUG
+                Console.Read();
+            #endif
+
+            return result;
         }
 
         private static int Init(InitOptions options)
@@ -45,7 +71,9 @@ namespace kOS.Cli
             Initializer initializer = new Initializer(options);
             int result = initializer.Run();
 
-            Console.Read();
+            #if DEBUG
+                Console.Read();
+            #endif
 
             return result;
         }

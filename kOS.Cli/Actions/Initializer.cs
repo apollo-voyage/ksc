@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using kOS.Cli.IO;
 using kOS.Cli.Models;
 using kOS.Cli.Options;
+using Pastel;
 
 namespace kOS.Cli.Actions
 {
-    public class Initializer
+    /// <summary>
+    /// Initializer action.
+    /// </summary>
+    public class Initializer : AbstractAction
     {
         /// <summary>
         /// Options for the initializer.
@@ -26,21 +31,13 @@ namespace kOS.Cli.Actions
         /// Runs the initializer.
         /// </summary>
         /// <returns>Returns the CLI return code.</returns>
-        public int Run()
+        public override int Run()
         {
             // Create the configuration based on given options.
-            Configuration config;
-            if (_options.Yes == false)
-            {
-                config = AskConfig();
-            }
-            else
-            {
-                config = CreateDefaultConfig();
-            }
+            Configuration config = _options.Yes == true ? CreateDefaultConfig() : AskConfig();
 
             // Write the configuration to disk based on given options.
-            if (_options.ProjectPath != string.Empty)
+            if (_options.ProjectPath != string.Empty && _options.ProjectPath != null)
             {
                 return ConfigIO.WriteConfigFile(config, Path.Combine(_options.ProjectPath, _options.ProjectName), true);
             }
@@ -77,7 +74,8 @@ namespace kOS.Cli.Actions
             Volume volume = new Volume();
             volume.Index = 0;
             volume.Name = Ask("Project volume name (volume with your code)", GetProjectNameDefault());
-            volume.Path = Ask("Project volume source directory", Constants.DefaultVolumePath);
+            volume.InputPath = Ask("Project volume source directory", Constants.DefaultVolumePath);
+            volume.OutputPath = Ask("Project volume source directory", Constants.DistDirectory);
             Console.WriteLine("You can add more volumes later in the created config file!");
             result.Volumes.Add(volume);
 
@@ -105,7 +103,8 @@ namespace kOS.Cli.Actions
             {
                 Index = 0,
                 Name = GetProjectNameDefault(),
-                Path = Constants.DefaultVolumePath
+                InputPath = Constants.DefaultVolumePath,
+                OutputPath = Constants.DistDirectory
             });
 
             // Scripts.
@@ -151,7 +150,7 @@ namespace kOS.Cli.Actions
             // Create the output format.
             if (Default != string.Empty)
             {
-                output = string.Format(Question + ": [{0}] ", Default);    
+                output = string.Format(Question + ": [{0}] ", Default.Pastel(Color.DarkGray));    
             }
             else
             {
