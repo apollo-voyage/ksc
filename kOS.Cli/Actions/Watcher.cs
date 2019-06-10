@@ -51,7 +51,7 @@ namespace kOS.Cli.Actions
         public Watcher(WatchOptions options)
         {
             _options = options;
-            _compiler = new Compiler(ConvertWatchOptionsToCompileOptions(_options), true);
+            _compiler = new Compiler(CompileOptions.FromWatchOptions(options), true);
             _logger = new WatcherLogger();
             _compilerLogger = new CompilerLogger();
 
@@ -204,21 +204,6 @@ namespace kOS.Cli.Actions
 
             result = result.Select(p => Path.GetFullPath(p)).ToList();
             return result;
-        }
-
-        /// <summary>
-        /// Convers the watch options to compile options to be used for the compiler.
-        /// </summary>
-        /// <param name="watchOptions">Options to convert.</param>
-        /// <returns>Converted comnpiler options.</returns>
-        private CompileOptions ConvertWatchOptionsToCompileOptions(WatchOptions watchOptions) 
-        {
-            return new CompileOptions
-            {
-                Input = watchOptions.Input,
-                Output = watchOptions.Output,
-                Volume = watchOptions.Volume
-            };
         }
     }
 }
