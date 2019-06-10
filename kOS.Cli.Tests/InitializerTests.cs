@@ -8,7 +8,7 @@ using kOS.Cli.Actions;
 namespace kOS.Cli.Tests
 {
     [TestFixture]
-    public class InitTests
+    public class InitializerTests
     {
         [Test]
         public void InitConfigWithoutOptions()

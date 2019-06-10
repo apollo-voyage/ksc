@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using kOS.Cli.IO;
 using kOS.Safe.Compilation;
-using kOS.Safe.Persistence;
 
 namespace kOS.Cli.Models
 {
@@ -10,7 +10,7 @@ namespace kOS.Cli.Models
         public string OutputPath { get; set; }
         public string Content { get; set; }
         public List<CodePart> CompiledContent { get; set; }
-        public Archive InputArchive { get; set; }
-        public Archive OutputArchive { get; set; }
+        public CliVolume InputVolume { get; set; }
+        public CliVolume OutputVolume { get; set; }
     }
 }

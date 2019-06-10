@@ -1,12 +1,19 @@
 {
-    "name": "scripts",
-    "description": "Scripts test project for development and unit testing.",
-    "archive": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Kerbal Space Program",
+    "name": "test-scripts",
+    "description": "This is a Kerboscript project with test scripts.",
+    "archive": "C:/Program Files (x86)/Steam/steamapps/common/Kerbal Space Program",
     "volumes": [
         {
-            "index": 0,
-            "name": "scripts",
-            "path": "./src"
+            "index": 1,
+            "name": "v-one",
+            "path": "./src/one",
+            "output": "./dist/one"
+        },
+        {
+            "index": 2,
+            "name": "v-two",
+            "path": "./src/two",
+            "output": "./dist/two"
         }
     ],
     "scripts": [

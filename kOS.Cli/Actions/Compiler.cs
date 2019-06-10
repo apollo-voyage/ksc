@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using kOS.Cli.IO;
 using kOS.Cli.Models;
@@ -43,6 +42,9 @@ namespace kOS.Cli.Actions
         /// </summary>
         private KerboscriptLoader _scriptLoader;
 
+        /// <summary>
+        /// Logger.
+        /// </summary>
         private CompilerLogger _logger;
 
         /// <summary>
@@ -59,8 +61,8 @@ namespace kOS.Cli.Actions
             _volumeManager = new VolumeManager();
             _scriptHandler = new KSScript();
             _compilerOptions = new CompilerOptions{ LoadProgramsInSameAddressSpace = true };
-            _scriptLoader = new KerboscriptLoader(_volumeManager, _options);
             _logger = new CompilerLogger();
+            _scriptLoader = new KerboscriptLoader(_volumeManager, _options, _logger);
         }
 
         /// <summary>
@@ -72,16 +74,9 @@ namespace kOS.Cli.Actions
             int result = 0;
 
             List<Kerboscript> scripts = LoadScripts();
-            if (scripts != null)
+            if (scripts != null && scripts.Count > 0)
             {
-                bool compiled = Compile(scripts);
-                if (_options.Write == true && compiled == true)
-                {
-                    result = WriteCompiledContent(scripts);
-                } else if (compiled == false)
-                {
-                    result = 1;
-                }
+                result = Compile(scripts) ? WriteCompiledContent(scripts) : 1;
             }
             else
             {
@@ -91,6 +86,10 @@ namespace kOS.Cli.Actions
             return result;
         }
 
+        /// <summary>
+        /// Loads the configuration from disk.
+        /// </summary>
+        /// <returns>Loaded configuration, if found on disk.</returns>
         protected override Configuration LoadConfiguration()
         {
             Configuration result = null;
@@ -103,16 +102,28 @@ namespace kOS.Cli.Actions
             return result;
         }
 
+        /// <summary>
+        /// Loads all scripts to compiler based on either the configuration or the CLI options.
+        /// </summary>
+        /// <returns>All found scripts.</returns>
         private List<Kerboscript> LoadScripts()
         {
-            List<Kerboscript> result;
+            List<Kerboscript> result = null;
 
             _logger.StartScriptLoading();
             {
                 Configuration config = LoadConfiguration();
-                if (config != null)
+                if (_options.Input == Constants.CurrentDirectory && 
+                    _options.Output == Constants.CurrentDirectory)
                 {
-                    result = _scriptLoader.LoadScriptsFromConfig(config);
+                    if (config != null)
+                    {
+                        result = _scriptLoader.LoadScriptsFromConfig(config);
+                    }
+                    else
+                    {
+                        _logger.NoConfigurationFound();
+                    }
                 }
                 else
                 {
@@ -128,7 +139,12 @@ namespace kOS.Cli.Actions
             return result;
         }
 
-        private bool Compile(List<Kerboscript> scripts, Configuration config = null)
+        /// <summary>
+        /// Compiles scripts.
+        /// </summary>
+        /// <param name="scripts">Scripts to compile.</param>
+        /// <returns>Flag, wheter the compilation has encountered errors or not.</returns>
+        private bool Compile(List<Kerboscript> scripts)
         {
             bool result = true;
 
@@ -136,7 +152,7 @@ namespace kOS.Cli.Actions
             {
                 foreach (Kerboscript script in scripts)
                 {
-                    GlobalPath inputPath = GetGlobalPath(script.InputArchive, script.InputPath);
+                    GlobalPath inputPath = CreateGlobalPath(script.InputVolume, script.InputPath);
 
                     try
                     {
@@ -154,21 +170,32 @@ namespace kOS.Cli.Actions
             return result;
         }
 
-        private int WriteCompiledContent(List<Kerboscript> Scripts)
+        /// <summary>
+        /// Writes the compile content to disk.
+        /// </summary>
+        /// <param name="scripts">Scripts for which the compiled content should be written.</param>
+        /// <returns>CLI return code.</returns>
+        private int WriteCompiledContent(List<Kerboscript> scripts)
         {
-            foreach (Kerboscript script in Scripts)
+            foreach (Kerboscript script in scripts)
             {
-                GlobalPath outputPath = GetGlobalPath(script.OutputArchive, script.OutputPath);
-                script.OutputArchive.SaveFile(outputPath, new FileContent(script.CompiledContent)); 
+                GlobalPath outputPath = CreateGlobalPath(script.OutputVolume, script.OutputPath);
+                script.OutputVolume.SaveFile(outputPath, new FileContent(script.CompiledContent)); 
             }
 
             return 1;
         }
 
-        private GlobalPath GetGlobalPath(Archive Archive, string Filepath)
+        /// <summary>
+        /// Creates a global volume path.
+        /// </summary>
+        /// <param name="volume">Volume for which to create the path.</param>
+        /// <param name="filepath">Filepath on disk.</param>
+        /// <returns>Created global path.</returns>
+        private GlobalPath CreateGlobalPath(CliVolume volume, string filepath)
         {
-            int archiveId = _volumeManager.GetVolumeId(Archive);
-            string path = string.Format("{0}:/" + Path.GetFileName(Filepath), archiveId);
+            int archiveId = _volumeManager.GetVolumeId(volume);
+            string path = string.Format("{0}:/" + Path.GetFileName(filepath), archiveId);
             return _volumeManager.GlobalPathFromObject(path);
         }
     }

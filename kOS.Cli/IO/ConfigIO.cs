@@ -51,7 +51,6 @@ namespace kOS.Cli.IO
             // Finally write the config file.
             File.WriteAllText(filePath, Config.ToJson());
 
-
             if (WriteToConsole == true)
             {
                 Console.WriteLine("Config file created at: {0}", filePath);

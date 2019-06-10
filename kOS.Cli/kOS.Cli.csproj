@@ -104,6 +104,9 @@
     <Compile Include="IO\ConfigIO.cs" />
     <Compile Include="IO\KerboscriptIO.cs" />
     <Compile Include="IO\KerboscriptLoader.cs" />
+    <Compile Include="IO\Volume\CliVolume.cs" />
+    <Compile Include="IO\Volume\CliVolumeDirectory.cs" />
+    <Compile Include="IO\Volume\CliVolumeFile.cs" />
     <Compile Include="Logging\CompilerLogger.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Models\Configuration.cs" />

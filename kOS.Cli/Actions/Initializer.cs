@@ -72,7 +72,7 @@ namespace kOS.Cli.Actions
 
             // Ask for volumes.
             Volume volume = new Volume();
-            volume.Index = 0;
+            volume.Index = 1;
             volume.Name = Ask("Project volume name (volume with your code)", GetProjectNameDefault());
             volume.InputPath = Ask("Project volume source directory", Constants.DefaultVolumePath);
             volume.OutputPath = Ask("Project volume source directory", Constants.DistDirectory);
