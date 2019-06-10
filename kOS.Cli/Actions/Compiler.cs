@@ -13,7 +13,7 @@ using kOS.Cli.Logging;
 namespace kOS.Cli.Actions
 {
     /// <summary>
-    /// Compiler action.
+    /// Compile action.
     /// </summary>
     public class Compiler : AbstractAction
     {
@@ -38,9 +38,14 @@ namespace kOS.Cli.Actions
         private KSScript _scriptHandler;
 
         /// <summary>
-        /// Script loader, which handles loading Kerboscripts from disc.
+        /// Script loader, which handles loading Kerboscripts from disk.
         /// </summary>
         private KerboscriptLoader _scriptLoader;
+
+        /// <summary>
+        /// Script delete, which handles the deletion of compiled Kerboscripts from disk.
+        /// </summary>
+        private KerboscriptDeleter _scriptDeleter;
 
         /// <summary>
         /// Logger.
@@ -48,21 +53,33 @@ namespace kOS.Cli.Actions
         private CompilerLogger _logger;
 
         /// <summary>
+        /// Loaded project congfiguration.
+        /// </summary>
+        private Configuration _config;
+
+        /// <summary>
+        /// Flag, wheter the compiler is being called from the watcher.
+        /// </summary>
+        private bool _calledFromWatcher;
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="Options">Options for the compiler.</param>
-        public Compiler(CompileOptions Options)
+        public Compiler(CompileOptions Options, bool calledFromWatcher = false)
         {
             Opcode.InitMachineCodeData();
             CompiledObject.InitTypeData();
             SafeSerializationMgr.CheckIDumperStatics();
 
+            _calledFromWatcher = calledFromWatcher;
             _options = Options;
-            _volumeManager = new VolumeManager();
             _scriptHandler = new KSScript();
             _compilerOptions = new CompilerOptions{ LoadProgramsInSameAddressSpace = true };
+            _volumeManager = new VolumeManager();
             _logger = new CompilerLogger();
             _scriptLoader = new KerboscriptLoader(_volumeManager, _options, _logger);
+            _scriptDeleter = new KerboscriptDeleter(_options);
         }
 
         /// <summary>
@@ -73,9 +90,15 @@ namespace kOS.Cli.Actions
         {
             int result = 0;
 
+            if (_calledFromWatcher == true)
+            {
+                _logger.DrawSeperator();
+            }
+
             List<Kerboscript> scripts = LoadScripts();
             if (scripts != null && scripts.Count > 0)
             {
+                _scriptDeleter.RemoveCompiledScripts(_config);
                 result = Compile(scripts) ? WriteCompiledContent(scripts) : 1;
             }
             else
@@ -92,14 +115,15 @@ namespace kOS.Cli.Actions
         /// <returns>Loaded configuration, if found on disk.</returns>
         protected override Configuration LoadConfiguration()
         {
-            Configuration result = null;
-
-            if (_options.Input == Constants.CurrentDirectory)
+            if (_config == null)
             {
-                result = base.LoadConfiguration();
+                if (_options.Input == Constants.CurrentDirectory)
+                {
+                    _config = base.LoadConfiguration();
+                }
             }
 
-            return result;
+            return _config;
         }
 
         /// <summary>
@@ -165,7 +189,15 @@ namespace kOS.Cli.Actions
                     }
                 }
             }
-            _logger.StopCompilation(scripts.Count);
+
+            if (result != false)
+            {
+                _logger.StopCompilationSuccess(scripts.Count);
+            }
+            else
+            {
+                _logger.StopCompilationFailure();
+            }
 
             return result;
         }

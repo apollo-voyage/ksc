@@ -99,9 +99,11 @@
     <Compile Include="Actions\Base\AbstractAction.cs" />
     <Compile Include="Actions\Base\Action.cs" />
     <Compile Include="Actions\Compiler.cs" />
+    <Compile Include="Actions\Watcher.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Actions\Initializer.cs" />
     <Compile Include="IO\ConfigIO.cs" />
+    <Compile Include="IO\KerboscriptDeleter.cs" />
     <Compile Include="IO\KerboscriptIO.cs" />
     <Compile Include="IO\KerboscriptLoader.cs" />
     <Compile Include="IO\Volume\CliVolume.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="IO\Volume\CliVolumeFile.cs" />
     <Compile Include="Logging\CompilerLogger.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\WatcherLogger.cs" />
     <Compile Include="Models\Configuration.cs" />
     <Compile Include="Models\Kerboscript.cs" />
     <Compile Include="Options\Base\InputOuputOptions.cs" />

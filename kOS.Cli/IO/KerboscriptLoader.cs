@@ -48,37 +48,12 @@ namespace kOS.Cli.IO
         public List<Kerboscript> LoadScriptsFromConfig(Configuration config)
         {
             List<Kerboscript> result = new List<Kerboscript>();
-
-            if (_options.Volume == Constants.AllVolumes)
+            foreach (var volume in config.GetVolumesForOption(_options.Volume))
             {
-                foreach (var volume in config.Volumes)
+                List<Kerboscript> scripts = LoadScriptsAndAddVolumes(volume.InputPath, volume.OutputPath, volume.Name);
+                if (scripts != null)
                 {
-                    List<Kerboscript> scripts = LoadScriptsAndAddVolumes(volume.InputPath, volume.OutputPath, volume.Name);
-                    if (scripts != null)
-                    {
-                        result.AddRange(scripts);
-                    }
-                }
-            }
-            else
-            {
-                Models.Volume volume = null;
-                if (int.TryParse(_options.Volume, out int index) == true)
-                {
-                    volume = config.Volumes.Find(v => v.Index == index);
-                }
-                else
-                {
-                    volume = config.Volumes.Find(v => v.Name == _options.Volume);
-                }
-
-                if (volume != null)
-                {
-                    List<Kerboscript> scripts = LoadScriptsAndAddVolumes(volume.InputPath, volume.OutputPath, volume.Name);
-                    if (scripts != null)
-                    {
-                        result.AddRange(scripts);
-                    }
+                    result.AddRange(scripts);
                 }
             }
 
@@ -111,7 +86,11 @@ namespace kOS.Cli.IO
             }
             else if (_options.Output == Constants.CurrentDirectory)
             {
-                _options.Output = Path.ChangeExtension(_options.Input, Constants.KerboscriptCompiledExtension);
+                if (Directory.Exists(_options.Input) == false)
+                {
+                    _options.Output = Path.ChangeExtension(_options.Input, Constants.KerboscriptCompiledExtension);
+                }
+
                 List<Kerboscript> scripts = LoadScriptsAndAddVolumes(_options.Input, _options.Output);
                 if (scripts != null)
                 {
@@ -176,8 +155,11 @@ namespace kOS.Cli.IO
         /// <returns>Created volume.</returns>
         private CliVolume CreateVolume(string folder, string name)
         {
-            CliVolume result = new CliVolume(folder, name);
-            _volumeManager.Add(result);
+            CliVolume result = _volumeManager.GetVolume(name) as CliVolume;
+            if (result == null) { 
+                result = new CliVolume(folder, name);
+                _volumeManager.Add(result);
+            }
 
             return result;
         }

@@ -7,6 +7,10 @@ namespace kOS.Cli.Actions
     /// </summary>
     internal interface IAction
     {
+        /// <summary>
+        /// Executes the action.
+        /// </summary>
+        /// <returns>CLI return code.</returns>
         int Run();
     }
 }

@@ -8,7 +8,7 @@ using Pastel;
 namespace kOS.Cli.Logging
 {
     /// <summary>
-    /// Logger implementation for the compiler action.
+    /// Logger implementation for the compile action.
     /// </summary>
     public class CompilerLogger : Logger
     {
@@ -17,6 +17,9 @@ namespace kOS.Cli.Logging
         /// </summary>
         private bool _noFilesFound = false;
 
+        /// <summary>
+        /// Flag, wheter the configuration was found.
+        /// </summary>
         private bool _noConfigFound = false;
 
         /// <summary>
@@ -65,13 +68,23 @@ namespace kOS.Cli.Logging
         }
 
         /// <summary>
-        /// Prints the stop compilation messages.
+        /// Prints the stop compilation messages for success.
         /// </summary>
         /// <param name="amount"></param>
-        public void StopCompilation(int amount)
+        public void StopCompilationSuccess(int amount)
         {
             StopWatch();
             Done(Draw.PrefixAndColor, "{0} Kerboscripts compiled in {1} ms.", amount, Elapsed);
+        }
+
+        /// <summary>
+        /// Prints the stop compilation messages for failure.
+        /// </summary>
+        /// <param name="amount"></param>
+        public void StopCompilationFailure()
+        {
+            StopWatch();
+            Error(Draw.PrefixAndColor, "Compilation unsuccessfull. See error messages above.");
         }
 
         /// <summary>
@@ -118,8 +131,15 @@ namespace kOS.Cli.Logging
         {
             _noConfigFound = true;
             Error(Draw.PrefixAndColor, "No configuration found.");
+            NewLine();
             Info(Draw.None, "Please execute the command " + "'ksc init'".Pastel(Color.DarkGray) + " to create a " + "ksconfig.json".Pastel(Color.DarkGray));
             Info(Draw.None, "or point to a file or directory containing " + "*.ks".Pastel(Color.DarkGray) + " files via the compile CLI options (" + "'ksc compile --help'".Pastel(Color.DarkGray) + ").");
+            NewLine();
+        }
+
+        public void DrawSeperator()
+        {
+            NewLine();
         }
     }
 }

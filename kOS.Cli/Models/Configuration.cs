@@ -28,6 +28,38 @@
 
         [JsonProperty("scripts")]
         public List<Script> Scripts { get; set; }
+
+        public List<Volume> GetVolumesForOption(string nameOrIndex = "all")
+        {
+            List<Volume> result = new List<Volume>();
+
+            if (nameOrIndex == Constants.AllVolumes)
+            {
+                result = Volumes;
+            }
+            else
+            {
+                Volume volume = null;
+                if (int.TryParse(nameOrIndex, out int index) == true)
+                {
+                    volume = Volumes.Find(v => v.Index == index);
+                    if (volume != null)
+                    {
+                        result.Add(volume);
+                    }
+                }
+                else
+                {
+                    volume = Volumes.Find(v => v.Name == nameOrIndex);
+                    if (volume != null)
+                    {
+                        result.Add(volume);
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 
     public partial class Script

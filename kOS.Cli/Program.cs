@@ -35,7 +35,8 @@ namespace kOS.Cli
 
         private static int Watch(WatchOptions options)
         {
-            int result = 1;
+            Watcher watcher = new Watcher(options);
+            int result = watcher.Run();
 
             #if DEBUG
                 Console.Read();
