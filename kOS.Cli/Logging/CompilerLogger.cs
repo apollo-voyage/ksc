@@ -62,6 +62,7 @@ namespace kOS.Cli.Logging
         /// <param name="script">Script which failed to compile.</param>
         public void CompilationError(Exception e, Kerboscript script)
         {
+            StopWatch();
             NewLine();
             Error(Draw.PrefixAndColor, "in {0}", script.InputPath);
             Error(Draw.Color, e.Message);

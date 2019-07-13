@@ -93,6 +93,9 @@
 
         [JsonProperty("output")]
         public string OutputPath { get; set; }
+
+        [JsonProperty("deploy")]
+        public string DeployPath { get; set; }
     }
 
     public partial class Configuration

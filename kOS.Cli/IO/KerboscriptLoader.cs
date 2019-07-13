@@ -15,7 +15,7 @@ namespace kOS.Cli.IO
         /// <summary>
         /// Compiler CLI options.
         /// </summary>
-        private CompileOptions _options;
+        private CompileOptions _compilerOptions;
 
         /// <summary>
         /// Compiler specific logger.
@@ -31,11 +31,12 @@ namespace kOS.Cli.IO
         /// Constructor.
         /// </summary>
         /// <param name="volumeManager">Volume manager.</param>
-        /// <param name="options">Compiler ClI options.</param>
+        /// <param name="compilerOptions">Compiler ClI options.</param>
+        /// <param name="deployOptions">Deployer ClI options.</param>
         /// <param name="logger">Compiler specific logger.</param>
-        public KerboscriptLoader(VolumeManager volumeManager, CompileOptions options, CompilerLogger logger)
+        public KerboscriptLoader(VolumeManager volumeManager, CompilerLogger logger, CompileOptions compilerOptions)
         {
-            _options = options;
+            _compilerOptions = compilerOptions;
             _volumeManager = volumeManager;
             _logger = logger;
         }
@@ -48,11 +49,14 @@ namespace kOS.Cli.IO
         public List<Kerboscript> LoadScriptsFromConfig(Configuration config)
         {
             List<Kerboscript> result = new List<Kerboscript>();
-            foreach (var volume in config.GetVolumesForOption(_options.Volume))
+            foreach (var volume in config.GetVolumesForOption(_compilerOptions.Volume))
             {
                 List<Kerboscript> scripts = LoadScriptsAndAddVolumes(volume.InputPath, volume.OutputPath, volume.Name);
                 if (scripts != null)
                 {
+                    string deployPath = Path.Combine(config.Archive, volume.DeployPath);
+                    scripts.ForEach(ks => ks.DeployPath = ks.InputPath.Replace(volume.InputPath, deployPath));
+
                     result.AddRange(scripts);
                 }
             }
@@ -68,30 +72,30 @@ namespace kOS.Cli.IO
         {
             List<Kerboscript> result = new List<Kerboscript>();
 
-            if (_options.Input == Constants.CurrentDirectory &&
-                _options.Output != Constants.CurrentDirectory)
+            if (_compilerOptions.Input == Constants.CurrentDirectory &&
+                _compilerOptions.Output != Constants.CurrentDirectory)
             {
                 _logger.NoInputSpecified();
                 return result;
             }
 
-            if (_options.Input != Constants.CurrentDirectory &&
-                _options.Output != Constants.CurrentDirectory)
+            if (_compilerOptions.Input != Constants.CurrentDirectory &&
+                _compilerOptions.Output != Constants.CurrentDirectory)
             {
-                List<Kerboscript> scripts = LoadScriptsAndAddVolumes(_options.Input, _options.Output);
+                List<Kerboscript> scripts = LoadScriptsAndAddVolumes(_compilerOptions.Input, _compilerOptions.Output);
                 if (scripts != null)
                 {
                     result.AddRange(scripts);
                 }
             }
-            else if (_options.Output == Constants.CurrentDirectory)
+            else if (_compilerOptions.Output == Constants.CurrentDirectory)
             {
-                if (Directory.Exists(_options.Input) == false)
+                if (Directory.Exists(_compilerOptions.Input) == false)
                 {
-                    _options.Output = Path.ChangeExtension(_options.Input, Constants.KerboscriptCompiledExtension);
+                    _compilerOptions.Output = Path.ChangeExtension(_compilerOptions.Input, Constants.KerboscriptCompiledExtension);
                 }
 
-                List<Kerboscript> scripts = LoadScriptsAndAddVolumes(_options.Input, _options.Output);
+                List<Kerboscript> scripts = LoadScriptsAndAddVolumes(_compilerOptions.Input, _compilerOptions.Output);
                 if (scripts != null)
                 {
                     result.AddRange(scripts);

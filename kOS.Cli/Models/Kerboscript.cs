@@ -8,6 +8,7 @@ namespace kOS.Cli.Models
     { 
         public string InputPath { get; set; }
         public string OutputPath { get; set; }
+        public string DeployPath { get; set; }
         public string Content { get; set; }
         public List<CodePart> CompiledContent { get; set; }
         public CliVolume InputVolume { get; set; }

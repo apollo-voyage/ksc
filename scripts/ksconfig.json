@@ -1,29 +1,31 @@
 {
-    "name": "test-scripts",
-    "description": "This is a Kerboscript project with test scripts.",
-    "archive": "C:/Program Files (x86)/Steam/steamapps/common/Kerbal Space Program",
-    "volumes": [
-        {
-            "index": 1,
-            "name": "v-one",
-            "path": "./src/one",
-            "output": "./dist/one"
-        },
-        {
-            "index": 2,
-            "name": "v-two",
-            "path": "./src/two",
-            "output": "./dist/two"
-        }
-    ],
-    "scripts": [
-        {
-            "name": "compile",
-            "content": "ksc run ./src/compile.ks"
-        },
-        {
-            "name": "deploy",
-            "content": "ksc run compile && ksc run ./src/deploy.ks"
-        }
-    ]
+  "name": null,
+  "description": "These are my scripts.",
+  "archive": "C:/Program Files (x86)/Steam/steamapps/common/Kerbal Space Program/Ships/Script",
+  "volumes": [
+    {
+      "index": 1,
+      "name": "boot",
+      "path": "./source/boot",
+      "output": "./dist/boot",
+      "deploy": "/boot"
+    },
+    {
+      "index": 2,
+      "name": "scripts",
+      "path": "./source",
+      "output": "./dist",
+      "deploy": null
+    }
+  ],
+  "scripts": [
+    {
+      "name": "compile",
+      "content": "ksc run ./src/compile.ks"
+    },
+    {
+      "name": "deploy",
+      "content": "ksc run compile && ksc run ./src/deploy.ks"
+    }
+  ]
 }

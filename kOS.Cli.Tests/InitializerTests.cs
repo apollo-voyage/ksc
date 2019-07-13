@@ -39,10 +39,13 @@ namespace kOS.Cli.Tests
 
             // Volumes asserts.
             Assert.IsNotNull(config.Volumes);
-            Assert.AreEqual(1, config.Volumes.Count);
-            Assert.AreEqual(0, config.Volumes[0].Index);
-            Assert.AreEqual(expectedName, config.Volumes[0].Name);
-            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[0].InputPath);
+            Assert.AreEqual(2, config.Volumes.Count);
+            Assert.AreEqual(1, config.Volumes[0].Index);
+            Assert.AreEqual(2, config.Volumes[1].Index);
+            Assert.AreEqual("boot", config.Volumes[0].Name);
+            Assert.AreEqual(expectedName, config.Volumes[1].Name);
+            Assert.AreEqual(Constants.DefaultVolumePath + Constants.DefaultBootVolumePath, config.Volumes[0].InputPath);
+            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[1].InputPath);
 
             // Scripts asserts.
             Assert.IsNotNull(config.Scripts);
@@ -52,7 +55,7 @@ namespace kOS.Cli.Tests
 
             // Tear down.
             File.Delete(configFilePath);
-        }
+            Directory.Delete(Path.GetFullPath(Constants.DefaultVolumePath), true);        }
 
         [Test]
         public void InitConfigWithProjectName([Values("foobar", "foo-bar", "foo_bar")] string ProjectName)
@@ -82,10 +85,13 @@ namespace kOS.Cli.Tests
 
             // Volumes asserts.
             Assert.IsNotNull(config.Volumes);
-            Assert.AreEqual(1, config.Volumes.Count);
-            Assert.AreEqual(0, config.Volumes[0].Index);
-            Assert.AreEqual(ProjectName, config.Volumes[0].Name);
-            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[0].InputPath);
+            Assert.AreEqual(2, config.Volumes.Count);
+            Assert.AreEqual(1, config.Volumes[0].Index);
+            Assert.AreEqual(2, config.Volumes[1].Index);
+            Assert.AreEqual("boot", config.Volumes[0].Name);
+            Assert.AreEqual(ProjectName, config.Volumes[1].Name);
+            Assert.AreEqual(Constants.DefaultVolumePath + Constants.DefaultBootVolumePath, config.Volumes[0].InputPath);
+            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[1].InputPath);
 
             // Scripts asserts.
             Assert.IsNotNull(config.Scripts);
@@ -128,10 +134,13 @@ namespace kOS.Cli.Tests
 
             // Volumes asserts.
             Assert.IsNotNull(config.Volumes);
-            Assert.AreEqual(1, config.Volumes.Count);
-            Assert.AreEqual(0, config.Volumes[0].Index);
-            Assert.AreEqual(ProjectName, config.Volumes[0].Name);
-            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[0].InputPath);
+            Assert.AreEqual(2, config.Volumes.Count);
+            Assert.AreEqual(1, config.Volumes[0].Index);
+            Assert.AreEqual(2, config.Volumes[1].Index);
+            Assert.AreEqual("boot", config.Volumes[0].Name);
+            Assert.AreEqual(ProjectName, config.Volumes[1].Name);
+            Assert.AreEqual(Constants.DefaultVolumePath + Constants.DefaultBootVolumePath, config.Volumes[0].InputPath);
+            Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[1].InputPath);
 
             // Scripts asserts.
             Assert.IsNotNull(config.Scripts);

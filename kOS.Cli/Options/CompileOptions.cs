@@ -9,7 +9,7 @@ namespace kOS.Cli.Options
         public string Volume { get; set; }
 
         /// <summary>
-        /// Creates a compile options from watch options.
+        /// Creates compile options from watch options.
         /// </summary>
         /// <param name="options">Watch options to convert.</param>
         /// <returns>Created compile options.</returns>
@@ -19,6 +19,21 @@ namespace kOS.Cli.Options
             {
                 Input = options.Input,
                 Output = options.Output,
+                Volume = options.Volume
+            };
+        }
+
+        /// <summary>
+        /// Creates compile options from deploy options.
+        /// </summary>
+        /// <param name="options">Deploy options to convert.</param>
+        /// <returns>Created compile options.</returns>
+        public static CompileOptions FromDeployOptions(DeployOptions options)
+        {
+            return new CompileOptions
+            {
+                Input = ".",
+                Output = ".",
                 Volume = options.Volume
             };
         }

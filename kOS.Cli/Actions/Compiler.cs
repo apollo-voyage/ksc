@@ -58,27 +58,32 @@ namespace kOS.Cli.Actions
         private Configuration _config;
 
         /// <summary>
+        /// Previous successfully compiled scripts.
+        /// </summary>
+        public List<Kerboscript> CompiledScripts { get; private set; }
+
+        /// <summary>
         /// Flag, wheter the compiler is being called from the watcher.
         /// </summary>
-        private bool _calledFromWatcher;
+        private bool _usedExternally;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="Options">Options for the compiler.</param>
-        public Compiler(CompileOptions Options, bool calledFromWatcher = false)
+        public Compiler(CompileOptions Options, bool usedExternally = false)
         {
             Opcode.InitMachineCodeData();
             CompiledObject.InitTypeData();
             SafeSerializationMgr.CheckIDumperStatics();
 
-            _calledFromWatcher = calledFromWatcher;
+            _usedExternally = usedExternally;
             _options = Options;
             _scriptHandler = new KSScript();
             _compilerOptions = new CompilerOptions{ LoadProgramsInSameAddressSpace = true };
             _volumeManager = new VolumeManager();
             _logger = new CompilerLogger();
-            _scriptLoader = new KerboscriptLoader(_volumeManager, _options, _logger);
+            _scriptLoader = new KerboscriptLoader(_volumeManager, _logger, _options);
             _scriptDeleter = new KerboscriptDeleter(_options);
         }
 
@@ -90,7 +95,7 @@ namespace kOS.Cli.Actions
         {
             int result = 0;
 
-            if (_calledFromWatcher == true)
+            if (_usedExternally == true)
             {
                 _logger.DrawSeperator();
             }
@@ -100,6 +105,7 @@ namespace kOS.Cli.Actions
             {
                 _scriptDeleter.RemoveCompiledScripts(_config);
                 result = Compile(scripts) ? WriteCompiledContent(scripts) : 1;
+                CompiledScripts = result == 1 ? null : scripts;
             }
             else
             {
@@ -173,20 +179,18 @@ namespace kOS.Cli.Actions
             bool result = true;
 
             _logger.StartCompilation();
+            foreach (Kerboscript script in scripts)
             {
-                foreach (Kerboscript script in scripts)
-                {
-                    GlobalPath inputPath = CreateGlobalPath(script.InputVolume, script.InputPath);
+                GlobalPath inputPath = CreateGlobalPath(script.InputVolume, script.InputPath);
 
-                    try
-                    {
-                        script.CompiledContent = _scriptHandler.Compile(inputPath, 1, script.Content, "ksc", _compilerOptions);
-                    }
-                    catch (KOSParseException e)
-                    {
-                        _logger.CompilationError(e, script);
-                        result = false;
-                    }
+                try
+                {
+                    script.CompiledContent = _scriptHandler.Compile(inputPath, 1, script.Content, "ksc", _compilerOptions);
+                }
+                catch (KOSParseException e)
+                {
+                    _logger.CompilationError(e, script);
+                    result = false;
                 }
             }
 

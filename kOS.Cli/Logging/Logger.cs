@@ -87,8 +87,7 @@ namespace kOS.Cli.Logging
         /// </summary>
         protected void ResetAndStartWatch()
         {
-            _watch.Reset();
-            _watch.Start();
+            _watch.Restart();
         }
 
         /// <summary>

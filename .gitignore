@@ -361,5 +361,4 @@ MigrationBackup/
 
 # End of https://www.gitignore.io/api/visualstudio,visualstudiocode
 
-/bak
-/dist
+*/dist

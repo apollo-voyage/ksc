@@ -33,18 +33,25 @@ namespace kOS.Cli.Actions
         /// <returns>Returns the CLI return code.</returns>
         public override int Run()
         {
+            int result = -1;
+
             // Create the configuration based on given options.
             Configuration config = _options.Yes == true ? CreateDefaultConfig() : AskConfig();
 
             // Write the configuration to disk based on given options.
             if (_options.ProjectPath != string.Empty && _options.ProjectPath != null)
             {
-                return ConfigIO.WriteConfigFile(config, Path.Combine(_options.ProjectPath, _options.ProjectName), true);
+                string path = Path.Combine(_options.ProjectPath, _options.ProjectName);
+                result = ConfigIO.WriteConfigFile(config, Path.Combine(_options.ProjectPath, _options.ProjectName), true);
+                CreateDefaultDirectories(config, path);
             }
             else
             {
-                return ConfigIO.WriteConfigFile(config, ".", true);
+                result = ConfigIO.WriteConfigFile(config, ".", true);
+                CreateDefaultDirectories(config, ".");
             }
+
+            return result;
         }
 
         #region Private
@@ -69,14 +76,28 @@ namespace kOS.Cli.Actions
 
             result.Description = Ask("Project description");
             result.Archive = Ask("Project archive (used KSP installation)", FindKSPInstallation());
+            if (result.Archive == Constants.DefaultKSPSteamInstallationWin32 ||
+                result.Archive == Constants.DefaultKSPSteamInstallationWin64)
+            {
+                result.Archive = result.Archive + Constants.ArchivePath;
+            }
 
             // Ask for volumes.
             Volume volume = new Volume();
-            volume.Index = 1;
+            volume.Index = 2;
             volume.Name = Ask("Project volume name (volume with your code)", GetProjectNameDefault());
             volume.InputPath = Ask("Project volume source directory", Constants.DefaultVolumePath);
             volume.OutputPath = Ask("Project volume source directory", Constants.DistDirectory);
-            Console.WriteLine("You can add more volumes later in the created config file!");
+            Console.WriteLine("You can add more volumes in the created config file!");
+
+            result.Volumes.Add(new Volume
+            {
+                Index = 1,
+                Name = "boot",
+                InputPath = volume.InputPath + Constants.DefaultBootVolumePath,
+                OutputPath = Constants.DistBootDirectory,
+                DeployPath = "/boot"
+            });
             result.Volumes.Add(volume);
 
             // Create two default scripts.
@@ -101,10 +122,20 @@ namespace kOS.Cli.Actions
             // Volume info.
             result.Volumes.Add(new Volume
             {
-                Index = 0,
+                Index = 1,
+                Name = "boot",
+                InputPath = Constants.DefaultVolumePath + Constants.DefaultBootVolumePath,
+                OutputPath = Constants.DistBootDirectory,
+                DeployPath = "/boot"
+            });
+
+            result.Volumes.Add(new Volume
+            {
+                Index = 2,
                 Name = GetProjectNameDefault(),
                 InputPath = Constants.DefaultVolumePath,
-                OutputPath = Constants.DistDirectory
+                OutputPath = Constants.DistDirectory,
+                DeployPath = "/"
             });
 
             // Scripts.
@@ -121,6 +152,19 @@ namespace kOS.Cli.Actions
         {
             Config.Scripts.Add(new Script { Name = "compile", Content = "ksc run " + Constants.DefaultVolumePath + "/compile.ks" });
             Config.Scripts.Add(new Script { Name = "deploy", Content = "ksc run compile && ksc run " + Constants.DefaultVolumePath + "/deploy.ks" });
+        }
+
+        /// <summary>
+        /// Creates the default directories "./src".
+        /// </summary>
+        /// <param name="BasePath">Base path where to create the default directories.</param>
+        private void CreateDefaultDirectories(Configuration Config, string BasePath)
+        {
+            Volume volume = Config.Volumes.Find(v => v.Index == 1);
+
+            string pathToCreate = Path.Combine(BasePath, volume.InputPath);
+            pathToCreate = Path.GetFullPath(pathToCreate);
+            Directory.CreateDirectory(pathToCreate);
         }
 
         #endregion // Config Creation

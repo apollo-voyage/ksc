@@ -99,6 +99,7 @@
     <Compile Include="Actions\Base\AbstractAction.cs" />
     <Compile Include="Actions\Base\Action.cs" />
     <Compile Include="Actions\Compiler.cs" />
+    <Compile Include="Actions\Deployer.cs" />
     <Compile Include="Actions\Watcher.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Actions\Initializer.cs" />
