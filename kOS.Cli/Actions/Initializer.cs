@@ -88,15 +88,16 @@ namespace kOS.Cli.Actions
             volume.Name = Ask("Project volume name (volume with your code)", GetProjectNameDefault());
             volume.InputPath = Ask("Project volume source directory", Constants.DefaultVolumePath);
             volume.OutputPath = Ask("Project volume source directory", Constants.DistDirectory);
+            volume.DeployPath = Constants.CurrentDirectory;
             Console.WriteLine("You can add more volumes in the created config file!");
 
             result.Volumes.Add(new Volume
             {
                 Index = 1,
                 Name = "boot",
-                InputPath = volume.InputPath + Constants.DefaultBootVolumePath,
+                InputPath = Constants.DefaultBootVolumePath,
                 OutputPath = Constants.DistBootDirectory,
-                DeployPath = "/boot"
+                DeployPath = Constants.DefaultBootVolumePath
             });
             result.Volumes.Add(volume);
 
@@ -124,7 +125,7 @@ namespace kOS.Cli.Actions
             {
                 Index = 1,
                 Name = "boot",
-                InputPath = Constants.DefaultVolumePath + Constants.DefaultBootVolumePath,
+                InputPath = Constants.DefaultBootVolumePath,
                 OutputPath = Constants.DistBootDirectory,
                 DeployPath = "/boot"
             });
@@ -160,11 +161,11 @@ namespace kOS.Cli.Actions
         /// <param name="BasePath">Base path where to create the default directories.</param>
         private void CreateDefaultDirectories(Configuration Config, string BasePath)
         {
-            Volume volume = Config.Volumes.Find(v => v.Index == 1);
-
-            string pathToCreate = Path.Combine(BasePath, volume.InputPath);
-            pathToCreate = Path.GetFullPath(pathToCreate);
-            Directory.CreateDirectory(pathToCreate);
+            foreach (Volume volume in Config.Volumes)
+            {
+                string pathToCreate = Path.Combine(BasePath, volume.InputPath);
+                Directory.CreateDirectory(Path.GetFullPath(pathToCreate));
+            }   
         }
 
         #endregion // Config Creation

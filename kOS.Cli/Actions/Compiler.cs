@@ -127,6 +127,21 @@ namespace kOS.Cli.Actions
                 {
                     _config = base.LoadConfiguration();
                 }
+                else
+                {
+                    string fullPath = Path.GetFullPath(_options.Input);
+                    if (Directory.Exists(fullPath) == true)
+                    {
+                        string configPath = Path.Combine(fullPath, Constants.ConfigFileName);
+                        _config = ConfigIO.ReadConfigFile(configPath);
+
+                        foreach(Models.Volume volume in _config.Volumes)
+                        {
+                            volume.InputPath = volume.InputPath.Replace(".", _options.Input);
+                            volume.OutputPath = volume.OutputPath.Replace(".", _options.Output);
+                        }
+                    }
+                }
             }
 
             return _config;
@@ -143,8 +158,9 @@ namespace kOS.Cli.Actions
             _logger.StartScriptLoading();
             {
                 Configuration config = LoadConfiguration();
-                if (_options.Input == Constants.CurrentDirectory && 
-                    _options.Output == Constants.CurrentDirectory)
+                if ((_options.Input == Constants.CurrentDirectory && 
+                    _options.Output == Constants.CurrentDirectory) || 
+                    IsDirectory(_options.Input) == true)
                 {
                     if (config != null)
                     {
@@ -233,6 +249,17 @@ namespace kOS.Cli.Actions
             int archiveId = _volumeManager.GetVolumeId(volume);
             string path = string.Format("{0}:/" + Path.GetFileName(filepath), archiveId);
             return _volumeManager.GlobalPathFromObject(path);
+        }
+
+        /// <summary>
+        /// Checks if a given path is a directory path.
+        /// </summary>
+        /// <param name="PathToCheck">Path to check.</param>
+        /// <returns>True if it is a directory, false if its not.</returns>
+        private bool IsDirectory(string PathToCheck)
+        {
+            string fullPath = Path.GetFullPath(PathToCheck);
+            return Directory.Exists(fullPath);
         }
     }
 }

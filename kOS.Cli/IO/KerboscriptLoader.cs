@@ -142,7 +142,7 @@ namespace kOS.Cli.IO
                     outputPath = Directory.GetParent(outputPath).FullName;
                 }
 
-                CliVolume inputVolume = CreateVolume(inputPath, "in-" + volumeName);
+                CliVolume inputVolume = CreateVolume(inputPath, volumeName);
                 CliVolume outputVolume = CreateVolume(outputPath, "out-" + volumeName);
                 scripts.ForEach(ks => ks.InputVolume = inputVolume);
                 scripts.ForEach(ks => ks.OutputVolume = outputVolume);

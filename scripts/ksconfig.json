@@ -1,21 +1,21 @@
 {
-  "name": null,
-  "description": "These are my scripts.",
+  "name": "scripts",
+  "description": "This is the Kerboscript project containing all test scripts.",
   "archive": "C:/Program Files (x86)/Steam/steamapps/common/Kerbal Space Program/Ships/Script",
   "volumes": [
     {
       "index": 1,
       "name": "boot",
-      "path": "./source/boot",
+      "path": "./boot",
       "output": "./dist/boot",
-      "deploy": "/boot"
+      "deploy": "./boot"
     },
     {
       "index": 2,
       "name": "scripts",
-      "path": "./source",
+      "path": "./src",
       "output": "./dist",
-      "deploy": null
+      "deploy": "."
     }
   ],
   "scripts": [

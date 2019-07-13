@@ -1,0 +1,1 @@
+print "Print from boot.ks".

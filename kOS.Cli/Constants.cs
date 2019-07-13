@@ -7,7 +7,7 @@
         public static readonly string ArchivePath = "/Ships/Script";
         public static readonly string ConfigFileName = "ksconfig.json";
         public static readonly string DefaultVolumePath = "./src";
-        public static readonly string DefaultBootVolumePath = "/boot";
+        public static readonly string DefaultBootVolumePath = "./boot";
         public static readonly string CurrentDirectory = ".";
         public static readonly string DistDirectory = "./dist";
         public static readonly string DistBootDirectory = "./dist/boot";
