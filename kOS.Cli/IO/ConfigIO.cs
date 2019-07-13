@@ -93,5 +93,16 @@ namespace kOS.Cli.IO
 
             return result;
         }
+
+        /// <summary>
+        /// Checks if a given path is a directory path.
+        /// </summary>
+        /// <param name="PathToCheck">Path to check.</param>
+        /// <returns>True if it is a directory, false if its not.</returns>
+        public static bool IsDirectory(string PathToCheck)
+        {
+            string fullPath = Path.GetFullPath(PathToCheck);
+            return Directory.Exists(fullPath);
+        }
     }
 }

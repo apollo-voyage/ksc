@@ -160,7 +160,7 @@ namespace kOS.Cli.Actions
                 Configuration config = LoadConfiguration();
                 if ((_options.Input == Constants.CurrentDirectory && 
                     _options.Output == Constants.CurrentDirectory) || 
-                    IsDirectory(_options.Input) == true)
+                    ConfigIO.IsDirectory(_options.Input) == true)
                 {
                     if (config != null)
                     {
@@ -249,17 +249,6 @@ namespace kOS.Cli.Actions
             int archiveId = _volumeManager.GetVolumeId(volume);
             string path = string.Format("{0}:/" + Path.GetFileName(filepath), archiveId);
             return _volumeManager.GlobalPathFromObject(path);
-        }
-
-        /// <summary>
-        /// Checks if a given path is a directory path.
-        /// </summary>
-        /// <param name="PathToCheck">Path to check.</param>
-        /// <returns>True if it is a directory, false if its not.</returns>
-        private bool IsDirectory(string PathToCheck)
-        {
-            string fullPath = Path.GetFullPath(PathToCheck);
-            return Directory.Exists(fullPath);
         }
     }
 }

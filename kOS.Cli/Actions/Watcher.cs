@@ -1,11 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
-using kOS.Cli.Logging;
-using kOS.Cli.Models;
-using kOS.Cli.Options;
 using System.Timers;
+using System.Collections.Generic;
+using kOS.Cli.IO;
+using kOS.Cli.Models;
+using kOS.Cli.Logging;
+using kOS.Cli.Options;
 
 namespace kOS.Cli.Actions
 {
@@ -96,11 +97,27 @@ namespace kOS.Cli.Actions
         protected override Configuration LoadConfiguration()
         {
             Configuration result = null;
+
             if (_options.Input == Constants.CurrentDirectory)
             {
                 result = base.LoadConfiguration();
             }
+            else
+            {
+                string fullPath = Path.GetFullPath(_options.Input);
+                if (Directory.Exists(fullPath) == true)
+                {
+                    string configPath = Path.Combine(fullPath, Constants.ConfigFileName);
+                    result = ConfigIO.ReadConfigFile(configPath);
 
+                    foreach (Volume volume in result.Volumes)
+                    {
+                        volume.InputPath = volume.InputPath.Replace(".", _options.Input);
+                        volume.OutputPath = volume.OutputPath.Replace(".", _options.Output);
+                    }
+                }
+            }
+         
             return result;
         }
 
@@ -165,8 +182,9 @@ namespace kOS.Cli.Actions
             List<string> result = new List<string>();
 
             Configuration config = LoadConfiguration();
-            if (_options.Input == Constants.CurrentDirectory &&
-                _options.Output == Constants.CurrentDirectory)
+            if ((_options.Input == Constants.CurrentDirectory &&
+                _options.Output == Constants.CurrentDirectory) ||
+                ConfigIO.IsDirectory(_options.Input) == true)
             {
                 if (config != null)
                 {
