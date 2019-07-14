@@ -104,6 +104,10 @@
     <Compile Include="Actions\Watcher.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Actions\Initializer.cs" />
+    <Compile Include="Execution\Config.cs" />
+    <Compile Include="Execution\Executer.cs" />
+    <Compile Include="Execution\Noop.cs" />
+    <Compile Include="Execution\Screen.cs" />
     <Compile Include="IO\ConfigIO.cs" />
     <Compile Include="IO\KerboscriptDeleter.cs" />
     <Compile Include="IO\KerboscriptIO.cs" />

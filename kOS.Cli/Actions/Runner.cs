@@ -4,11 +4,18 @@ using kOS.Cli.IO;
 using kOS.Cli.Models;
 using kOS.Cli.Options;
 using kOS.Cli.Logging;
+using kOS.Cli.Execution;
 using kOS.Safe.Serialization;
 using kOS.Safe.Compilation;
 using kOS.Safe.Compilation.KS;
 using kOS.Safe.Persistence;
 using kOS.Safe.Exceptions;
+using kOS.Safe.Utilities;
+using kOS.Safe.Encapsulation;
+using System;
+using kOS.Safe;
+using kOS.Safe.Function;
+using kOS.Safe.Execution;
 
 namespace kOS.Cli.Actions
 {
@@ -48,14 +55,19 @@ namespace kOS.Cli.Actions
         {
             int result = 0;
 
+            Configuration config = LoadConfiguration();
             if (IsKerboscript(_options.Script) == true)
             {
-                ExecuteKerboscript(_options.Script);
+                string fullScriptPath = Path.GetFullPath(_options.Script);
+                _logger.StartScriptExecution();
+                {
+                    result = ExecuteKerboscript(fullScriptPath, config);
+                }
+                _logger.StopScriptExecution(fullScriptPath);
             }
             else
             {
-                Configuration config = LoadConfiguration();
-                if (config != null) {
+                if (config != null) { 
                     Models.Script script = config.Scripts.Find(s => s.Name == _options.Script);
                     if (script != null)
                     {
@@ -105,11 +117,13 @@ namespace kOS.Cli.Actions
         /// </summary>
         /// <param name="Filepath">Filepath to the Kerboscript to execute.</param>
         /// <returns>CLI return code.</returns>
-        private int ExecuteKerboscript(string Filepath)
+        private int ExecuteKerboscript(string Filepath, Configuration Config)
         {
             int result = 0;
 
-
+            ScriptExecuter executer = new ScriptExecuter(_logger, Config);
+            List<string> output = executer.ExecuteScript(Filepath);
+            _logger.PrintScriptOutput(output);
 
             return result;
         }
@@ -121,7 +135,12 @@ namespace kOS.Cli.Actions
         /// <returns>True if it is a Kerboscript, false if it's not.</returns>
         private bool IsKerboscript(string Script)
         {
-            return File.Exists(Script);
+            bool result = false;
+
+            string fullScriptPath = Path.GetFullPath(Script);
+            result = File.Exists(fullScriptPath);
+
+            return result;
         }
     }
 }

@@ -32,14 +32,14 @@ namespace kOS.Cli.Logging
         /// <summary>
         /// Prints the stop script loading messages.
         /// </summary>
-        /// <param name="amount"></param>
-        public void StopScriptLoading(int amount)
+        /// <param name="Amount"></param>
+        public void StopScriptLoading(int Amount)
         {
             StopWatch();
 
             if (_noFilesFound == false)
             {
-                Done(Draw.Prefix, "{0} Kerboscript(s) loaded in {1} ms.", amount, Elapsed);
+                Done(Draw.Prefix, "{0} Kerboscript(s) loaded in {1} ms.", Amount, Elapsed);
                 NewLine();
             }
         }

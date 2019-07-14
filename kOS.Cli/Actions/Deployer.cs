@@ -59,7 +59,7 @@ namespace kOS.Cli.Actions
                 {
                     _logger.StartScriptDeployment();
                     result = Deploy(_compiler.CompiledScripts, config);
-                    _logger.StopScriptLoading(_compiler.CompiledScripts.Count);
+                    _logger.StopScriptDeployment(_compiler.CompiledScripts.Count);
                 }
                 else
                 {
@@ -92,6 +92,8 @@ namespace kOS.Cli.Actions
 
             foreach(Kerboscript script in Scripts)
             {
+                _logger.DeployingScript(script);
+
                 string fileName   = _options.DeploySource ? Path.GetFileName(script.InputPath) : Path.GetFileName(script.OutputPath);
                 string deployPath = Path.Combine(script.DeployPath, fileName);
                 File.Copy(script.OutputPath, deployPath, true);

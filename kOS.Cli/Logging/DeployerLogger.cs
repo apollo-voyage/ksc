@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using kOS.Cli.Models;
 
 namespace kOS.Cli.Logging
 {
@@ -18,6 +14,7 @@ namespace kOS.Cli.Logging
         {
             NewLine();
             Info("Deploying Kerboscript(s)...");
+            NewLine();
             ResetAndStartWatch();
         }
 
@@ -25,11 +22,21 @@ namespace kOS.Cli.Logging
         /// Prints the stop script deployment messages.
         /// </summary>
         /// <param name="amount"></param>
-        public void StopScriptLoading(int amount)
+        public void StopScriptDeployment(int amount)
         {
             StopWatch();
+            NewLine();
             Done(Draw.PrefixAndColor, "{0} Kerboscript(s) deployed in {1} ms.", amount, Elapsed);
             NewLine();
+        }
+
+        /// <summary>
+        /// Print the deploying script message.
+        /// </summary>
+        /// <param name="Script"></param>
+        public void DeployingScript(Kerboscript Script)
+        {
+            Info(Draw.None, "Deploying {0}...", Script.InputPath);
         }
     }
 }
