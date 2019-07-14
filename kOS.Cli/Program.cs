@@ -1,13 +1,20 @@
 ﻿using System;
 using CommandLine;
 using kOS.Cli.Actions;
-using kOS.Cli.Logging;
 using kOS.Cli.Options;
 
 namespace kOS.Cli
 {
+    /// <summary>
+    /// Main program.
+    /// </summary>
     class Program
     {
+        /// <summary>
+        /// Main method; entry point.
+        /// </summary>
+        /// <param name="args">Command line arguments.</param>
+        /// <returns>CLI return code.</returns>
         static int Main(string[] args)
         {
             return Parser.Default.ParseArguments<CompileOptions, WatchOptions, DeployOptions, RunOptions, InitOptions>(args)
@@ -21,6 +28,11 @@ namespace kOS.Cli
                 );
         }
 
+        /// <summary>
+        /// Runs the compile action.
+        /// </summary>
+        /// <param name="Options">CLI options for the compile action.</param>
+        /// <returns>CLI return code.</returns>
         private static int Compile(CompileOptions Options)
         {
             Compiler compiler = new Compiler(Options);
@@ -33,6 +45,11 @@ namespace kOS.Cli
             return result;
         }
 
+        /// <summary>
+        /// Runs the watch action.
+        /// </summary>
+        /// <param name="Options">CLI options for the watch action.</param>
+        /// <returns>CLI return code.</returns>
         private static int Watch(WatchOptions Options)
         {
             Watcher watcher = new Watcher(Options);
@@ -45,6 +62,11 @@ namespace kOS.Cli
             return result;
         }
 
+        /// <summary>
+        /// Runs the deploy action.
+        /// </summary>
+        /// <param name="Options">CLI options for the deploy action.</param>
+        /// <returns>CLI return code.</returns>
         private static int Deploy(DeployOptions Options)
         {
             Deployer deployer = new Deployer(Options);
@@ -57,9 +79,15 @@ namespace kOS.Cli
             return result;
         }
 
+        /// <summary>
+        /// Runs the run action.
+        /// </summary>
+        /// <param name="Options">CLI options for the run action.</param>
+        /// <returns>CLI return code.</returns>
         private static int Run(RunOptions Options)
         {
-            int result = 1;
+            Runner runner = new Runner(Options);
+            int result = runner.Run();
 
             #if DEBUG
                 Console.Read();
@@ -68,6 +96,11 @@ namespace kOS.Cli
             return result;
         }
 
+        /// <summary>
+        /// Runs the init action.
+        /// </summary>
+        /// <param name="Options">CLI options for the init action.</param>
+        /// <returns>CLI return code.</returns>
         private static int Init(InitOptions Options)
         {
             Initializer initializer = new Initializer(Options);

@@ -100,6 +100,7 @@
     <Compile Include="Actions\Base\Action.cs" />
     <Compile Include="Actions\Compiler.cs" />
     <Compile Include="Actions\Deployer.cs" />
+    <Compile Include="Actions\Runner.cs" />
     <Compile Include="Actions\Watcher.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Actions\Initializer.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Logging\CompilerLogger.cs" />
     <Compile Include="Logging\DeployerLogger.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\RunnerLogger.cs" />
     <Compile Include="Logging\WatcherLogger.cs" />
     <Compile Include="Models\Configuration.cs" />
     <Compile Include="Models\Kerboscript.cs" />

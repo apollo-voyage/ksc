@@ -3,12 +3,12 @@ using System.IO;
 using kOS.Cli.IO;
 using kOS.Cli.Models;
 using kOS.Cli.Options;
+using kOS.Cli.Logging;
 using kOS.Safe.Serialization;
 using kOS.Safe.Compilation;
 using kOS.Safe.Compilation.KS;
 using kOS.Safe.Persistence;
 using kOS.Safe.Exceptions;
-using kOS.Cli.Logging;
 
 namespace kOS.Cli.Actions
 {
