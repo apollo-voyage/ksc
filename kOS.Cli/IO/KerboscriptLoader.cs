@@ -54,9 +54,7 @@ namespace kOS.Cli.IO
                 List<Kerboscript> scripts = LoadScriptsAndAddVolumes(volume.InputPath, volume.OutputPath, volume.Name);
                 if (scripts != null)
                 {
-                    string deployPath = Path.Combine(config.Archive, volume.DeployPath);
-                    scripts.ForEach(ks => ks.DeployPath = ks.InputPath.Replace(volume.InputPath, deployPath));
-
+                    scripts.ForEach(ks => ks.DeployPath = volume.DeployPath.Replace(".", config.Archive));
                     result.AddRange(scripts);
                 }
             }

@@ -1,30 +1,47 @@
-﻿using kOS.Cli.Logging;
-using kOS.Cli.Models;
-using kOS.Cli.Options;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using kOS.Cli.Logging;
+using kOS.Cli.Models;
+using kOS.Cli.Options;
 
 namespace kOS.Cli.Actions
 {
     public class Deployer : AbstractAction
     {
+        /// <summary>
+        /// Deploy CLI options.
+        /// </summary>
         private DeployOptions _options;
 
+        /// <summary>
+        /// Compiler. Implements compile action, will be used to compile after file changes.
+        /// </summary>
         private Compiler _compiler;
 
+        /// <summary>
+        /// Compiler logger. TODO: Is used for NoConfigurationFound method, extract method in generic logger.
+        /// </summary>
         private CompilerLogger _compilerLogger;
 
-
-        public Deployer(DeployOptions options)
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="Options">Deploy CLI options.</param>
+        public Deployer(DeployOptions Options)
         {
-            _options = options;
-            _compiler = new Compiler(CompileOptions.FromDeployOptions(options), true);
+            _options = Options;
+            _compiler = new Compiler(CompileOptions.FromDeployOptions(Options), true);
             _compilerLogger = new CompilerLogger();
         }
 
+        /// <summary>
+        /// Runs the deployment action.
+        /// </summary>
+        /// <returns></returns>
         public override int Run()
         {
             int result = 0;
@@ -32,8 +49,15 @@ namespace kOS.Cli.Actions
             if (_compiler.Run() == 0)
             {
                 Configuration config = LoadConfiguration();
-                result = config == null ? DeployFromOptions(_compiler.CompiledScripts) : 
-                                          DeployFromConfig(_compiler.CompiledScripts, config);
+                if (config != null)
+                {
+                    result = Deploy(_compiler.CompiledScripts, config);
+                }
+                else
+                {
+                    _compilerLogger.NoConfigurationFound();
+                    result = 1;
+                }
             }
 
             return result;
@@ -45,25 +69,25 @@ namespace kOS.Cli.Actions
         /// <returns>Loaded configuration, if found on disk.</returns>
         protected override Configuration LoadConfiguration()
         {
-            Configuration result = null;
-            //if (_options.Input == Constants.CurrentDirectory)
-            //{
-            //    result = base.LoadConfiguration();
-            //}
-
-            return result;
+            return base.LoadConfiguration();
         }
 
-        private int DeployFromConfig(List<Kerboscript> scripts, Configuration config)
+        /// <summary>
+        /// Deploys the scripts based on the options and given configuration.
+        /// </summary>
+        /// <param name="Scripts">Scripts to deploy.</param>
+        /// <param name="Config">Configuration used for the deployment.</param>
+        /// <returns>CLI return code.</returns>
+        private int Deploy(List<Kerboscript> Scripts, Configuration Config)
         {
             int result = 0;
 
-            return result;
-        }
-
-        private int DeployFromOptions(List<Kerboscript> scripts)
-        {
-            int result = 0;
+            foreach(Kerboscript script in Scripts)
+            {
+                string fileName   = _options.DeploySource ? Path.GetFileName(script.InputPath) : Path.GetFileName(script.OutputPath);
+                string deployPath = Path.Combine(script.DeployPath, fileName);
+                File.Copy(script.OutputPath, deployPath, true);
+            }
 
             return result;
         }

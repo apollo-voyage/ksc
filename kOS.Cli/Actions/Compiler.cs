@@ -235,7 +235,7 @@ namespace kOS.Cli.Actions
                 script.OutputVolume.SaveFile(outputPath, new FileContent(script.CompiledContent)); 
             }
 
-            return 1;
+            return 0;
         }
 
         /// <summary>
