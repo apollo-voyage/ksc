@@ -53,6 +53,11 @@ namespace kOS.Cli.Actions
         private CompilerLogger _logger;
 
         /// <summary>
+        /// Common logger.
+        /// </summary>
+        private CommonLogger _commonLogger;
+
+        /// <summary>
         /// Loaded project congfiguration.
         /// </summary>
         private Configuration _config;
@@ -83,6 +88,7 @@ namespace kOS.Cli.Actions
             _compilerOptions = new CompilerOptions{ LoadProgramsInSameAddressSpace = true };
             _volumeManager = new VolumeManager();
             _logger = new CompilerLogger();
+            _commonLogger = new CommonLogger();
             _scriptLoader = new KerboscriptLoader(_volumeManager, _logger, _options);
             _scriptDeleter = new KerboscriptDeleter(_options);
         }
@@ -168,7 +174,7 @@ namespace kOS.Cli.Actions
                     }
                     else
                     {
-                        _logger.NoConfigurationFound();
+                        _commonLogger.NoConfigurationFound();
                     }
                 }
                 else

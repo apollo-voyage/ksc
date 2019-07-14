@@ -26,9 +26,9 @@ namespace kOS.Cli.Actions
         private Compiler _compiler;
         
         /// <summary>
-        /// Compiler logger. TODO: Is used for NoConfigurationFound method, extract method in generic logger.
+        /// Common logger.
         /// </summary>
-        private CompilerLogger _compilerLogger;
+        private CommonLogger _commonLogger;
 
         /// <summary>
         /// Watcher logger.
@@ -54,7 +54,7 @@ namespace kOS.Cli.Actions
             _options = options;
             _compiler = new Compiler(CompileOptions.FromWatchOptions(options), true);
             _logger = new WatcherLogger();
-            _compilerLogger = new CompilerLogger();
+            _commonLogger = new CommonLogger();
 
             _timer = new Timer
             {
@@ -212,7 +212,7 @@ namespace kOS.Cli.Actions
                 }
                 else
                 {
-                    _compilerLogger.NoConfigurationFound();
+                    _commonLogger.NoConfigurationFound();
                 }
             }
             else

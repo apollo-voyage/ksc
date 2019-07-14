@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using kOS.Cli.Models;
 using kOS.Cli.Options;
-using Pastel;
 
 namespace kOS.Cli.Logging
 {
@@ -27,7 +25,7 @@ namespace kOS.Cli.Logging
         /// </summary>
         public void StartScriptLoading()
         {
-            Info("Loading Kerboscripts...");
+            Info("Loading Kerboscript(s)...");
             ResetAndStartWatch();
         }
 
@@ -41,7 +39,7 @@ namespace kOS.Cli.Logging
 
             if (_noFilesFound == false)
             {
-                Done(Draw.Prefix, "{0} Kerboscripts loaded in {1} ms.", amount, Elapsed);
+                Done(Draw.Prefix, "{0} Kerboscript(s) loaded in {1} ms.", amount, Elapsed);
                 NewLine();
             }
         }
@@ -51,7 +49,7 @@ namespace kOS.Cli.Logging
         /// </summary>
         public void StartCompilation()
         {
-            Info("Compiling Kerboscripts...");
+            Info("Compiling Kerboscript(s)...");
             ResetAndStartWatch();
         }
 
@@ -75,7 +73,7 @@ namespace kOS.Cli.Logging
         public void StopCompilationSuccess(int amount)
         {
             StopWatch();
-            Done(Draw.PrefixAndColor, "{0} Kerboscripts compiled in {1} ms.", amount, Elapsed);
+            Done(Draw.PrefixAndColor, "{0} Kerboscript(s) compiled in {1} ms.", amount, Elapsed);
         }
 
         /// <summary>
@@ -85,7 +83,7 @@ namespace kOS.Cli.Logging
         public void StopCompilationFailure()
         {
             StopWatch();
-            Error(Draw.PrefixAndColor, "Compilation unsuccessfull. See error messages above.");
+            Error(Draw.PrefixAndColor, "Compilation failed. See error messages above.");
         }
 
         /// <summary>
@@ -126,18 +124,8 @@ namespace kOS.Cli.Logging
         }
 
         /// <summary>
-        /// Prints no configuration found message.
+        /// Draw a seperator.
         /// </summary>
-        public void NoConfigurationFound()
-        {
-            _noConfigFound = true;
-            Error(Draw.PrefixAndColor, "No configuration found.");
-            NewLine();
-            Info(Draw.None, "Please execute the command " + "'ksc init'".Pastel(Color.DarkGray) + " to create a " + "ksconfig.json".Pastel(Color.DarkGray));
-            Info(Draw.None, "or point to a file or directory containing " + "*.ks".Pastel(Color.DarkGray) + " files via the compile CLI options (" + "'ksc compile --help'".Pastel(Color.DarkGray) + ").");
-            NewLine();
-        }
-
         public void DrawSeperator()
         {
             NewLine();

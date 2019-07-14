@@ -23,9 +23,14 @@ namespace kOS.Cli.Actions
         private Compiler _compiler;
 
         /// <summary>
-        /// Compiler logger. TODO: Is used for NoConfigurationFound method, extract method in generic logger.
+        /// Logger.
         /// </summary>
-        private CompilerLogger _compilerLogger;
+        private DeployerLogger _logger;
+
+        /// <summary>
+        /// Common logger.
+        /// <summary>
+        private CommonLogger _commonLogger;
 
         /// <summary>
         /// Constructor.
@@ -35,7 +40,8 @@ namespace kOS.Cli.Actions
         {
             _options = Options;
             _compiler = new Compiler(CompileOptions.FromDeployOptions(Options), true);
-            _compilerLogger = new CompilerLogger();
+            _logger = new DeployerLogger();
+            _commonLogger = new CommonLogger();
         }
 
         /// <summary>
@@ -51,11 +57,13 @@ namespace kOS.Cli.Actions
                 Configuration config = LoadConfiguration();
                 if (config != null)
                 {
+                    _logger.StartScriptDeployment();
                     result = Deploy(_compiler.CompiledScripts, config);
+                    _logger.StopScriptLoading(_compiler.CompiledScripts.Count);
                 }
                 else
                 {
-                    _compilerLogger.NoConfigurationFound();
+                    _commonLogger.NoConfigurationFound();
                     result = 1;
                 }
             }
