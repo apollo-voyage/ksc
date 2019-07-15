@@ -37,6 +37,16 @@ namespace kOS.Cli.Execution
         private RunnerLogger _logger;
 
         /// <summary>
+        /// Wheter or not a error accured.
+        /// </summary>
+        private bool _error;
+
+        /// <summary>
+        /// Wheter or not a error accured.
+        /// </summary>
+        public bool Error { get => _error; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="Logger">Logger.</param>
@@ -45,6 +55,7 @@ namespace kOS.Cli.Execution
         {
             _config = Config;
             _logger = Logger;
+            _error = false;
 
             StaticSetup();
             Setup();
@@ -58,7 +69,6 @@ namespace kOS.Cli.Execution
         /// <returns>Output of the script.</returns>
         public List<string> ExecuteScript(string Filepath)
         {
-            _shared.Screen.ClearScreen();
             List<CodePart> CompiledScript = CompileScript(Filepath);
             if (CompiledScript.Count > 0)
             {
@@ -143,13 +153,14 @@ namespace kOS.Cli.Execution
             {
                 result = _shared.ScriptHandler.Compile(path, 1, content, "ksc", new CompilerOptions() {
                     LoadProgramsInSameAddressSpace = false,
-                    IsCalledFromRun = true,
+                    IsCalledFromRun = false,
                     FuncManager = _shared.FunctionManager
                 });
             }
             catch (KOSParseException e)
             {
                 _logger.CompilationError(e, Filepath);
+                _error = true;
             }
 
             return result;

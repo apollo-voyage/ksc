@@ -84,14 +84,15 @@ namespace kOS.Cli.Actions
             _options = Options;
 
             _shared = new SafeSharedObjects();
-            _shared.Screen = new Screen();
-            _shared.Interpreter = new NoopInterpreter();
             _shared.FunctionManager = new FunctionManager(_shared);
             _shared.GameEventDispatchManager = new NoopGameEventDispatchManager();
             _shared.Processor = new NoopProcessor();
             _shared.ScriptHandler = new KSScript();
+            _shared.Screen = new Screen();
             _shared.UpdateHandler = new UpdateHandler();
             _shared.VolumeMgr = new VolumeManager();
+            _shared.FunctionManager.Load();
+
             _compilerOptions = new CompilerOptions()
             {
                 LoadProgramsInSameAddressSpace = false,

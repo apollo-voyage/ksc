@@ -44,46 +44,4 @@ namespace kOS.Cli.Execution
         public bool CheckCanBoot() => true;
         public void SetMode(ProcessorModes newProcessorMode) { }
     }
-
-    public class NoopInterpreter : IInterpreter
-    {
-        public int CharacterPixelWidth { get => 0; set { } }
-        public int CharacterPixelHeight { get => 0; set { } }
-        public double Brightness { get => 1; set { } }
-        public int CursorRowShow => 0;
-        public int CursorColumnShow => 0;
-        public int RowCount => 0;
-        public int ColumnCount => 0;
-        public int AbsoluteCursorRow { get => 0; set { } }
-        public int BeepsPending { get => 0; set { } }
-        public bool ReverseScreen { get => false; set { } }
-        public bool VisualBeep { get => false; set { } }
-        public Queue<char> CharInputQueue => new Queue<char>();
-        public int TopRow => 0;
-
-        public string DebugDump() => "";
-        public void Print(string textToPrint) { }
-        public void Print(string textToPrint, bool addNewLine) { }
-        public void PrintAt(string textToPrint, int row, int column) { }
-
-        public void AddResizeNotifier(ScreenBuffer.ResizeNotifier notifier) => throw new NotImplementedException();
-        public void AddSubBuffer(SubBuffer subBuffer) => throw new NotImplementedException();
-        public List<IScreenBufferLine> GetBuffer() => throw new NotImplementedException();
-        public void MoveCursor(int row, int column) => throw new NotImplementedException();
-        public void MoveToNextLine() => throw new NotImplementedException();
-        public void RemoveAllResizeNotifiers() => throw new NotImplementedException();
-        public void RemoveResizeNotifier(ScreenBuffer.ResizeNotifier notifier) => throw new NotImplementedException();
-        public void RemoveSubBuffer(SubBuffer subBuffer) => throw new NotImplementedException();
-        public int ScrollVertical(int deltaRows) => throw new NotImplementedException();
-        public void SetSize(int rowCount, int columnCount) => throw new NotImplementedException();
-
-        public void Type(char ch) { }
-        public bool SpecialKey(char key) => false;
-        public string GetCommandHistoryAbsolute(int absoluteIndex) => "";
-        public void SetInputLock(bool isLocked) { }
-        public bool IsAtStartOfCommand() => false;
-        public bool IsWaitingForCommand() => false;
-        public void Reset() { }
-        public void ClearScreen() { }
-    }
 }

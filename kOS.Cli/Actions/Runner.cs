@@ -60,10 +60,11 @@ namespace kOS.Cli.Actions
             {
                 string fullScriptPath = Path.GetFullPath(_options.Script);
                 _logger.StartScriptExecution();
+                result = ExecuteKerboscript(fullScriptPath, config);
+                if (result == 0)
                 {
-                    result = ExecuteKerboscript(fullScriptPath, config);
+                    _logger.StopScriptExecution(fullScriptPath);
                 }
-                _logger.StopScriptExecution(fullScriptPath);
             }
             else
             {
@@ -123,7 +124,14 @@ namespace kOS.Cli.Actions
 
             Executer executer = new Executer(_logger, Config);
             List<string> output = executer.ExecuteScript(Filepath);
-            _logger.PrintScriptOutput(output);
+            if (executer.Error == true)
+            {
+                result = 1;
+            }
+            else
+            {
+                _logger.PrintScriptOutput(output);
+            }
 
             return result;
         }
