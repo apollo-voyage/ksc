@@ -1,8 +1,10 @@
-﻿using kOS.Safe.Persistence;
-using System.IO;
+﻿using System.IO;
+using kOS.Safe.Utilities;
+using kOS.Safe.Persistence;
 
 namespace kOS.Cli.IO
 {
+    [KOSNomenclature("CliVolumeFile")]
     public class CliVolumeFile : VolumeFile
     {
         private readonly FileInfo fileInfo;

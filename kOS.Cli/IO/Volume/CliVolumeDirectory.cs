@@ -1,12 +1,14 @@
-﻿using kOS.Safe;
-using kOS.Safe.Persistence;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
+using kOS.Safe;
+using kOS.Safe.Utilities;
+using kOS.Safe.Persistence;
+using System.Collections.Generic;
 
 namespace kOS.Cli.IO
 {
+    [KOSNomenclature("CliVolumeDirectory")]
     public class CliVolumeDirectory : VolumeDirectory
     {
         private CliVolume volume;

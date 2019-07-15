@@ -10,7 +10,7 @@ namespace kOS.Cli.Execution
     /// </summary>
     public class Config : IConfig
     {
-        public int InstructionsPerUpdate { get => 10000; set { } }
+        public int InstructionsPerUpdate { get => 2000; set { } }
         public bool UseCompressedPersistence { get => false; set { } }
         public bool ShowStatistics { get => false; set { } }
         public bool StartOnArchive { get => false; set { } }

@@ -9,6 +9,9 @@ using kOS.Safe.Compilation;
 using kOS.Safe.Compilation.KS;
 using kOS.Safe.Persistence;
 using kOS.Safe.Exceptions;
+using kOS.Safe;
+using kOS.Safe.Function;
+using kOS.Cli.Execution;
 
 namespace kOS.Cli.Actions
 {
@@ -28,14 +31,9 @@ namespace kOS.Cli.Actions
         private CompilerOptions _compilerOptions;
 
         /// <summary>
-        /// Volume manager.
+        /// Shared safe objects.
         /// </summary>
-        private VolumeManager _volumeManager;
-
-        /// <summary>
-        /// Script handler, which handles compiling.
-        /// </summary>
-        private KSScript _scriptHandler;
+        private SafeSharedObjects _shared;
 
         /// <summary>
         /// Script loader, which handles loading Kerboscripts from disk.
@@ -84,12 +82,26 @@ namespace kOS.Cli.Actions
 
             _usedExternally = usedExternally;
             _options = Options;
-            _scriptHandler = new KSScript();
-            _compilerOptions = new CompilerOptions{ LoadProgramsInSameAddressSpace = true };
-            _volumeManager = new VolumeManager();
+
+            _shared = new SafeSharedObjects();
+            _shared.Screen = new Screen();
+            _shared.Interpreter = new NoopInterpreter();
+            _shared.FunctionManager = new FunctionManager(_shared);
+            _shared.GameEventDispatchManager = new NoopGameEventDispatchManager();
+            _shared.Processor = new NoopProcessor();
+            _shared.ScriptHandler = new KSScript();
+            _shared.UpdateHandler = new UpdateHandler();
+            _shared.VolumeMgr = new VolumeManager();
+            _compilerOptions = new CompilerOptions()
+            {
+                LoadProgramsInSameAddressSpace = false,
+                IsCalledFromRun = false,
+                FuncManager = _shared.FunctionManager
+            };
+
             _logger = new CompilerLogger();
             _commonLogger = new CommonLogger();
-            _scriptLoader = new KerboscriptLoader(_volumeManager, _logger, _options);
+            _scriptLoader = new KerboscriptLoader(_shared.VolumeMgr as VolumeManager, _logger, _options);
             _scriptDeleter = new KerboscriptDeleter(_options);
         }
 
@@ -207,7 +219,7 @@ namespace kOS.Cli.Actions
 
                 try
                 {
-                    script.CompiledContent = _scriptHandler.Compile(inputPath, 1, script.Content, "ksc", _compilerOptions);
+                    script.CompiledContent = _shared.ScriptHandler.Compile(inputPath, 1, script.Content, "ksc", _compilerOptions);
                 }
                 catch (KOSParseException e)
                 {
@@ -252,9 +264,9 @@ namespace kOS.Cli.Actions
         /// <returns>Created global path.</returns>
         private GlobalPath CreateGlobalPath(CliVolume volume, string filepath)
         {
-            int archiveId = _volumeManager.GetVolumeId(volume);
+            int archiveId = _shared.VolumeMgr.GetVolumeId(volume);
             string path = string.Format("{0}:/" + Path.GetFileName(filepath), archiveId);
-            return _volumeManager.GlobalPathFromObject(path);
+            return _shared.VolumeMgr.GlobalPathFromObject(path);
         }
     }
 }

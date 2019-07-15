@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace kOS.Cli.IO
 {
+    [KOSNomenclature("CliVolume")]
     public class CliVolume : Safe.Persistence.Volume
     {
         public const string ArchiveName = "Archive";

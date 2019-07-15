@@ -121,7 +121,7 @@ namespace kOS.Cli.Actions
         {
             int result = 0;
 
-            ScriptExecuter executer = new ScriptExecuter(_logger, Config);
+            Executer executer = new Executer(_logger, Config);
             List<string> output = executer.ExecuteScript(Filepath);
             _logger.PrintScriptOutput(output);
 
