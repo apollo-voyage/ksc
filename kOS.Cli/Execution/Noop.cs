@@ -44,4 +44,52 @@ namespace kOS.Cli.Execution
         public bool CheckCanBoot() => true;
         public void SetMode(ProcessorModes newProcessorMode) { }
     }
+
+    public class NoopInterpreter : IInterpreter
+    {
+        private IScreenBuffer _screen;
+
+        public NoopInterpreter(IScreenBuffer Screen)
+        {
+            _screen = Screen;
+        }
+
+        public int CharacterPixelWidth { get => 0; set { } }
+        public int CharacterPixelHeight { get => 0; set { } }
+        public double Brightness { get => 1; set { } }
+        public int CursorRowShow => 0;
+        public int CursorColumnShow => 0;
+        public int RowCount => 0;
+        public int ColumnCount => 0;
+        public int AbsoluteCursorRow { get => 0; set { } }
+        public int BeepsPending { get => 0; set { } }
+        public bool ReverseScreen { get => false; set { } }
+        public bool VisualBeep { get => false; set { } }
+        public Queue<char> CharInputQueue => null;
+        public int TopRow => 0;
+
+        public void AddResizeNotifier(ScreenBuffer.ResizeNotifier notifier) { }
+        public void AddSubBuffer(SubBuffer subBuffer) { }
+        public void ClearScreen() { }
+        public string DebugDump() => "";
+        public List<IScreenBufferLine> GetBuffer() => null;
+        public string GetCommandHistoryAbsolute(int absoluteIndex) => "";
+        public bool IsAtStartOfCommand() => false;
+        public bool IsWaitingForCommand() => false;
+        public void MoveCursor(int row, int column) { }
+        public void MoveToNextLine() { }
+        public void RemoveAllResizeNotifiers() { }
+        public void RemoveResizeNotifier(ScreenBuffer.ResizeNotifier notifier) { }
+        public void RemoveSubBuffer(SubBuffer subBuffer) { }
+        public void Reset() { }
+        public int ScrollVertical(int deltaRows) => 0;
+        public void SetInputLock(bool isLocked) { }
+        public void SetSize(int rowCount, int columnCount) { }
+        public bool SpecialKey(char key) => false;
+        public void Type(char ch) { }
+
+        public void Print(string textToPrint) => _screen.Print(textToPrint);
+        public void Print(string textToPrint, bool addNewLine) => _screen.Print(textToPrint, addNewLine);
+        public void PrintAt(string textToPrint, int row, int column) => _screen.PrintAt(textToPrint, row, column);
+    }
 }

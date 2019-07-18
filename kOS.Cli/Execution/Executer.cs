@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using kOS.Cli.IO;
 using kOS.Cli.Models;
 using kOS.Cli.Logging;
 using kOS.Safe;
@@ -12,7 +13,7 @@ using kOS.Safe.Compilation;
 using kOS.Safe.Persistence;
 using kOS.Safe.Encapsulation;
 using kOS.Safe.Compilation.KS;
-using kOS.Cli.IO;
+using kOS.Safe.Serialization;
 
 namespace kOS.Cli.Execution
 {
@@ -69,6 +70,8 @@ namespace kOS.Cli.Execution
         /// <returns>Output of the script.</returns>
         public List<string> ExecuteScript(string Filepath)
         {
+            _shared.Screen.ClearScreen();
+
             List<CodePart> CompiledScript = CompileScript(Filepath);
             if (CompiledScript.Count > 0)
             {
@@ -83,6 +86,10 @@ namespace kOS.Cli.Execution
         /// </summary>
         private void StaticSetup()
         {
+            Opcode.InitMachineCodeData();
+            CompiledObject.InitTypeData();
+            SafeSerializationMgr.CheckIDumperStatics();
+
             SafeHouse.Init(new Config(), new VersionInfo(0, 0, 0, 0), "", true, _config.Archive);
             SafeHouse.Logger = new NoopLogger();
 
@@ -109,6 +116,7 @@ namespace kOS.Cli.Execution
             _shared.Processor = new NoopProcessor();
             _shared.ScriptHandler = new KSScript();
             _shared.Screen = new Screen();
+            _shared.Interpreter = new NoopInterpreter(_shared.Screen);
             _shared.UpdateHandler = new UpdateHandler();
             _shared.VolumeMgr = new VolumeManager();
             _shared.FunctionManager.Load();
@@ -174,11 +182,13 @@ namespace kOS.Cli.Execution
         {
             _shared.Cpu.GetCurrentContext().AddParts(CompiledScript);
 
-            _shared.UpdateHandler.UpdateFixedObservers(0.01f);
-            while (_shared.Cpu.InstructionsThisUpdate == SafeHouse.Config.InstructionsPerUpdate)
+            do
             {
-                _shared.UpdateHandler.UpdateFixedObservers(0.01f);
+                _shared.UpdateHandler.UpdateObservers(0.1f);
+                _shared.UpdateHandler.UpdateFixedObservers(0.1f);
+                System.Threading.Thread.Sleep(100);
             }
+            while (_shared.Cpu.InstructionsThisUpdate > 1);
 
             _shared.VolumeMgr.Remove("ksc");
         }
