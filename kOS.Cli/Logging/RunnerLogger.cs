@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using Pastel;
 using static kOS.Cli.Models.Script;
+using System.IO;
 
 namespace kOS.Cli.Logging
 {
@@ -43,7 +44,7 @@ namespace kOS.Cli.Logging
         /// </summary>
         public void StartKerboscriptExecution(string Script)
         {
-            Info("Executing Kerboscript: " + "'{0}'".Pastel(Color.DarkGray), Script);
+            Info("Executing Kerboscript: " + "'{0}'".Pastel(Color.DarkGray), Path.GetFileName(Script));
             ResetAndStartWatch();
         }
 
@@ -57,7 +58,7 @@ namespace kOS.Cli.Logging
 
             long elapsed = Elapsed > 1000 ? Elapsed / 1000 : Elapsed;
             string unit = Elapsed > 1000 ? "s" : "ms";
-            Done(Draw.Prefix, "Script " + "'{0}'".Pastel(Color.DarkGray) + " executed in {1} {2}", Script, elapsed, unit);
+            Done(Draw.Prefix, "Script " + "'{0}'".Pastel(Color.DarkGray) + " executed in {1} {2}", Path.GetFileName(Script), elapsed, unit);
             NewLine();
         }
 
@@ -93,7 +94,7 @@ namespace kOS.Cli.Logging
         /// <param name="line"></param>
         public void PrintExternalScriptOutput(string line)
         {
-            Info(Draw.None, line);
+            Info(Draw.None, "   " + line);
         }
 
         /// <summary>
