@@ -1,25 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using kOS.Cli.IO;
+using System.Diagnostics;
+using System.Collections.Generic;
 using kOS.Cli.Models;
 using kOS.Cli.Options;
 using kOS.Cli.Logging;
 using kOS.Cli.Execution;
-using kOS.Safe.Serialization;
 using kOS.Safe.Compilation;
-using kOS.Safe.Compilation.KS;
-using kOS.Safe.Persistence;
-using kOS.Safe.Exceptions;
-using kOS.Safe.Utilities;
-using kOS.Safe.Encapsulation;
-using System;
-using kOS.Safe;
-using kOS.Safe.Function;
-using kOS.Safe.Execution;
+
+using static kOS.Cli.Models.Script;
 
 namespace kOS.Cli.Actions
 {
-    public class Runner : AbstractAction
+    class Runner : AbstractAction
     {
         /// <summary>
         /// Run CLI options.
@@ -59,11 +52,11 @@ namespace kOS.Cli.Actions
             if (IsKerboscript(_options.Script) == true)
             {
                 string fullScriptPath = Path.GetFullPath(_options.Script);
-                _logger.StartScriptExecution();
+                _logger.StartKerboscriptExecution(fullScriptPath);
                 result = ExecuteKerboscript(fullScriptPath, config);
                 if (result == 0)
                 {
-                    _logger.StopScriptExecution(fullScriptPath);
+                    _logger.StopKerboscriptExecution(fullScriptPath);
                 }
             }
             else
@@ -108,7 +101,24 @@ namespace kOS.Cli.Actions
         {
             int result = 0;
 
-
+            List<ScriptPart> scriptParts = Script.GetScriptParts();
+            foreach(ScriptPart part in scriptParts)
+            {
+                if (part.Program != Constants.ProgramKsc)
+                {
+                    _logger.StartExternalProcessExecution(part);
+                    result = StartExternalProcess(part);
+                    if (result != 0)
+                    {
+                        break;
+                    }
+                    _logger.StopExternalProcessExecution(part);
+                }
+                else
+                {
+                    result = ActionDispatcher.Dispatch(part.Arguments.Split(' '), false);
+                }
+            }
 
             return result;
         }
@@ -147,6 +157,48 @@ namespace kOS.Cli.Actions
 
             string fullScriptPath = Path.GetFullPath(Script);
             result = File.Exists(fullScriptPath);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Starts an external process.
+        /// </summary>
+        /// <param name="scriptPart">Script part which represents the external process to start.</param>
+        /// <returns>Cli Return Code</returns>
+        private int StartExternalProcess(ScriptPart scriptPart)
+        {
+            int result = 0;
+
+            try
+            {
+                Process proc = new Process
+                {
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = scriptPart.Program,
+                        Arguments = scriptPart.Arguments,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        CreateNoWindow = true
+                    }
+                };
+
+                proc.Start();
+                _logger.NewLine();
+                while (!proc.StandardOutput.EndOfStream)
+                {
+                    string line = proc.StandardOutput.ReadLine();
+                    _logger.PrintExternalScriptOutput(line);
+                }
+                _logger.NewLine();
+            }
+            catch (Exception e)
+            {
+                _logger.ExternalScriptException(e);
+
+                result = 1;
+            }
 
             return result;
         }

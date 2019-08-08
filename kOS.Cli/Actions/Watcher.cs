@@ -13,7 +13,7 @@ namespace kOS.Cli.Actions
     /// <summary>
     /// Watch action.
     /// </summary>
-    public class Watcher : AbstractAction
+    class Watcher : AbstractAction
     {
         /// <summary>
         /// Watch CLI options.

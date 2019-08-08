@@ -64,11 +64,40 @@
 
     public partial class Script
     {
+        public class ScriptPart
+        {
+            public string Program { get; private set; }
+
+            public string Arguments { get; private set; }
+
+            public ScriptPart(string program, string arguments)
+            {
+                Program = program;
+                Arguments = arguments;
+            }
+
+        }
+
         [JsonProperty("name")]
         public string Name { get; set; }
 
         [JsonProperty("content")]
         public string Content { get; set; }
+
+
+        public List<ScriptPart> GetScriptParts()
+        {
+            List<ScriptPart> result = new List<ScriptPart>();
+
+            string[] parts = Content.Split(new string[] { "&&" }, System.StringSplitOptions.RemoveEmptyEntries);
+            foreach(string part in parts)
+            {
+                string[] scriptParts = part.Trim(' ').Split(new char[] { ' ' }, 2);
+                result.Add(new ScriptPart(scriptParts[0], scriptParts[1]));
+            }
+
+            return result;
+        }
     }
 
     public partial class Volume

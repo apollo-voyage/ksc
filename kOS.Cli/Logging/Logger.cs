@@ -197,7 +197,7 @@ namespace kOS.Cli.Logging
         /// <summary>
         /// Writes a new empty line to the console.
         /// </summary>
-        protected void NewLine()
+        public void NewLine()
         {
             Console.WriteLine("");
         }

@@ -15,5 +15,6 @@
         public static readonly string KerboscriptSearchPattern = "*.ks";
         public static readonly string KerboscriptCompiledExtension = ".ksm";
         public static readonly string AllVolumes = "all";
+        public static readonly string ProgramKsc = "ksc";
     }
 }

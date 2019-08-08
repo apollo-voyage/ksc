@@ -18,7 +18,7 @@ namespace kOS.Cli.Actions
     /// <summary>
     /// Compile action.
     /// </summary>
-    public class Compiler : AbstractAction
+    class Compiler : AbstractAction
     {
         /// <summary>
         /// Options for the compiler.

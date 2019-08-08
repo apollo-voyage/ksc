@@ -11,7 +11,7 @@ namespace kOS.Cli.Actions
     /// <summary>
     /// Initializer action.
     /// </summary>
-    public class Initializer : AbstractAction
+    class Initializer : AbstractAction
     {
         /// <summary>
         /// Options for the initializer.

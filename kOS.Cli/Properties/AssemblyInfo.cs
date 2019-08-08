@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("kOS.Cli")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ksc")]
+[assembly: AssemblyDescription("Kerboscript Compiler for the Command Line")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("kOS.Cli")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCompany("mrbandler")]
+[assembly: AssemblyProduct("ksc")]
+[assembly: AssemblyCopyright("Copyright © mrbandler 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

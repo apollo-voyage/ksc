@@ -10,7 +10,7 @@ using kOS.Cli.Options;
 
 namespace kOS.Cli.Actions
 {
-    public class Deployer : AbstractAction
+    class Deployer : AbstractAction
     {
         /// <summary>
         /// Deploy CLI options.
