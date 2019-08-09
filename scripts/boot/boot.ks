@@ -1,1 +1,1 @@
-print "Print from boot.ks".
+print "Implement your boot logic here...".

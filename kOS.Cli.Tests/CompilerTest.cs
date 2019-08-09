@@ -1,8 +1,5 @@
 ﻿using System.IO;
-using System.Linq;
 using NUnit.Framework;
-using kOS.Cli.Models;
-using kOS.Cli.Options;
 using kOS.Cli.Actions;
 
 namespace kOS.Cli.Tests
@@ -16,16 +13,12 @@ namespace kOS.Cli.Tests
             // Build up.
             string scriptPath = Path.GetFullPath("./scripts/src/test.ks");
             string compiledScriptPath = Path.ChangeExtension(scriptPath, "ksm");
-            CompileOptions options = new CompileOptions
-            {
-                Input = scriptPath,
-                Output = "."
-            };
+            string arguments = "compile -i" + scriptPath;
 
-            //Compiler compiler = new Compiler(options);
 
             // Test.
-            //int result = compiler.Run();
+            int result = ActionDispatcher.Dispatch(arguments.Split(' '), false);
+            Assert.AreEqual(0, result);
             Assert.IsTrue(File.Exists(compiledScriptPath));
 
             // Tear down.
@@ -35,18 +28,12 @@ namespace kOS.Cli.Tests
         [Test]
         public void CompileProject()
         {
-            // Build up.
-            CompileOptions options = new CompileOptions
-            {
-                Input = "./scripts",
-                Output = "./scripts",
-                Volume = "all"
-            };
-
-            //Compiler compiler = new Compiler(options);
+            string arguments = "compile -i ./scripts";
 
             // Test.
-            //int result = compiler.Run();
+            int result = ActionDispatcher.Dispatch(arguments.Split(' '), false);
+            Assert.AreEqual(0, result);
+
             string fullDistPath = Path.GetFullPath("./scripts/dist");
             Assert.IsTrue(Directory.Exists(fullDistPath));
 
@@ -57,18 +44,12 @@ namespace kOS.Cli.Tests
         [Test]
         public void CompileProjectVolumeByName()
         {
-            // Build up.
-            CompileOptions options = new CompileOptions
-            {
-                Input = "./scripts",
-                Output = "./scripts",
-                Volume = "boot"
-            };
-
-            //Compiler compiler = new Compiler(options);
+            string arguments = "compile -i ./scripts -v boot";
 
             // Test.
-            //int result = compiler.Run();
+            int result = ActionDispatcher.Dispatch(arguments.Split(' '), false);
+            Assert.AreEqual(0, result);
+
             string fullDistBootPath = Path.GetFullPath("./scripts/dist/boot");
             Assert.IsTrue(Directory.Exists(fullDistBootPath));
 
@@ -80,18 +61,12 @@ namespace kOS.Cli.Tests
         [Test]
         public void CompileProjectVolumeByIndex()
         {
-            // Build up.
-            CompileOptions options = new CompileOptions
-            {
-                Input = "./scripts",
-                Output = "./scripts",
-                Volume = "1"
-            };
-
-            //Compiler compiler = new Compiler(options);
+            string arguments = "compile -i ./scripts -v 1";
 
             // Test.
-            //int result = compiler.Run();
+            int result = ActionDispatcher.Dispatch(arguments.Split(' '), false);
+            Assert.AreEqual(0, result);
+
             string fullDistBootPath = Path.GetFullPath("./scripts/dist/boot");
             Assert.IsTrue(Directory.Exists(fullDistBootPath));
 

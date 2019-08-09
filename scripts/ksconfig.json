@@ -21,11 +21,11 @@
   "scripts": [
     {
       "name": "compile",
-      "content": "node ./scripts/test.js && ksc run ./src/compile.ks"
+      "content": "ksc run ./scripts/compile.ks"
     },
     {
       "name": "deploy",
-      "content": "ksc run compile && ksc run ./src/deploy.ks"
+      "content": "ksc run compile && ksc run ./scripts/deploy.ks"
     }
   ]
 }

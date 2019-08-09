@@ -176,11 +176,16 @@ namespace kOS.Cli.Actions
 
             _logger.StartScriptLoading();
             {
-                Configuration config = LoadConfiguration();
                 if ((_options.Input == Constants.CurrentDirectory && 
                     _options.Output == Constants.CurrentDirectory) || 
                     ConfigIO.IsDirectory(_options.Input) == true)
                 {
+                    if (_options.Output == Constants.CurrentDirectory)
+                    {
+                        _options.Output = _options.Input;
+                    }
+
+                    Configuration config = LoadConfiguration();
                     if (config != null)
                     {
                         result = _scriptLoader.LoadScriptsFromConfig(config);

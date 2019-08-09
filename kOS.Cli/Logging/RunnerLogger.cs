@@ -66,7 +66,6 @@ namespace kOS.Cli.Logging
         {
             if (Output.Count > 0)
             {
-                Info("Output:");
                 NewLine();
                 foreach(string line in Output)
                 {
