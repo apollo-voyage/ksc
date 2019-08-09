@@ -14,14 +14,12 @@ namespace kOS.Cli.Tests
         public void InitConfigWithoutOptions()
         {
             // Build up.
-            InitOptions options = new InitOptions { ProjectName = "", ProjectPath = "", Yes = true };
-            //Initializer initializer = new Initializer(options);
+            string arguments = "init -y";
 
             // Test.
-            //int result = initializer.Run();
+            int result = ActionDispatcher.Dispatch(arguments.Split(' '), false);
 
             // General asserts.
-            int result = 0;
             Assert.AreEqual(0, result);
             string configFilePath = Path.GetFullPath(Path.Combine("./", Constants.ConfigFileName));
             Assert.IsTrue(File.Exists(configFilePath));
@@ -54,24 +52,41 @@ namespace kOS.Cli.Tests
             Assert.AreEqual("compile", config.Scripts[0].Name);
             Assert.AreEqual("deploy", config.Scripts[1].Name);
 
+            // Default files and directory asserts.
+            string bootDirectory = Path.GetFullPath(Path.Combine("./", Constants.DefaultBootVolumePath));
+            string bootFilepath = Path.Combine(bootDirectory, Constants.DefaultBootScriptFilename);
+            Assert.IsTrue(Directory.Exists(bootDirectory));
+            Assert.IsTrue(File.Exists(bootFilepath));
+            Assert.AreEqual(Constants.DefaultBootScriptContent, File.ReadAllText(bootFilepath));
+
+            string scriptDirectory = Path.GetFullPath(Path.Combine("./", Constants.DefaultScriptVolumePath));
+            Assert.IsTrue(Directory.Exists(scriptDirectory));
+
+            string compileScriptFilepath = Path.Combine(scriptDirectory, Constants.DefaultCompileScriptFilename);
+            Assert.IsTrue(File.Exists(compileScriptFilepath));
+            Assert.AreEqual(Constants.DefaultCompileScriptContent, File.ReadAllText(compileScriptFilepath));
+
+            string deployScriptFilepath = Path.Combine(scriptDirectory, Constants.DefaultDeployScriptFilename);
+            Assert.IsTrue(File.Exists(deployScriptFilepath));
+            Assert.AreEqual(Constants.DefaultDeployScriptContent, File.ReadAllText(deployScriptFilepath));
+
             // Tear down.
             File.Delete(configFilePath);
             Directory.Delete(Path.GetFullPath(Constants.DefaultVolumePath), true);
             Directory.Delete(Path.GetFullPath(Constants.DefaultBootVolumePath), true);
+            Directory.Delete(Path.GetFullPath(Constants.DefaultScriptVolumePath), true);
         }
 
         [Test]
         public void InitConfigWithProjectName([Values("foobar", "foo-bar", "foo_bar")] string ProjectName)
         {
             // Build up.
-            InitOptions options = new InitOptions { ProjectName = ProjectName, ProjectPath = "", Yes = true };
-            //Initializer initializer = new Initializer(options);
+            string arguments = "init " + ProjectName + " -y";
 
             // Test.
-            //int result = initializer.Run();
+            int result = ActionDispatcher.Dispatch(arguments.Split(' '), false);
 
             // General asserts.
-            int result = 0;
             Assert.AreEqual(0, result);
             string configFilePath = Path.GetFullPath(Path.Combine("./", Constants.ConfigFileName));
             Assert.IsTrue(File.Exists(configFilePath));
@@ -103,10 +118,13 @@ namespace kOS.Cli.Tests
             Assert.AreEqual("compile", config.Scripts[0].Name);
             Assert.AreEqual("deploy", config.Scripts[1].Name);
 
+            // Default files and directory asserts.
+
             // Tear down.
             File.Delete(configFilePath);
             Directory.Delete(Path.GetFullPath(Constants.DefaultVolumePath), true);
             Directory.Delete(Path.GetFullPath(Constants.DefaultBootVolumePath), true);
+            Directory.Delete(Path.GetFullPath(Constants.DefaultScriptVolumePath), true);
         }
 
         [Test]
@@ -116,14 +134,12 @@ namespace kOS.Cli.Tests
         )
         {
             // Build up.
-            InitOptions options = new InitOptions { ProjectName = ProjectName, ProjectPath = ProjectPath, Yes = true };
-            //Initializer initializer = new Initializer(options);
+            string arguments = "init " + ProjectName + " " + ProjectPath + " -y";
 
             // Test.
-            //int result = initializer.Run();
+            int result = ActionDispatcher.Dispatch(arguments.Split(' '), false);
 
             // General asserts.
-            int result = 0;
             Assert.AreEqual(0, result);
             string configFilePath = Path.GetFullPath(Path.Combine(Path.Combine(Path.GetFullPath(ProjectPath), ProjectName), Constants.ConfigFileName));
             Assert.IsTrue(File.Exists(configFilePath));
@@ -154,6 +170,8 @@ namespace kOS.Cli.Tests
             Assert.AreEqual(2, config.Scripts.Count);
             Assert.AreEqual("compile", config.Scripts[0].Name);
             Assert.AreEqual("deploy", config.Scripts[1].Name);
+
+            // Default files and directory asserts.
 
             // Tear down.
             File.Delete(configFilePath);
