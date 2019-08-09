@@ -12,21 +12,21 @@ namespace kOS.Cli.IO
     public class CliVolumeDirectory : VolumeDirectory
     {
         private CliVolume volume;
-        private string archivePath;
+        private string volumePath;
 
         public CliVolumeDirectory(CliVolume volume, VolumePath path) : base(volume, path)
         {
             this.volume = volume;
-            this.archivePath = volume.GetArchivePath(path);
+            this.volumePath = volume.GetArchivePath(path);
         }
 
         public override IDictionary<string, VolumeItem> List()
         {
-            string[] files = Directory.GetFiles(archivePath);
+            string[] files = Directory.GetFiles(volumePath);
             var filterHid = files.Where(f => (File.GetAttributes(f) & FileAttributes.Hidden) != 0);
             var filterSys = files.Where(f => (File.GetAttributes(f) & FileAttributes.System) != 0);
             var visFiles = files.Except(filterSys).Except(filterHid).ToArray();
-            string[] directories = Directory.GetDirectories(archivePath);
+            string[] directories = Directory.GetDirectories(volumePath);
 
             Array.Sort(directories);
             Array.Sort(visFiles);

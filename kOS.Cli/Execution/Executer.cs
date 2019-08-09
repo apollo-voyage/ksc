@@ -135,8 +135,9 @@ namespace kOS.Cli.Execution
 
                 foreach (Models.Volume volume in _config.Volumes)
                 {
-                    string fullVolumePath = Path.GetFullPath(volume.InputPath);
-                    CliVolume cliVolume = new CliVolume(fullVolumePath, volume.Name);
+                    string rootVolumePath = Path.GetFullPath(volume.InputPath);
+                    string outputVolumePath = Path.GetFullPath(volume.OutputPath);
+                    CliVolume cliVolume = new CliVolume(rootVolumePath, volume.Name);
                     _shared.VolumeMgr.Add(cliVolume);
                 }
             }

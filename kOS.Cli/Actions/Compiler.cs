@@ -216,7 +216,7 @@ namespace kOS.Cli.Actions
             _logger.StartCompilation();
             foreach (Kerboscript script in scripts)
             {
-                GlobalPath inputPath = CreateGlobalPath(script.InputVolume, script.InputPath);
+                GlobalPath inputPath = CreateGlobalPath(script.Volume, script.InputPath);
 
                 try
                 {
@@ -250,8 +250,11 @@ namespace kOS.Cli.Actions
         {
             foreach (Kerboscript script in scripts)
             {
-                GlobalPath outputPath = CreateGlobalPath(script.OutputVolume, script.OutputPath);
-                script.OutputVolume.SaveFile(outputPath, new FileContent(script.CompiledContent)); 
+                GlobalPath outputPath = CreateGlobalPath(script.Volume, script.OutputPath);
+
+                script.Volume.Mode = CliVolumeMode.Output;
+                script.Volume.SaveFile(outputPath, new FileContent(script.CompiledContent));
+                script.Volume.Mode = CliVolumeMode.Root;
             }
 
             return 0;

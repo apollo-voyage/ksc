@@ -1,6 +1,5 @@
 ﻿using System;
 using CommandLine;
-using kOS.Cli.Actions;
 using kOS.Cli.Options;
 
 namespace kOS.Cli.Actions

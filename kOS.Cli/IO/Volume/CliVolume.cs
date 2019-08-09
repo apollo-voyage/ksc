@@ -1,45 +1,93 @@
-﻿using kOS.Safe;
+﻿using System;
+using System.IO;
+using kOS.Safe;
+using kOS.Safe.Utilities;
 using kOS.Safe.Exceptions;
 using kOS.Safe.Persistence;
-using kOS.Safe.Utilities;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace kOS.Cli.IO
 {
+    public enum CliVolumeMode
+    {
+        Root,
+        Output
+    }
+
     [KOSNomenclature("CliVolume")]
-    public class CliVolume : Safe.Persistence.Volume
+    public class CliVolume : Volume
     {
         public const string ArchiveName = "Archive";
-        public CliVolumeDirectory RootArchiveDirectory { get; private set; }
+        public CliVolumeDirectory RootVolumeDirectory { get; private set; }
+        public CliVolumeDirectory OutputVolumeDirectory { get; private set; }
 
-        private string ArchiveFolder { get; set; }
+        public CliVolumeMode Mode = CliVolumeMode.Root;
+
+        private string VolumeFolder {
+            get {
+                return Mode == CliVolumeMode.Root ? _volumeFolder : _outputFolder;
+            }
+
+            set {
+                switch (Mode)
+                {
+                    case CliVolumeMode.Root: _volumeFolder = value;
+                        break;
+                    case CliVolumeMode.Output: _outputFolder = value;
+                        break;
+                }
+            }
+        }
+
+        private string _volumeFolder;
+        private string _outputFolder;
 
         public override VolumeDirectory Root
         {
             get
             {
-                return RootArchiveDirectory;
+                return RootVolumeDirectory;
             }
+        }
+
+        public CliVolume(string folder, string outputFolder, string name = ArchiveName)
+        {
+            _volumeFolder = Path.GetFullPath(folder).TrimEnd(VolumePath.PathSeparator);
+            _outputFolder = Path.GetFullPath(outputFolder).TrimEnd(VolumePath.PathSeparator);
+
+            CreateVolumeDirectories();
+            Renameable = false;
+            InitializeName(name);
+
+            Mode = CliVolumeMode.Root;
+            RootVolumeDirectory = new CliVolumeDirectory(this, VolumePath.EMPTY);
+            Mode = CliVolumeMode.Output;
+            OutputVolumeDirectory = new CliVolumeDirectory(this, VolumePath.EMPTY);
+            Mode = CliVolumeMode.Root;
         }
 
         public CliVolume(string folder, string name = ArchiveName)
         {
-            ArchiveFolder = Path.GetFullPath(folder).TrimEnd(VolumePath.PathSeparator);
-            CreateArchiveDirectory();
+            _volumeFolder = Path.GetFullPath(folder).TrimEnd(VolumePath.PathSeparator);
+
+            CreateVolumeDirectories();
             Renameable = false;
             InitializeName(name);
 
-            RootArchiveDirectory = new CliVolumeDirectory(this, VolumePath.EMPTY);
+            RootVolumeDirectory = new CliVolumeDirectory(this, VolumePath.EMPTY);
         }
 
-        private void CreateArchiveDirectory()
+        private void CreateVolumeDirectories()
         {
-            Directory.CreateDirectory(ArchiveFolder);
+            Mode = CliVolumeMode.Root;
+            Directory.CreateDirectory(VolumeFolder);
+
+            Mode = CliVolumeMode.Output;
+            if (VolumeFolder != null && VolumeFolder != "")
+            {
+                Directory.CreateDirectory(VolumeFolder);
+            }
+
+            Mode = CliVolumeMode.Root;
         }
 
         public string GetArchivePath(VolumePath path)
@@ -49,16 +97,14 @@ namespace kOS.Cli.IO
                 throw new KOSInvalidPathException("Path refers to parent directory", path.ToString());
             }
 
-            string mergedPath = ArchiveFolder;
-
+            string mergedPath = VolumeFolder;
             foreach (string segment in path.Segments)
             {
                 mergedPath = Path.Combine(mergedPath, segment);
             }
 
             string fullPath = Path.GetFullPath(mergedPath);
-
-            if (!fullPath.StartsWith(ArchiveFolder, StringComparison.Ordinal))
+            if (!fullPath.StartsWith(VolumeFolder, StringComparison.Ordinal))
             {
                 throw new KOSInvalidPathException("Path refers to parent directory", path.ToString());
             }
@@ -68,12 +114,12 @@ namespace kOS.Cli.IO
 
         public override void Clear()
         {
-            if (Directory.Exists(ArchiveFolder))
+            if (Directory.Exists(VolumeFolder))
             {
-                Directory.Delete(ArchiveFolder, true);
+                Directory.Delete(VolumeFolder, true);
             }
 
-            Directory.CreateDirectory(ArchiveFolder);
+            Directory.CreateDirectory(VolumeFolder);
         }
 
         public override VolumeItem Open(VolumePath path, bool ksmDefault = false)
@@ -88,7 +134,7 @@ namespace kOS.Cli.IO
                 }
                 else if (fileSystemInfo is FileInfo)
                 {
-                    VolumePath filePath = VolumePath.FromString(fileSystemInfo.FullName.Substring(ArchiveFolder.Length).Replace(Path.DirectorySeparatorChar, VolumePath.PathSeparator));
+                    VolumePath filePath = VolumePath.FromString(fileSystemInfo.FullName.Substring(VolumeFolder.Length).Replace(Path.DirectorySeparatorChar, VolumePath.PathSeparator));
                     return new CliVolumeFile(this, fileSystemInfo as FileInfo, filePath);
                 }
                 else
@@ -191,7 +237,7 @@ namespace kOS.Cli.IO
 
         public override VolumeFile SaveFile(VolumePath path, FileContent content, bool verifyFreeSpace = true)
         {
-            Directory.CreateDirectory(ArchiveFolder);
+            Directory.CreateDirectory(VolumeFolder);
 
             string archivePath = GetArchivePath(path);
             if (Directory.Exists(archivePath))

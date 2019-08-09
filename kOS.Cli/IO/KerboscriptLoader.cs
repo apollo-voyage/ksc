@@ -140,10 +140,8 @@ namespace kOS.Cli.IO
                     outputPath = Directory.GetParent(outputPath).FullName;
                 }
 
-                CliVolume inputVolume = CreateVolume(inputPath, volumeName);
-                CliVolume outputVolume = CreateVolume(outputPath, "out-" + volumeName);
-                scripts.ForEach(ks => ks.InputVolume = inputVolume);
-                scripts.ForEach(ks => ks.OutputVolume = outputVolume);
+                CliVolume volume = CreateVolume(inputPath, outputPath, volumeName);
+                scripts.ForEach(ks => ks.Volume = volume);
             }
 
             return scripts;
@@ -152,14 +150,14 @@ namespace kOS.Cli.IO
         /// <summary>
         /// Creates a volume.
         /// </summary>
-        /// <param name="folder">Root folder of the volume.</param>
+        /// <param name="directory">Root directory of the volume.</param>
         /// <param name="name">Name of the volume.</param>
         /// <returns>Created volume.</returns>
-        private CliVolume CreateVolume(string folder, string name)
+        private CliVolume CreateVolume(string directory, string outputDirectory, string name)
         {
             CliVolume result = _volumeManager.GetVolume(name) as CliVolume;
             if (result == null) { 
-                result = new CliVolume(folder, name);
+                result = new CliVolume(directory, outputDirectory, name);
                 _volumeManager.Add(result);
             }
 

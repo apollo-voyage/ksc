@@ -22,10 +22,10 @@ namespace kOS.Cli.Tests
                 Output = "."
             };
 
-            Compiler compiler = new Compiler(options);
+            //Compiler compiler = new Compiler(options);
 
             // Test.
-            int result = compiler.Run();
+            //int result = compiler.Run();
             Assert.IsTrue(File.Exists(compiledScriptPath));
 
             // Tear down.
@@ -43,10 +43,10 @@ namespace kOS.Cli.Tests
                 Volume = "all"
             };
 
-            Compiler compiler = new Compiler(options);
+            //Compiler compiler = new Compiler(options);
 
             // Test.
-            int result = compiler.Run();
+            //int result = compiler.Run();
             string fullDistPath = Path.GetFullPath("./scripts/dist");
             Assert.IsTrue(Directory.Exists(fullDistPath));
 
@@ -65,10 +65,10 @@ namespace kOS.Cli.Tests
                 Volume = "boot"
             };
 
-            Compiler compiler = new Compiler(options);
+            //Compiler compiler = new Compiler(options);
 
             // Test.
-            int result = compiler.Run();
+            //int result = compiler.Run();
             string fullDistBootPath = Path.GetFullPath("./scripts/dist/boot");
             Assert.IsTrue(Directory.Exists(fullDistBootPath));
 
@@ -88,10 +88,10 @@ namespace kOS.Cli.Tests
                 Volume = "1"
             };
 
-            Compiler compiler = new Compiler(options);
+            //Compiler compiler = new Compiler(options);
 
             // Test.
-            int result = compiler.Run();
+            //int result = compiler.Run();
             string fullDistBootPath = Path.GetFullPath("./scripts/dist/boot");
             Assert.IsTrue(Directory.Exists(fullDistBootPath));
 
