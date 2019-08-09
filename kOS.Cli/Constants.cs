@@ -8,6 +8,13 @@
         public static readonly string ConfigFileName = "ksconfig.json";
         public static readonly string DefaultVolumePath = "./src";
         public static readonly string DefaultBootVolumePath = "./boot";
+        public static readonly string DefaultBootScriptFilename = "boot.ks";
+        public static readonly string DefaultBootScriptContent = "print \"Implement your boot logic here...\".";
+        public static readonly string DefaultScriptVolumePath = "./scripts";
+        public static readonly string DefaultCompileScriptFilename = "compile.ks";
+        public static readonly string DefaultCompileScriptContent = "print \"Implement your compile logic here...\".";
+        public static readonly string DefaultDeployScriptFilename = "deploy.ks";
+        public static readonly string DefaultDeployScriptContent = "print \"Implement your deploy logic here...\".";
         public static readonly string CurrentDirectory = ".";
         public static readonly string DistDirectory = "./dist";
         public static readonly string DistBootDirectory = "./dist/boot";

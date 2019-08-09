@@ -11,7 +11,7 @@ namespace kOS.Cli.Options
         [Value(1, MetaName = "path", Default = "", Required = false, HelpText = "Path of the project.")]
         public string ProjectPath { get; set; }
 
-        [Option('y', Default = false, Required = false, HelpText = "Skip project creation questions and use defaults only.")]
+        [Option('y', Default = false, Required = false, HelpText = "Skip project initialization questions and use defaults only.")]
         public bool Yes { get; set; }
     }
 }

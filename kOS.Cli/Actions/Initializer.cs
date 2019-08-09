@@ -43,12 +43,12 @@ namespace kOS.Cli.Actions
             {
                 string path = Path.Combine(_options.ProjectPath, _options.ProjectName);
                 result = ConfigIO.WriteConfigFile(config, Path.Combine(_options.ProjectPath, _options.ProjectName), true);
-                CreateDefaultDirectories(config, path);
+                CreateDefaultDirectoriesAndFiles(config, path);
             }
             else
             {
                 result = ConfigIO.WriteConfigFile(config, ".", true);
-                CreateDefaultDirectories(config, ".");
+                CreateDefaultDirectoriesAndFiles(config, ".");
             }
 
             return result;
@@ -87,7 +87,7 @@ namespace kOS.Cli.Actions
             volume.Index = 2;
             volume.Name = Ask("Project volume name (volume with your code)", GetProjectNameDefault());
             volume.InputPath = Ask("Project volume source directory", Constants.DefaultVolumePath);
-            volume.OutputPath = Ask("Project volume source directory", Constants.DistDirectory);
+            volume.OutputPath = Ask("Project volume dist directory", Constants.DistDirectory);
             volume.DeployPath = Constants.CurrentDirectory;
             Console.WriteLine("You can add more volumes in the created config file!");
 
@@ -151,21 +151,31 @@ namespace kOS.Cli.Actions
         /// <param name="Config">Configuration to add it to.</param>
         private void AddDefaultScripts(Configuration Config)
         {
-            Config.Scripts.Add(new Script { Name = "compile", Content = "ksc run " + Constants.DefaultVolumePath + "/compile.ks" });
-            Config.Scripts.Add(new Script { Name = "deploy", Content = "ksc run compile && ksc run " + Constants.DefaultVolumePath + "/deploy.ks" });
+            Config.Scripts.Add(new Script { Name = "compile", Content = "ksc run " + Constants.DefaultScriptVolumePath + "/" + Constants.DefaultCompileScriptFilename });
+            Config.Scripts.Add(new Script { Name = "deploy", Content = "ksc run compile && ksc run " + Constants.DefaultScriptVolumePath + "/" + Constants.DefaultDeployScriptFilename });
         }
 
         /// <summary>
         /// Creates the default directories "./src".
         /// </summary>
         /// <param name="BasePath">Base path where to create the default directories.</param>
-        private void CreateDefaultDirectories(Configuration Config, string BasePath)
+        private void CreateDefaultDirectoriesAndFiles(Configuration Config, string BasePath)
         {
             foreach (Volume volume in Config.Volumes)
             {
                 string pathToCreate = Path.Combine(BasePath, volume.InputPath);
                 Directory.CreateDirectory(Path.GetFullPath(pathToCreate));
-            }   
+
+                if (volume.InputPath == Constants.DefaultBootVolumePath)
+                {
+                    File.WriteAllText(Path.Combine(Path.GetFullPath(pathToCreate), Constants.DefaultBootScriptFilename), Constants.DefaultBootScriptContent);
+                }
+            }
+
+            string defaultScriptPath = Path.Combine(BasePath, Constants.DefaultScriptVolumePath);
+            Directory.CreateDirectory(Path.GetFullPath(defaultScriptPath));
+            File.WriteAllText(Path.Combine(defaultScriptPath, Constants.DefaultCompileScriptFilename), Constants.DefaultCompileScriptContent);
+            File.WriteAllText(Path.Combine(defaultScriptPath, Constants.DefaultDeployScriptFilename), Constants.DefaultDeployScriptContent);
         }
 
         #endregion // Config Creation
@@ -177,7 +187,7 @@ namespace kOS.Cli.Actions
         /// </summary>
         private void PrintWelcomeText()
         {
-            Console.WriteLine("This utility will walk you through creating a ksconfig.json");
+            Console.WriteLine("This utility will walk you through the initialization process for a ksconfig.json");
             Console.WriteLine("");
             Console.WriteLine("Press ^C at any time to quit.");
         }
