@@ -4,13 +4,30 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C7A62E7C-6D40-4E92-8BC0-E992AFFC1C1D}</ProjectGuid>
+    <ProjectGuid>{869431BB-B460-4988-AF37-BF26207A2D49}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>kOS.Cli</RootNamespace>
-    <AssemblyName>kOS.Cli</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <AssemblyName>ksc</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,17 +48,114 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>49FF0C03F6BD3B2C8C3D818015CDDB5B672D2B0C</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>kOS.Cli_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>kOS.Cli.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine, Version=2.5.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommandLineParser.2.5.0\lib\net461\CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Pastel, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pastel.1.3.0\lib\netstandard2.0\Pastel.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\ActionDispatcher.cs" />
+    <Compile Include="Actions\Base\AbstractAction.cs" />
+    <Compile Include="Actions\Base\IAction.cs" />
+    <Compile Include="Actions\CompileAction.cs" />
+    <Compile Include="Actions\DeployAction.cs" />
+    <Compile Include="Actions\RunAction.cs" />
+    <Compile Include="Actions\WatchAction.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Actions\InitAction.cs" />
+    <Compile Include="Execution\Config.cs" />
+    <Compile Include="Execution\Executer.cs" />
+    <Compile Include="Execution\Noop.cs" />
+    <Compile Include="Execution\Screen.cs" />
+    <Compile Include="IO\ConfigIO.cs" />
+    <Compile Include="IO\KerboscriptDeleter.cs" />
+    <Compile Include="IO\KerboscriptIO.cs" />
+    <Compile Include="IO\KerboscriptLoader.cs" />
+    <Compile Include="IO\Volume\CliVolume.cs" />
+    <Compile Include="IO\Volume\CliVolumeDirectory.cs" />
+    <Compile Include="IO\Volume\CliVolumeFile.cs" />
+    <Compile Include="Logging\CommonLogger.cs" />
+    <Compile Include="Logging\CompilerLogger.cs" />
+    <Compile Include="Logging\DeployerLogger.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\RunnerLogger.cs" />
+    <Compile Include="Logging\WatcherLogger.cs" />
+    <Compile Include="Models\Configuration.cs" />
+    <Compile Include="Models\Kerboscript.cs" />
+    <Compile Include="Options\Base\InputOuputOptions.cs" />
+    <Compile Include="Options\CompileOptions.cs" />
+    <Compile Include="Options\DeployOptions.cs" />
+    <Compile Include="Options\InitOptions.cs" />
+    <Compile Include="Options\RunOptions.cs" />
+    <Compile Include="Options\WatchOptions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\kOS\src\kOS.Safe\kOS.Safe.csproj">
+      <Project>{590ffda8-7b44-4bc3-a12a-5ffe2bb7d8fd}</Project>
+      <Name>kOS.Safe</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

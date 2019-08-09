@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("kOS.Cli")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ksc")]
+[assembly: AssemblyDescription("Kerboscript Compiler for the Command Line")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("kOS.Cli")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCompany("mrbandler")]
+[assembly: AssemblyProduct("ksc")]
+[assembly: AssemblyCopyright("Copyright © mrbandler 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c7a62e7c-6d40-4e92-8bc0-e992affc1c1d")]
+[assembly: Guid("869431bb-b460-4988-af37-bf26207a2d49")]
 
 // Version information for an assembly consists of the following four values:
 //
