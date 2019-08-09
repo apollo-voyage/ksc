@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Collections.Generic;
 using kOS.Cli.Logging;
 using kOS.Cli.Models;
@@ -90,12 +86,32 @@ namespace kOS.Cli.Actions
         {
             int result = 0;
 
+            List<Volume> volumes = Config.GetVolumesForOption(_options.Volume);
+            foreach(Volume volume in volumes)
+            { 
+                string deployDirectory = volume.DeployPath.Replace(Constants.CurrentDirectory, Config.Archive);
+                if (deployDirectory != Config.Archive && Directory.Exists(deployDirectory))
+                {
+                    Directory.Delete(deployDirectory, true);
+                }
+                else
+                {
+                    string[] files = Directory.GetFiles(deployDirectory);
+                    foreach(string file in files)
+                    {
+                        File.Delete(file);
+                    }
+                }
+            }
+
             foreach(Kerboscript script in Scripts)
             {
                 _logger.DeployingScript(script);
 
                 string fileName   = _options.DeploySource ? Path.GetFileName(script.InputPath) : Path.GetFileName(script.OutputPath);
                 string deployPath = Path.Combine(script.DeployPath, fileName);
+
+                Directory.CreateDirectory(Path.GetDirectoryName(deployPath));
                 File.Copy(script.OutputPath, deployPath, true);
             }
 
