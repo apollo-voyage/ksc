@@ -11,9 +11,9 @@ using kOS.Cli.Options;
 namespace kOS.Cli.Actions
 {
     /// <summary>
-    /// Watch action.
+    /// Watch action. Runs when the user uses "ksc watch".
     /// </summary>
-    class Watcher : AbstractAction
+    class WatchAction : AbstractAction
     {
         /// <summary>
         /// Watch CLI options.
@@ -23,7 +23,7 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Compiler. Implements compile action, will be used to compile after file changes.
         /// </summary>
-        private Compiler _compiler;
+        private CompileAction _compiler;
         
         /// <summary>
         /// Common logger.
@@ -49,10 +49,10 @@ namespace kOS.Cli.Actions
         /// Constructor.
         /// </summary>
         /// <param name="options">Watch CLI options.</param>
-        public Watcher(WatchOptions options)
+        public WatchAction(WatchOptions options)
         {
             _options = options;
-            _compiler = new Compiler(CompileOptions.FromWatchOptions(options), true);
+            _compiler = new CompileAction(CompileOptions.FromWatchOptions(options), true);
             _logger = new WatcherLogger();
             _commonLogger = new CommonLogger();
 

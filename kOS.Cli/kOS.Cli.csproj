@@ -98,13 +98,13 @@
   <ItemGroup>
     <Compile Include="Actions\ActionDispatcher.cs" />
     <Compile Include="Actions\Base\AbstractAction.cs" />
-    <Compile Include="Actions\Base\Action.cs" />
-    <Compile Include="Actions\Compiler.cs" />
-    <Compile Include="Actions\Deployer.cs" />
-    <Compile Include="Actions\Runner.cs" />
-    <Compile Include="Actions\Watcher.cs" />
+    <Compile Include="Actions\Base\IAction.cs" />
+    <Compile Include="Actions\CompileAction.cs" />
+    <Compile Include="Actions\DeployAction.cs" />
+    <Compile Include="Actions\RunAction.cs" />
+    <Compile Include="Actions\WatchAction.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Actions\Initializer.cs" />
+    <Compile Include="Actions\InitAction.cs" />
     <Compile Include="Execution\Config.cs" />
     <Compile Include="Execution\Executer.cs" />
     <Compile Include="Execution\Noop.cs" />

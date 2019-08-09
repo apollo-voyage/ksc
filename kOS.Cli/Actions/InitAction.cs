@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
+using System.Drawing;
+using Pastel;
 using kOS.Cli.IO;
 using kOS.Cli.Models;
 using kOS.Cli.Options;
-using Pastel;
 
 namespace kOS.Cli.Actions
 {
     /// <summary>
-    /// Initializer action.
+    /// Init action. Runs when the user uses "ksc init".
     /// </summary>
-    class Initializer : AbstractAction
+    class InitAction : AbstractAction
     {
         /// <summary>
         /// Options for the initializer.
@@ -22,7 +22,7 @@ namespace kOS.Cli.Actions
         /// Constructor.
         /// </summary>
         /// <param name="options">Options for the initializer.</param>
-        public Initializer(InitOptions options)
+        public InitAction(InitOptions options)
         {
             _options = options;
         }
@@ -148,22 +148,22 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Adds default scripts to a configuration.
         /// </summary>
-        /// <param name="Config">Configuration to add it to.</param>
-        private void AddDefaultScripts(Configuration Config)
+        /// <param name="config">Configuration to add it to.</param>
+        private void AddDefaultScripts(Configuration config)
         {
-            Config.Scripts.Add(new Script { Name = "compile", Content = "ksc run " + Constants.DefaultScriptVolumePath + "/" + Constants.DefaultCompileScriptFilename });
-            Config.Scripts.Add(new Script { Name = "deploy", Content = "ksc run compile && ksc run " + Constants.DefaultScriptVolumePath + "/" + Constants.DefaultDeployScriptFilename });
+            config.Scripts.Add(new Script { Name = "compile", Content = "ksc run " + Constants.DefaultScriptVolumePath + "/" + Constants.DefaultCompileScriptFilename });
+            config.Scripts.Add(new Script { Name = "deploy", Content = "ksc run compile && ksc run " + Constants.DefaultScriptVolumePath + "/" + Constants.DefaultDeployScriptFilename });
         }
 
         /// <summary>
         /// Creates the default directories "./src".
         /// </summary>
-        /// <param name="BasePath">Base path where to create the default directories.</param>
-        private void CreateDefaultDirectoriesAndFiles(Configuration Config, string BasePath)
+        /// <param name="basePath">Base path where to create the default directories.</param>
+        private void CreateDefaultDirectoriesAndFiles(Configuration config, string basePath)
         {
-            foreach (Volume volume in Config.Volumes)
+            foreach (Volume volume in config.Volumes)
             {
-                string pathToCreate = Path.Combine(BasePath, volume.InputPath);
+                string pathToCreate = Path.Combine(basePath, volume.InputPath);
                 Directory.CreateDirectory(Path.GetFullPath(pathToCreate));
 
                 if (volume.InputPath == Constants.DefaultBootVolumePath)
@@ -172,7 +172,7 @@ namespace kOS.Cli.Actions
                 }
             }
 
-            string defaultScriptPath = Path.Combine(BasePath, Constants.DefaultScriptVolumePath);
+            string defaultScriptPath = Path.Combine(basePath, Constants.DefaultScriptVolumePath);
             Directory.CreateDirectory(Path.GetFullPath(defaultScriptPath));
             File.WriteAllText(Path.Combine(defaultScriptPath, Constants.DefaultCompileScriptFilename), Constants.DefaultCompileScriptContent);
             File.WriteAllText(Path.Combine(defaultScriptPath, Constants.DefaultDeployScriptFilename), Constants.DefaultDeployScriptContent);
@@ -195,21 +195,21 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Ask the user a given question.
         /// </summary>
-        /// <param name="Question">Question to ask.</param>
-        /// <param name="Default">Default for the question.</param>
+        /// <param name="question">Question to ask.</param>
+        /// <param name="default">Default for the question.</param>
         /// <returns>Answer from the user.</returns>
-        private string Ask(string Question, string Default = "")
+        private string Ask(string question, string @default = "")
         {
             string output;
 
             // Create the output format.
-            if (Default != string.Empty)
+            if (@default != string.Empty)
             {
-                output = string.Format(Question + ": [{0}] ", Default.Pastel(Color.DarkGray));    
+                output = string.Format(question + ": [{0}] ", @default.Pastel(Color.DarkGray));    
             }
             else
             {
-                output = Question + ": ";
+                output = question + ": ";
             }
 
             // Ask the question.
@@ -219,7 +219,7 @@ namespace kOS.Cli.Actions
             // Check if the question has been answered, if not set the default as the result.
             if (result == string.Empty)
             {
-                result = Default;
+                result = @default;
             }
 
             return result;

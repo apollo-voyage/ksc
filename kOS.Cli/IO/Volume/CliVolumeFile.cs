@@ -4,6 +4,9 @@ using kOS.Safe.Persistence;
 
 namespace kOS.Cli.IO
 {
+    /// <summary>
+    /// CLI volume file to be used for a custom Kerboscript compilation and deployment.
+    /// </summary>
     [KOSNomenclature("CliVolumeFile")]
     public class CliVolumeFile : VolumeFile
     {

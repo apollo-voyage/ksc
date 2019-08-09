@@ -7,8 +7,6 @@ namespace kOS.Cli.Execution
 {
     public class Screen : IScreenBuffer
     {
-        private List<string> _output = new List<string>();
-
         public int CharacterPixelWidth { get => 0; set { } }
         public int CharacterPixelHeight { get => 0; set { } }
         public double Brightness { get => 1; set { } }
@@ -23,12 +21,12 @@ namespace kOS.Cli.Execution
         public Queue<char> CharInputQueue => new Queue<char>();
         public int TopRow => 0;
 
-        public List<string> Ouput => _output;
-        public void ClearScreen() => _output.Clear();
+        public List<string> Output { get; } = new List<string>();
+        public void ClearScreen() => Output.Clear();
         public string DebugDump() => "";
-        public void Print(string textToPrint) => _output.Add(textToPrint);
-        public void Print(string textToPrint, bool addNewLine) => _output.Add(textToPrint);
-        public void PrintAt(string textToPrint, int row, int column) => _output.Add(textToPrint);
+        public void Print(string textToPrint) => Output.Add(textToPrint);
+        public void Print(string textToPrint, bool addNewLine) => Output.Add(textToPrint);
+        public void PrintAt(string textToPrint, int row, int column) => Output.Add(textToPrint);
 
         public void AddResizeNotifier(ScreenBuffer.ResizeNotifier notifier) => throw new NotImplementedException();
         public void AddSubBuffer(SubBuffer subBuffer) => throw new NotImplementedException();

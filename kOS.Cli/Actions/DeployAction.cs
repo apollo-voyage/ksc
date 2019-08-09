@@ -6,7 +6,10 @@ using kOS.Cli.Options;
 
 namespace kOS.Cli.Actions
 {
-    class Deployer : AbstractAction
+    /// <summary>
+    /// Deploy action. Runs when the user users "ksc deploy".
+    /// </summary>
+    class DeployAction : AbstractAction
     {
         /// <summary>
         /// Deploy CLI options.
@@ -16,7 +19,7 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Compiler. Implements compile action, will be used to compile after file changes.
         /// </summary>
-        private Compiler _compiler;
+        private CompileAction _compiler;
 
         /// <summary>
         /// Logger.
@@ -31,11 +34,11 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="Options">Deploy CLI options.</param>
-        public Deployer(DeployOptions Options)
+        /// <param name="options">Deploy CLI options.</param>
+        public DeployAction(DeployOptions options)
         {
-            _options = Options;
-            _compiler = new Compiler(CompileOptions.FromDeployOptions(Options), true);
+            _options = options;
+            _compiler = new CompileAction(CompileOptions.FromDeployOptions(options), true);
             _logger = new DeployerLogger();
             _commonLogger = new CommonLogger();
         }
@@ -79,18 +82,18 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Deploys the scripts based on the options and given configuration.
         /// </summary>
-        /// <param name="Scripts">Scripts to deploy.</param>
-        /// <param name="Config">Configuration used for the deployment.</param>
+        /// <param name="scripts">Scripts to deploy.</param>
+        /// <param name="config">Configuration used for the deployment.</param>
         /// <returns>CLI return code.</returns>
-        private int Deploy(List<Kerboscript> Scripts, Configuration Config)
+        private int Deploy(List<Kerboscript> scripts, Configuration config)
         {
             int result = 0;
 
-            List<Volume> volumes = Config.GetVolumesForOption(_options.Volume);
+            List<Volume> volumes = config.GetVolumesForOption(_options.Volume);
             foreach(Volume volume in volumes)
             { 
-                string deployDirectory = volume.DeployPath.Replace(Constants.CurrentDirectory, Config.Archive);
-                if (deployDirectory != Config.Archive && Directory.Exists(deployDirectory))
+                string deployDirectory = volume.DeployPath.Replace(Constants.CurrentDirectory, config.Archive);
+                if (deployDirectory != config.Archive && Directory.Exists(deployDirectory))
                 {
                     Directory.Delete(deployDirectory, true);
                 }
@@ -104,7 +107,7 @@ namespace kOS.Cli.Actions
                 }
             }
 
-            foreach(Kerboscript script in Scripts)
+            foreach(Kerboscript script in scripts)
             {
                 _logger.DeployingScript(script);
 

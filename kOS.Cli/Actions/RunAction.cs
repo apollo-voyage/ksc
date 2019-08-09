@@ -12,7 +12,10 @@ using static kOS.Cli.Models.Script;
 
 namespace kOS.Cli.Actions
 {
-    class Runner : AbstractAction
+    /// <summary>
+    /// Run action. Runs when the users uses "ksc run".
+    /// </summary>
+    class RunAction : AbstractAction
     {
         /// <summary>
         /// Run CLI options.
@@ -32,10 +35,10 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="Options">Run CLI options.</param>
-        public Runner(RunOptions Options)
+        /// <param name="options">Run CLI options.</param>
+        public RunAction(RunOptions options)
         {
-            _options = Options;
+            _options = options;
             _logger = new RunnerLogger();
             _commonLogger = new CommonLogger();
         }
@@ -95,13 +98,13 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Executes a script from the configuration.
         /// </summary>
-        /// <param name="Script"></param>
+        /// <param name="script"></param>
         /// <returns>CLI return code.</returns>
-        private int ExecuteConfigScript(Models.Script Script)
+        private int ExecuteConfigScript(Models.Script script)
         {
             int result = 0;
 
-            List<ScriptPart> scriptParts = Script.GetScriptParts();
+            List<ScriptPart> scriptParts = script.GetScriptParts();
             foreach(ScriptPart part in scriptParts)
             {
                 if (part.Program != Constants.ProgramKsc)
@@ -126,14 +129,14 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Executes a Kerboscript.
         /// </summary>
-        /// <param name="Filepath">Filepath to the Kerboscript to execute.</param>
+        /// <param name="filepath">Filepath to the Kerboscript to execute.</param>
         /// <returns>CLI return code.</returns>
-        private int ExecuteKerboscript(string Filepath, Configuration Config)
+        private int ExecuteKerboscript(string filepath, Configuration config)
         {
             int result = 0;
 
-            Executer executer = new Executer(_logger, Config);
-            List<string> output = executer.ExecuteScript(Filepath);
+            Executer executer = new Executer(_logger, config);
+            List<string> output = executer.ExecuteScript(filepath);
             if (executer.Error == true)
             {
                 result = 1;
@@ -149,13 +152,13 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Checks if a given script string is a Kerboscript on disk.
         /// </summary>
-        /// <param name="Script">Script string to check.</param>
+        /// <param name="script">Script string to check.</param>
         /// <returns>True if it is a Kerboscript, false if it's not.</returns>
-        private bool IsKerboscript(string Script)
+        private bool IsKerboscript(string script)
         {
             bool result = false;
 
-            string fullScriptPath = Path.GetFullPath(Script);
+            string fullScriptPath = Path.GetFullPath(script);
             result = File.Exists(fullScriptPath);
 
             return result;

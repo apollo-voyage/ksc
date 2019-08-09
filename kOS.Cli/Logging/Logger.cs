@@ -1,10 +1,7 @@
 ﻿using System;
-using System.IO;
 using System.Drawing;
-using System.Diagnostics;
-using kOS.Cli.Models;
-using kOS.Cli.Options;
 using Pastel;
+using System.Diagnostics;
 
 namespace kOS.Cli.Logging
 {

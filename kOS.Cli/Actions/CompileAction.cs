@@ -1,24 +1,24 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
+using System.Collections.Generic;
 using kOS.Cli.IO;
 using kOS.Cli.Models;
 using kOS.Cli.Options;
 using kOS.Cli.Logging;
+using kOS.Cli.Execution;
+using kOS.Safe;
+using kOS.Safe.Function;
+using kOS.Safe.Exceptions;
+using kOS.Safe.Persistence;
 using kOS.Safe.Serialization;
 using kOS.Safe.Compilation;
 using kOS.Safe.Compilation.KS;
-using kOS.Safe.Persistence;
-using kOS.Safe.Exceptions;
-using kOS.Safe;
-using kOS.Safe.Function;
-using kOS.Cli.Execution;
 
 namespace kOS.Cli.Actions
 {
     /// <summary>
-    /// Compile action.
+    /// Compiler action. Runs when the user uses "ksc compile".
     /// </summary>
-    class Compiler : AbstractAction
+    class CompileAction : AbstractAction
     {
         /// <summary>
         /// Options for the compiler.
@@ -73,15 +73,15 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="Options">Options for the compiler.</param>
-        public Compiler(CompileOptions Options, bool usedExternally = false)
+        /// <param name="options">Options for the compiler.</param>
+        public CompileAction(CompileOptions options, bool usedExternally = false)
         {
             Opcode.InitMachineCodeData();
             CompiledObject.InitTypeData();
             SafeSerializationMgr.CheckIDumperStatics();
 
             _usedExternally = usedExternally;
-            _options = Options;
+            _options = options;
 
             _shared = new SafeSharedObjects();
             _shared.FunctionManager = new FunctionManager(_shared);
@@ -116,7 +116,7 @@ namespace kOS.Cli.Actions
 
             if (_usedExternally == true)
             {
-                _logger.DrawSeperator();
+                _logger.NewLine();
             }
 
             List<Kerboscript> scripts = LoadScripts();

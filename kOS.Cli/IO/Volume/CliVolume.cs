@@ -7,12 +7,19 @@ using kOS.Safe.Persistence;
 
 namespace kOS.Cli.IO
 {
+    /// <summary>
+    /// CLI Volume mode.
+    /// As a CLI volume can have two folders, the root and the output folder.
+    /// </summary>
     public enum CliVolumeMode
     {
         Root,
         Output
     }
 
+    /// <summary>
+    /// CLI Volume to be used for a custom Kerboscript compilation and deployment.
+    /// </summary>
     [KOSNomenclature("CliVolume")]
     public class CliVolume : Volume
     {
@@ -300,12 +307,6 @@ namespace kOS.Cli.IO
             return POWER_REQUIRED;
         }
 
-        /// <summary>
-        /// Get the file from the OS.
-        /// </summary>
-        /// <param name="name">filename to look for</param>
-        /// <param name="ksmDefault">if true, it prefers to use the KSM filename over the KS.  The default is to prefer KS.</param>
-        /// <returns>the full fileinfo of the filename if found</returns>
         private FileSystemInfo Search(VolumePath volumePath, bool ksmDefault)
         {
             var path = GetArchivePath(volumePath);

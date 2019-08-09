@@ -12,17 +12,17 @@ namespace kOS.Cli.IO
         /// <summary>
         /// Writes the configuration to a file to disk, in form of a JSON representation.
         /// </summary>
-        /// <param name="Config">Configuration to write.</param>
-        /// <param name="DirectoryPath">Directory path to create the file in.</param>
-        /// <param name="WriteToConsole">Flag, wheter the method should write to the console.</param>
+        /// <param name="config">Configuration to write.</param>
+        /// <param name="directoryPath">Directory path to create the file in.</param>
+        /// <param name="writeToConsole">Flag, wheter the method should write to the console.</param>
         /// <returns></returns>
-        public static int WriteConfigFile(Configuration Config, string DirectoryPath = "", bool WriteToConsole = false)
+        public static int WriteConfigFile(Configuration config, string directoryPath = "", bool writeToConsole = false)
         {
             // Test of the config is null.
-            int result = Config != null ? 0 : 1;
+            int result = config != null ? 0 : 1;
             if (result == 1)
             {
-                if (WriteToConsole == true)
+                if (writeToConsole == true)
                 {
                     Console.WriteLine("Something went wrong; unable to create config file.");
                 }
@@ -33,25 +33,25 @@ namespace kOS.Cli.IO
             // Check for the directory path to save the config in,
             // if it doesn't exist we create it.
             string filePath;
-            DirectoryPath = DirectoryPath == null ? string.Empty : DirectoryPath;
-            DirectoryPath = Path.GetFullPath(DirectoryPath);
-            if (DirectoryPath == string.Empty)
+            directoryPath = directoryPath == null ? string.Empty : directoryPath;
+            directoryPath = Path.GetFullPath(directoryPath);
+            if (directoryPath == string.Empty)
             {
                 filePath = Path.Combine(Directory.GetCurrentDirectory(), Constants.ConfigFileName);
             }
             else
             {
-                DirectoryInfo dirInfo = Directory.Exists(DirectoryPath) ? 
-                    new DirectoryInfo(DirectoryPath) : 
-                    Directory.CreateDirectory(DirectoryPath);
+                DirectoryInfo dirInfo = Directory.Exists(directoryPath) ? 
+                    new DirectoryInfo(directoryPath) : 
+                    Directory.CreateDirectory(directoryPath);
 
                 filePath = Path.Combine(dirInfo.FullName, Constants.ConfigFileName);
             }
 
             // Finally write the config file.
-            File.WriteAllText(filePath, Config.ToJson());
+            File.WriteAllText(filePath, config.ToJson());
 
-            if (WriteToConsole == true)
+            if (writeToConsole == true)
             {
                 Console.WriteLine("Config file created at: {0}", filePath);
             }
@@ -62,15 +62,15 @@ namespace kOS.Cli.IO
         /// <summary>
         /// Reads a configuration from a file from disk.
         /// </summary>
-        /// <param name="Filepath">Filepath to the configuration file.</param>
+        /// <param name="filepath">Filepath to the configuration file.</param>
         /// <returns>Read configuration.</returns>
-        public static Configuration ReadConfigFile(string Filepath)
+        public static Configuration ReadConfigFile(string filepath)
         {
             Configuration result = null;
 
-            if (File.Exists(Filepath) == true)
+            if (File.Exists(filepath) == true)
             {
-                string configJSON = File.ReadAllText(Filepath);
+                string configJSON = File.ReadAllText(filepath);
                 result = Configuration.FromJson(configJSON);
             }
 
@@ -97,11 +97,11 @@ namespace kOS.Cli.IO
         /// <summary>
         /// Checks if a given path is a directory path.
         /// </summary>
-        /// <param name="PathToCheck">Path to check.</param>
+        /// <param name="path">Path to check.</param>
         /// <returns>True if it is a directory, false if its not.</returns>
-        public static bool IsDirectory(string PathToCheck)
+        public static bool IsDirectory(string path)
         {
-            string fullPath = Path.GetFullPath(PathToCheck);
+            string fullPath = Path.GetFullPath(path);
             return Directory.Exists(fullPath);
         }
     }

@@ -32,14 +32,14 @@ namespace kOS.Cli.Logging
         /// <summary>
         /// Prints the stop script loading messages.
         /// </summary>
-        /// <param name="Amount"></param>
-        public void StopScriptLoading(int Amount)
+        /// <param name="amount"></param>
+        public void StopScriptLoading(int amount)
         {
             StopWatch();
 
             if (_noFilesFound == false)
             {
-                Done(Draw.Prefix, "{0} Kerboscript(s) loaded in {1} ms.", Amount, Elapsed);
+                Done(Draw.Prefix, "{0} Kerboscript(s) loaded in {1} ms.", amount, Elapsed);
                 NewLine();
             }
         }
@@ -121,14 +121,6 @@ namespace kOS.Cli.Logging
         {
             _noFilesFound = true;
             Error(Draw.PrefixAndColor, "If you specify a output you need to specify a input.");
-        }
-
-        /// <summary>
-        /// Draw a seperator.
-        /// </summary>
-        public void DrawSeperator()
-        {
-            NewLine();
         }
     }
 }

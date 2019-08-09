@@ -103,12 +103,12 @@
     public partial class Volume
     {
         public Volume() { }
-        public Volume(string InputPath, string OutputPath)
+        public Volume(string inputPath, string outputPath)
         {
             this.Index = 0;
             this.Name = "Archive";
-            this.InputPath = InputPath;
-            this.OutputPath = OutputPath;
+            this.InputPath = inputPath;
+            this.OutputPath = outputPath;
         }
 
         [JsonProperty("index")]

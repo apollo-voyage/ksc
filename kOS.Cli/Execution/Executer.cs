@@ -50,12 +50,12 @@ namespace kOS.Cli.Execution
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="Logger">Logger.</param>
-        /// <param name="Config">Current configuration.</param>
-        public Executer(RunnerLogger Logger, Configuration Config)
+        /// <param name="logger">Logger.</param>
+        /// <param name="config">Current configuration.</param>
+        public Executer(RunnerLogger logger, Configuration config)
         {
-            _config = Config;
-            _logger = Logger;
+            _logger = logger;
+            _config = config;
             _error = false;
 
             StaticSetup();
@@ -66,19 +66,19 @@ namespace kOS.Cli.Execution
         /// <summary>
         /// Executes a single script.
         /// </summary>
-        /// <param name="Filepath">Filepath to the script to execute.</param>
+        /// <param name="filepath">Filepath to the script to execute.</param>
         /// <returns>Output of the script.</returns>
-        public List<string> ExecuteScript(string Filepath)
+        public List<string> ExecuteScript(string filepath)
         {
             _shared.Screen.ClearScreen();
 
-            List<CodePart> CompiledScript = CompileScript(Filepath);
+            List<CodePart> CompiledScript = CompileScript(filepath);
             if (CompiledScript.Count > 0)
             {
                 RunCompiledScript(CompiledScript);
             }
 
-            return GetCastedScreen().Ouput;
+            return GetCastedScreen().Output;
         }
 
         /// <summary>
@@ -146,17 +146,17 @@ namespace kOS.Cli.Execution
         /// <summary>
         /// Compiles a script.
         /// </summary>
-        /// <param name="Filepath">Filepath to the script to compile.</param>
+        /// <param name="filepath">Filepath to the script to compile.</param>
         /// <returns>Compiled script parts.</returns>
-        private List<CodePart> CompileScript(string Filepath)
+        private List<CodePart> CompileScript(string filepath)
         {
             List<CodePart> result = new List<CodePart>();
 
-            CliVolume volume = new CliVolume(Path.GetDirectoryName(Filepath), "ksc");
+            CliVolume volume = new CliVolume(Path.GetDirectoryName(filepath), "ksc");
             _shared.VolumeMgr.Add(volume);
 
-            GlobalPath path = _shared.VolumeMgr.GlobalPathFromObject("ksc:/" + Path.GetFileName(Filepath));
-            string content = File.ReadAllText(Filepath);
+            GlobalPath path = _shared.VolumeMgr.GlobalPathFromObject("ksc:/" + Path.GetFileName(filepath));
+            string content = File.ReadAllText(filepath);
 
             try
             {
@@ -168,7 +168,7 @@ namespace kOS.Cli.Execution
             }
             catch (KOSParseException e)
             {
-                _logger.CompilationError(e, Filepath);
+                _logger.CompilationError(e, filepath);
                 _error = true;
             }
 
@@ -178,10 +178,10 @@ namespace kOS.Cli.Execution
         /// <summary>
         /// Runs a compiled script.
         /// </summary>
-        /// <param name="CompiledScript">Compiled script parts.</param>
-        private void RunCompiledScript(List<CodePart> CompiledScript)
+        /// <param name="compiledScript">Compiled script parts.</param>
+        private void RunCompiledScript(List<CodePart> compiledScript)
         {
-            _shared.Cpu.GetCurrentContext().AddParts(CompiledScript);
+            _shared.Cpu.GetCurrentContext().AddParts(compiledScript);
 
             do
             {

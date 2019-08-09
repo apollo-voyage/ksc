@@ -8,6 +8,9 @@ using System.Collections.Generic;
 
 namespace kOS.Cli.IO
 {
+    /// <summary>
+    /// CLI volume directory to be used for a custom Kerboscript compilation and deployment.
+    /// </summary>
     [KOSNomenclature("CliVolumeDirectory")]
     public class CliVolumeDirectory : VolumeDirectory
     {
