@@ -2,7 +2,7 @@
 
 namespace kOS.Cli.Options
 {
-    [Verb("init", HelpText = "Create a new Kerboscript project.")]
+    [Verb("init", HelpText = "Initializes a new Kerboscript project.")]
     public class InitOptions
     {
         [Value(0, MetaName = "name", Default = "", Required = false, HelpText = "Name of the project.")]
