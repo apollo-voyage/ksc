@@ -31,7 +31,7 @@ build/win-x64:
   before_script:
     - bash ./gen-kos-safe-core.sh
   script:
-    - dotnet publish -r win-x64 -c Release -o ./win-x64 -verbosity:d
+    - dotnet publish -r win-x64 -c Release -o ../win-x64
   artifacts:
     paths:
       - ./win-x64
@@ -47,7 +47,7 @@ build/win-x86:
     - export PATH="$PATH:/root/.dotnet/tools"
     - bash ./gen-kos-safe-core.sh
   script:
-    - dotnet publish -r win-x86 -c Release -o ./win-x86 -verbosity:d
+    - dotnet publish -r win-x86 -c Release -o ../win-x86
   artifacts:
     paths:
       - ./win-x86
@@ -63,7 +63,7 @@ build/linux-x64:
     - export PATH="$PATH:/root/.dotnet/tools"
     - bash ./gen-kos-safe-core.sh
   script:
-    - dotnet publish -r linux-x64 -c Release -o ./linux-x64 -verbosity:d
+    - dotnet publish -r linux-x64 -c Release -o ../linux-x64
   artifacts:
     paths:
       - ./linux-x64
@@ -80,7 +80,7 @@ build/osx-x64:
     - export PATH="$PATH:/root/.dotnet/tools"
     - bash ./gen-kos-safe-core.sh
   script:
-    - dotnet publish -r osx-x64 -c Release -o ./osx-x64 -verbosity:d
+    - dotnet publish -r osx-x64 -c Release -o ../osx-x64
   artifacts:
     paths:
       - ./osx-x64
