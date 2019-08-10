@@ -29,73 +29,61 @@ build/win-x64:
   except:
     - tags
   before_script:
+    - bash ./gen-kos-safe-core.sh
+  script:
+    - dotnet publish -r win-x64 -c Release -o ./win-x64
+  artifacts:
+    paths:
+      - ./win-x64
+
+build/win-x86:
+  stage: build
+  image: microsoft/dotnet:latest
+  only:
+    - master
+  except:
+    - tags
+  before_script:
     - export PATH="$PATH:/root/.dotnet/tools"
     - bash ./gen-kos-safe-core.sh
   script:
-    - dotnet restore
-    - dotnet tool install --global dotnet-warp
-    - cd ./kOS.Cli
-    - dotnet-warp -r win-x64 --verbose
+    - dotnet publish -r win-x86 -c Release -o ./win-x86
   artifacts:
     paths:
-      - ./kOS.Cli/ksc.exe
+      - ./win-x86
 
-# build/win-x86:
-#   stage: build
-#   image: microsoft/dotnet:latest
-#   only:
-#     - master
-#   except:
-#     - tags
-#   before_script:
-#     - export PATH="$PATH:/root/.dotnet/tools"
-#     - bash ./gen-kos-safe-core.sh
-#   script:
-#     - dotnet restore
-#     - dotnet tool install --global dotnet-warp
-#     - cd ./kOS.Cli
-#     - dotnet-warp -r win-x86
-#   artifacts:
-#     paths:
-#       - ./win-x86/ksc.exe
+build/linux-x64:
+  stage: build
+  image: microsoft/dotnet:latest
+  only:
+    - master
+  except:
+    - tags
+  before_script:
+    - export PATH="$PATH:/root/.dotnet/tools"
+    - bash ./gen-kos-safe-core.sh
+  script:
+    - dotnet publish -r linux-x64 -c Release -o ./linux-x64
+  artifacts:
+    paths:
+      - ./linux-x64
 
-# build/linux-x64:
-#   stage: build
-#   image: microsoft/dotnet:latest
-#   only:
-#     - master
-#   except:
-#     - tags
-#   before_script:
-#     - export PATH="$PATH:/root/.dotnet/tools"
-#     - bash ./gen-kos-safe-core.sh
-#   script:
-#     - dotnet restore
-#     - dotnet tool install --global dotnet-warp
-#     - cd ./kOS.Cli
-#     - dotnet-warp -r linux-x64
-#   artifacts:
-#     paths:
-#       - ./linux-x64
 
-# build/osx-x64:
-#   stage: build
-#   image: microsoft/dotnet:latest
-#   only:
-#     - master
-#   except:
-#     - tags
-#   before_script:
-#     - export PATH="$PATH:/root/.dotnet/tools"
-#     - bash ./gen-kos-safe-core.sh
-#   script:
-#     - dotnet restore
-#     - dotnet tool install --global dotnet-warp
-#     - cd ./kOS.Cli
-#     - dotnet-warp -r osx-x64
-#   artifacts:
-#     paths:
-#       - ./osx-x64
+build/osx-x64:
+  stage: build
+  image: microsoft/dotnet:latest
+  only:
+    - master
+  except:
+    - tags
+  before_script:
+    - export PATH="$PATH:/root/.dotnet/tools"
+    - bash ./gen-kos-safe-core.sh
+  script:
+    - dotnet publish -r osx-x64 -c Release -o ./osx-x64
+  artifacts:
+    paths:
+      - ./osx-x64
 
 ##############################################################
 # Running unit tests.
