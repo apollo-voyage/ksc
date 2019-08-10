@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\kOS\src\kOS.Safe\kOS.Safe.csproj" />
+    <ProjectReference Include="..\kOS.Safe.Core\kOS.Safe.Core.csproj" />
   </ItemGroup>
 
 </Project>

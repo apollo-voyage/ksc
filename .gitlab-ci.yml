@@ -10,13 +10,13 @@ variables:
 ##############################################################
 build/debug:
   stage: build
-  image: microsoft/dotnet-framework
+  image: microsoft/dotnet:latest
   only:
     - develop
   except:
     - tags
   before_script:
-    - bash ./ci-cd/upgrade-to-4.7.2.sh
+    - bash ./gen-kos-safe-core.sh
   script:
     - dotnet restore
     - dotnet build
@@ -29,7 +29,7 @@ build/x64:
   except:
     - tags
   before_script:
-    - ./ci-cd/upgrade-to-4.7.2.sh
+    - bash ./gen-kos-safe-core.sh
   script:
     - dotnet restore
     - dotnet tool install --global dotnet-warp
@@ -47,7 +47,7 @@ build/x86:
   except:
     - tags
   before_script:
-    - ./ci-cd/upgrade-to-4.7.2.sh
+    - bash ./gen-kos-safe-core.sh
   script:
     - dotnet restore
     - dotnet tool install --global dotnet-warp
@@ -65,7 +65,7 @@ build/linux-x64:
   except:
     - tags
   before_script:
-    - ./ci-cd/upgrade-to-4.7.2.sh
+    - bash ./gen-kos-safe-core.sh
   script:
     - dotnet restore
     - dotnet tool install --global dotnet-warp
@@ -83,7 +83,7 @@ build/osx-x64:
   except:
     - tags
   before_script:
-    - ./ci-cd/upgrade-to-4.7.2.sh
+    - bash ./gen-kos-safe-core.sh
   script:
     - dotnet restore
     - dotnet tool install --global dotnet-warp
@@ -102,7 +102,7 @@ test/unit-testing:
   except:
     - tags
   before_script:
-    - ./ci-cd/upgrade-to-4.7.2.sh
+    - bash ./gen-kos-safe-core.sh
   script:
     - dotnet test
 
