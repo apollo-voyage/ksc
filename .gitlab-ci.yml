@@ -9,7 +9,7 @@ build/debug:
   except:
     - tags
   before_script:
-    - ./ci-cd/upgrade-to-4.7.2.sh
+    - bash ./ci-cd/upgrade-to-4.7.2.sh
   script:
     - dotnet restore
     - dotnet build
