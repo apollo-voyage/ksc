@@ -1,18 +1,97 @@
 ##############################################################
+# Variables.
+##############################################################
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  GIT_SUBMODULES: init
+
+##############################################################
 # Build that shit.
 ##############################################################
-build:
+build/debug:
   stage: build
   image: microsoft/dotnet:latest
+  only:
+    - develop
   except:
     - tags
+  before_script:
+    - bash ./gen-kos-safe-core.sh
   script:
     - dotnet restore
-    - dotnet publish -c Release -r win-x86
-    - dotnet publish -c Release -r win-x64
+    - dotnet build
+
+build/x64:
+  stage: build
+  image: microsoft/dotnet:latest
+  only:
+    - master
+  except:
+    - tags
+  before_script:
+    - bash ./gen-kos-safe-core.sh
+  script:
+    - dotnet restore
+    - dotnet tool install --global dotnet-warp
+    - cd ./kOS.Cli
+    - dotnet-warp -r win-x64 -o ../win-x64/ksc.exe
   artifacts:
     paths:
-      - ./package
+      - ./win-x64/ksc.exe
+
+build/x86:
+  stage: build
+  image: microsoft/dotnet:latest
+  only:
+    - master
+  except:
+    - tags
+  before_script:
+    - bash ./gen-kos-safe-core.sh
+  script:
+    - dotnet restore
+    - dotnet tool install --global dotnet-warp
+    - cd ./kOS.Cli
+    - dotnet-warp -r win-x86 -o ../win-x86/ksc.exe
+  artifacts:
+    paths:
+      - ./win-x86/ksc.exe
+
+build/linux-x64:
+  stage: build
+  image: microsoft/dotnet:latest
+  only:
+    - master
+  except:
+    - tags
+  before_script:
+    - bash ./gen-kos-safe-core.sh
+  script:
+    - dotnet restore
+    - dotnet tool install --global dotnet-warp
+    - cd ./kOS.Cli
+    - dotnet-warp -r linux-x64 -o ../linux-x64/ksc
+  artifacts:
+    paths:
+      - ./linux-x64
+
+build/osx-x64:
+  stage: build
+  image: microsoft/dotnet:latest
+  only:
+    - master
+  except:
+    - tags
+  before_script:
+    - bash ./gen-kos-safe-core.sh
+  script:
+    - dotnet restore
+    - dotnet tool install --global dotnet-warp
+    - cd ./kOS.Cli
+    - dotnet-warp -r osx-x64 -o ../osx-x64/ksc
+  artifacts:
+    paths:
+      - ./osx-x64
 
 ##############################################################
 # Running unit tests.
@@ -22,18 +101,20 @@ test/unit-testing:
   image: microsoft/dotnet:latest
   except:
     - tags
+  before_script:
+    - bash ./gen-kos-safe-core.sh
   script:
     - dotnet test
 
 ##############################################################
 # Deployment.
 ##############################################################
-deploy/nuget:
-  stage: deploy
-  image: microsoft/dotnet:latest
-  only:
-    - master
-  except:
-    - tags
-  script:
-    dotnet nuget push ./package/*.nupkg -k $NUGET_API_KEY -s nuget.org
+# deploy/nuget:
+#   stage: deploy
+#   image: microsoft/dotnet:latest
+#   only:
+#     - master
+#   except:
+#     - tags
+#   script:
+#     dotnet nuget push ./package/*.nupkg -k $NUGET_API_KEY -s nuget.org
