@@ -10,7 +10,7 @@ variables:
 ##############################################################
 build/debug:
   stage: build
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet:2.2
   only:
     - develop
   except:
@@ -23,7 +23,7 @@ build/debug:
 
 build/win-x64:
   stage: build
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet:2.2
   only:
     - master
   except:
@@ -31,14 +31,14 @@ build/win-x64:
   before_script:
     - bash ./gen-kos-safe-core.sh
   script:
-    - dotnet publish -r win-x64 -c Release -o ./win-x64 -verbosity:diag
+    - dotnet publish -r win-x64 -c Release -o ./win-x64 -verbosity:d
   artifacts:
     paths:
       - ./win-x64
 
 build/win-x86:
   stage: build
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet:2.2
   only:
     - master
   except:
@@ -47,14 +47,14 @@ build/win-x86:
     - export PATH="$PATH:/root/.dotnet/tools"
     - bash ./gen-kos-safe-core.sh
   script:
-    - dotnet publish -r win-x86 -c Release -o ./win-x86 -verbosity:diag
+    - dotnet publish -r win-x86 -c Release -o ./win-x86 -verbosity:d
   artifacts:
     paths:
       - ./win-x86
 
 build/linux-x64:
   stage: build
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet:2.2
   only:
     - master
   except:
@@ -63,7 +63,7 @@ build/linux-x64:
     - export PATH="$PATH:/root/.dotnet/tools"
     - bash ./gen-kos-safe-core.sh
   script:
-    - dotnet publish -r linux-x64 -c Release -o ./linux-x64 -verbosity:diag
+    - dotnet publish -r linux-x64 -c Release -o ./linux-x64 -verbosity:d
   artifacts:
     paths:
       - ./linux-x64
@@ -71,7 +71,7 @@ build/linux-x64:
 
 build/osx-x64:
   stage: build
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet:2.2
   only:
     - master
   except:
@@ -80,7 +80,7 @@ build/osx-x64:
     - export PATH="$PATH:/root/.dotnet/tools"
     - bash ./gen-kos-safe-core.sh
   script:
-    - dotnet publish -r osx-x64 -c Release -o ./osx-x64 -verbosity:diag
+    - dotnet publish -r osx-x64 -c Release -o ./osx-x64 -verbosity:d
   artifacts:
     paths:
       - ./osx-x64
@@ -90,7 +90,7 @@ build/osx-x64:
 ##############################################################
 test/unit-testing:
   stage: test
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet:2.2
   except:
     - tags
   before_script:
