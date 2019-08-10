@@ -10,7 +10,7 @@ variables:
 ##############################################################
 build/debug:
   stage: build
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet-framework
   only:
     - develop
   except:
