@@ -1,0 +1,45 @@
+{
+  "name": "ksc",
+  "version": "1.0.0",
+  "description": "Kerboscript Compiler, a command line tool to work with larger Kerboscript (kOS) projects.",
+  "scripts": {},
+  "cpu": [
+    "x64",
+    "x86"
+  ],
+  "os": [
+    "win32",
+    "darwin",
+    "linux"
+  ],
+  "bin": {
+    "ksc": "./cli.js"
+  },
+  "files": [
+    "cli.js",
+    "win-x64",
+    "!win-x64/kerboscript-project",
+    "win-x86",
+    "!win-x86/kerboscript-project",
+    "linux-x64",
+    "!linux-x64/kerboscript-project",
+    "osx-x64",
+    "!osx-x64/kerboscript-project"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrbandler/ksc.git"
+  },
+  "keywords": [
+    "ksc",
+    "kerboscript",
+    "kOS",
+    "cli"
+  ],
+  "author": "mrbandler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrbandler/ksc/issues"
+  },
+  "homepage": "https://github.com/mrbandler/ksc#readme"
+}

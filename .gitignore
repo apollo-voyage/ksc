@@ -366,3 +366,7 @@ MigrationBackup/
 dotnetwarp_temp/
 kOS.Safe.Core/*
 !kOS.Safe.Core/kOS.Safe.Core.csproj
+win-x64/
+win-x86/
+linux-x64/
+osx-x64/

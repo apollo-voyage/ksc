@@ -101,12 +101,13 @@ test/unit-testing:
 ##############################################################
 # Deployment.
 ##############################################################
-# deploy/nuget:
-#   stage: deploy
-#   image: microsoft/dotnet:latest
-#   only:
-#     - master
-#   except:
-#     - tags
-#   script:
-#     dotnet nuget push ./package/*.nupkg -k $NUGET_API_KEY -s nuget.org
+deploy/npm:
+  stage: deploy
+  image: node:latest
+  only:
+    - master
+  except:
+    - tags
+  script:
+    - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+    - npm publish
