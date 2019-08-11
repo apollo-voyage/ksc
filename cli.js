@@ -12,10 +12,10 @@ const PLATFORM_MACOS = 'darwin';
 const ARCH_X64 = 'x64';
 const ARCH_X86 = 'x86';
 
-const BIN_WIN32_X64 = './win-x64/ksc.exe';
-const BIN_WIN32_X86 = './win-x86/ksc.exe';
-const BIN_LINUX = './linux-x64/ksc';
-const BIN_MACOS = './osx-x64/ksc';
+const BIN_WIN32_X64 = __dirname + '/win-x64/ksc.exe';
+const BIN_WIN32_X86 = __dirname + '/win-x86/ksc.exe';
+const BIN_LINUX = __dirname + '/linux-x64/ksc';
+const BIN_MACOS = __dirname + '/osx-x64/ksc';
 
 // Returns the OS specific .NET binary.
 function getOSBin() {
