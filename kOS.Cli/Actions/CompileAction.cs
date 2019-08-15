@@ -23,37 +23,37 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Options for the compiler.
         /// </summary>
-        private CompileOptions _options;
+        private readonly CompileOptions _options;
 
         /// <summary>
         /// Compiler options for the KSScript compiler.
         /// </summary>
-        private CompilerOptions _compilerOptions;
+        private readonly CompilerOptions _compilerOptions;
 
         /// <summary>
         /// Shared safe objects.
         /// </summary>
-        private SafeSharedObjects _shared;
+        private readonly SafeSharedObjects _shared;
 
         /// <summary>
         /// Script loader, which handles loading Kerboscripts from disk.
         /// </summary>
-        private KerboscriptLoader _scriptLoader;
+        private readonly KerboscriptLoader _scriptLoader;
 
         /// <summary>
         /// Script delete, which handles the deletion of compiled Kerboscripts from disk.
         /// </summary>
-        private KerboscriptDeleter _scriptDeleter;
+        private readonly KerboscriptDeleter _scriptDeleter;
 
         /// <summary>
         /// Logger.
         /// </summary>
-        private CompilerLogger _logger;
+        private readonly CompilerLogger _logger;
 
         /// <summary>
         /// Common logger.
         /// </summary>
-        private CommonLogger _commonLogger;
+        private readonly CommonLogger _commonLogger;
 
         /// <summary>
         /// Loaded project congfiguration.
@@ -68,7 +68,7 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Flag, wheter the compiler is being called from the watcher.
         /// </summary>
-        private bool _usedExternally;
+        private readonly bool _usedExternally;
 
         /// <summary>
         /// Constructor.

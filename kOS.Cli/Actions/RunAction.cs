@@ -20,17 +20,17 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Run CLI options.
         /// </summary>
-        private RunOptions _options;
+        private readonly RunOptions _options;
 
         /// <summary>
         /// Logger.
         /// </summary>
-        private RunnerLogger _logger;
+        private readonly RunnerLogger _logger;
 
         /// <summary>
         /// Common logger.
         /// </summary>
-        private CommonLogger _commonLogger;
+        private readonly CommonLogger _commonLogger;
 
         /// <summary>
         /// Constructor.
@@ -84,15 +84,6 @@ namespace kOS.Cli.Actions
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Loads the configuration from disk.
-        /// </summary>
-        /// <returns>Loaded configuration, if found on disk.</returns>
-        protected override Configuration LoadConfiguration()
-        {
-            return base.LoadConfiguration();
         }
 
         /// <summary>

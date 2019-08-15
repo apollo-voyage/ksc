@@ -54,22 +54,22 @@ namespace kOS.Cli.Logging
         /// <summary>
         /// Prefix for info messages.
         /// </summary>
-        private string InfoPrefix = " INFO ".Pastel(Color.Black).PastelBg(InfoColor);
+        private readonly string InfoPrefix = " INFO ".Pastel(Color.Black).PastelBg(InfoColor);
 
         /// <summary>
         /// Prefix for done messages.
         /// </summary>
-        private string DonePrefix = " DONE ".Pastel(Color.Black).PastelBg(DoneColor);
+        private readonly string DonePrefix = " DONE ".Pastel(Color.Black).PastelBg(DoneColor);
 
         /// <summary>
         /// Prefix for error messages.
         /// </summary>
-        private string ErrorPrefix = " ERROR ".Pastel(Color.Black).PastelBg(ErrorColor);
+        private readonly string ErrorPrefix = " ERROR ".Pastel(Color.Black).PastelBg(ErrorColor);
 
         /// <summary>
         /// Prefix for warning messages.
         /// </summary>
-        private string WarningPrefix = " WARN ".Pastel(Color.Black).PastelBg(WarnColor);
+        private readonly string WarningPrefix = " WARN ".Pastel(Color.Black).PastelBg(WarnColor);
 
         /// <summary>
         /// Default constructor.

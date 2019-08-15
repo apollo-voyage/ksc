@@ -15,17 +15,17 @@ namespace kOS.Cli.IO
         /// <summary>
         /// Compiler CLI options.
         /// </summary>
-        private CompileOptions _compilerOptions;
+        private readonly CompileOptions _compilerOptions;
 
         /// <summary>
         /// Compiler specific logger.
         /// </summary>
-        private CompilerLogger _logger;
+        private readonly CompilerLogger _logger;
 
         /// <summary>
         /// Volume manager.
         /// </summary>
-        private VolumeManager _volumeManager;
+        private readonly VolumeManager _volumeManager;
 
         /// <summary>
         /// Constructor.

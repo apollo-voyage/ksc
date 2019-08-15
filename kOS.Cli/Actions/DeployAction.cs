@@ -14,22 +14,22 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Deploy CLI options.
         /// </summary>
-        private DeployOptions _options;
+        private readonly DeployOptions _options;
 
         /// <summary>
         /// Compiler. Implements compile action, will be used to compile after file changes.
         /// </summary>
-        private CompileAction _compiler;
+        private readonly CompileAction _compiler;
 
         /// <summary>
         /// Logger.
         /// </summary>
-        private DeployerLogger _logger;
+        private readonly DeployerLogger _logger;
 
         /// <summary>
         /// Common logger.
         /// <summary>
-        private CommonLogger _commonLogger;
+        private readonly CommonLogger _commonLogger;
 
         /// <summary>
         /// Constructor.
@@ -68,15 +68,6 @@ namespace kOS.Cli.Actions
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Loads the configuration from disk.
-        /// </summary>
-        /// <returns>Loaded configuration, if found on disk.</returns>
-        protected override Configuration LoadConfiguration()
-        {
-            return base.LoadConfiguration();
         }
 
         /// <summary>

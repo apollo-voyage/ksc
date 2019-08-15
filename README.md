@@ -1,19 +1,20 @@
-# @KS/CLI - Kerboscript Command Line Interface
 
-[![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/3KGsDx52prxWciBkfNJYBkXaTJ6GUURP2c)](https://en.cryptobadges.io/donate/3KGsDx52prxWciBkfNJYBkXaTJ6GUURP2c) [![Donate with Litecoin](https://en.cryptobadges.io/badge/micro/LcHsJH13A8PmHJQwpbWevGUebZwhWNMXgS)](https://en.cryptobadges.io/donate/LcHsJH13A8PmHJQwpbWevGUebZwhWNMXgS) [![Donate with Ethereum](https://en.cryptobadges.io/badge/micro/0xd6Ffc89Bc87f7dFdf0ef1aefF956634d4B7451c8)](https://en.cryptobadges.io/donate/0xd6Ffc89Bc87f7dFdf0ef1aefF956634d4B7451c8) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mrbandler/)
+<img src="https://raw.githubusercontent.com/mrbandler/ksc/master/Icons/logo-text.png" alt="ksc Icon Banner" width="150" height="110" style="display: flex; justify-content: center;"/>
 
-**A CLI to streamline development on Kerboscript projects.**
+# ksc - Kerboscript Compiler
 
-> **DISCLAIMER:** This project is still in very early in development, I will add instructions on how to install and use it as soon as the feature set is final and implemented.
+[![pipeline status](https://gitlab.com/mrbandler/ksc/badges/master/pipeline.svg)](https://gitlab.com/mrbandler/ksc/commits/master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5f5a13169c904f5c8aa3178b5eca4dc7)](https://www.codacy.com/app/mrbandler/ksc?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mrbandler/ksc&amp;utm_campaign=Badge_Grade) [![npm version](https://badge.fury.io/js/ksc.svg)](https://badge.fury.io/js/ksc) [![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/3KGsDx52prxWciBkfNJYBkXaTJ6GUURP2c)](https://en.cryptobadges.io/donate/3KGsDx52prxWciBkfNJYBkXaTJ6GUURP2c) [![Donate with Litecoin](https://en.cryptobadges.io/badge/micro/LcHsJH13A8PmHJQwpbWevGUebZwhWNMXgS)](https://en.cryptobadges.io/donate/LcHsJH13A8PmHJQwpbWevGUebZwhWNMXgS) [![Donate with Ethereum](https://en.cryptobadges.io/badge/micro/0xd6Ffc89Bc87f7dFdf0ef1aefF956634d4B7451c8)](https://en.cryptobadges.io/donate/0xd6Ffc89Bc87f7dFdf0ef1aefF956634d4B7451c8) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mrbandler/)
+
+**A command line tool to streamline work with larger Kerboscript projects.**
 
 ## Table Of Content
 
-1. [Idea and Use Case](#1-idea-and-use-case) 🤔
-2. [Installation](#2-installation) 💻
-3. [Usage](#3-usage) ⌨️
-4. [Bugs and Features](#4-bugs-and-features) 🐞💡
-5. [Buy me a coffee](#5-buy-me-a-coffee) ☕
-6. [License](#6-license) 📃
+ 1. [Idea and Use Case](#1-idea-and-use-case) 🤔
+ 2. [Installation](#2-installation) 💻
+ 3. [Usage](#3-usage) ⌨️
+ 4. [Bugs and Features](#4-bugs-and-features) 🐞💡
+ 5. [Buy me a coffee](#5-buy-me-a-coffee) ☕
+ 6. [License](#6-license) 📃
 
 ---
 
@@ -25,7 +26,17 @@ This is the solution I came up with, a CLI for managing Kerboscript projects wit
 
 ## 2. Installation
 
-**Coming soon...**
+The CLI can easily be installed over [npm](https://www.npmjs.com/) (Node Package Manager). Which can be installed by installing [nodejs](https://nodejs.org/).
+
+````shell
+> npm install -g ksc
+````
+
+That's it, now you're up and running!
+
+> **NOTE**
+>
+> The package is currently rather big as .NET Core 2.2 does not let me create a self-contained executable with tree shaking. .NET Core 3.0 has all these great features so I will switch to it once it's production ready.
 
 ## 3. Usage
 

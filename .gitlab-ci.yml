@@ -5,10 +5,11 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
   GIT_SUBMODULES: init
 
+
 ##############################################################
 # Build that shit.
 ##############################################################
-build/debug:
+build/dev:
   stage: build
   image: microsoft/dotnet:latest
   only:
@@ -20,6 +21,7 @@ build/debug:
   script:
     - dotnet restore
     - dotnet build
+
 
 build/win-x64:
   stage: build
@@ -36,6 +38,7 @@ build/win-x64:
     paths:
       - ./win-x64
 
+
 build/win-x86:
   stage: build
   image: microsoft/dotnet:latest
@@ -51,6 +54,7 @@ build/win-x86:
   artifacts:
     paths:
       - ./win-x86
+
 
 build/linux-x64:
   stage: build
