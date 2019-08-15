@@ -49,7 +49,10 @@ namespace kOS.Cli.IO
             }
 
             // Finally write the config file.
-            File.WriteAllText(filePath, config.ToJson());
+            if (config != null) 
+            {
+                File.WriteAllText(filePath, config.ToJson());
+            }
 
             if (writeToConsole == true)
             {

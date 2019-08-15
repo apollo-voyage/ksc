@@ -84,7 +84,7 @@ namespace kOS.Cli.Actions
                 _logger.InitialCompilation();
                 _compiler.Run();
 
-                while (true) ;
+                while (true) { };
             }
 
             return result;

@@ -5,7 +5,7 @@ namespace kOS.Cli
     /// <summary>
     /// Main program.
     /// </summary>
-    class Program
+    public class Program
     {
         /// <summary>
         /// Main method; entry point.
