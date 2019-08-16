@@ -16,8 +16,6 @@ Altough `ksc` can be used to compile a single **Kerboscript** file or a complete
 
 ## The Init Verb
 
-![ksc init](/images/ksc-init.gif)
-
 To start a new `ksc` project in your current directory simply execute the following command:
 
 ```bash

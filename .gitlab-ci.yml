@@ -22,7 +22,6 @@ build/dev:
     - dotnet restore
     - dotnet build
 
-
 build/win-x64:
   stage: build
   image: microsoft/dotnet:latest
@@ -37,7 +36,6 @@ build/win-x64:
   artifacts:
     paths:
       - ./win-x64
-
 
 build/win-x86:
   stage: build
@@ -55,7 +53,6 @@ build/win-x86:
     paths:
       - ./win-x86
 
-
 build/linux-x64:
   stage: build
   image: microsoft/dotnet:latest
@@ -71,7 +68,6 @@ build/linux-x64:
   artifacts:
     paths:
       - ./linux-x64
-
 
 build/osx-x64:
   stage: build
@@ -89,6 +85,7 @@ build/osx-x64:
     paths:
       - ./osx-x64
 
+
 ##############################################################
 # Running unit tests.
 ##############################################################
@@ -101,21 +98,12 @@ test/unit-testing:
     - bash ./gen-kos-safe-core.sh
   script:
     - dotnet test
+  dependencies: []
+
 
 ##############################################################
 # Deployment.
 ##############################################################
-deploy/docs:
-  stage: deploy
-  image: node:latest
-  only:
-    - master
-  except:
-    - tags
-  script:
-    - npm install -g vuepress
-    - ./deploy-docs.sh
-
 deploy/npm:
   stage: deploy
   image: node:latest

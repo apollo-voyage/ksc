@@ -5,7 +5,7 @@ module.exports = {
     head: [
         ['link', { rel: 'icon', href: '/images/logo.png' }]
     ],
-    dest: 'dist',
+    dest: '../docs',
     serviceWorker: true,
     themeConfig: {
         logo: '/images/logo.png',
