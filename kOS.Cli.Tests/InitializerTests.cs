@@ -11,10 +11,10 @@ namespace kOS.Cli.Tests
     public class InitializerTests
     {
         [Test]
-        public void InitConfigWithoutOptions()
+        public void InitConfigWithoutOptions([Values("foobar", "foo-bar", "foo_bar")] string ProjectName)
         {
             // Build up.
-            string arguments = "init -y";
+            string arguments = $"init {ProjectName} -y";
 
             // Test.
             int result = ActionDispatcher.Dispatch(arguments.Split(' '), false);
@@ -32,9 +32,8 @@ namespace kOS.Cli.Tests
             Configuration config = Configuration.FromJson(configContent);
             Assert.IsNotNull(config);
 
-            string expectedName = new DirectoryInfo(Path.GetFullPath("./")).Name;
             Assert.IsNotNull(config.Name);
-            Assert.AreEqual(expectedName, config.Name);
+            Assert.AreEqual(ProjectName, config.Name);
 
             // Volumes asserts.
             Assert.IsNotNull(config.Volumes);
@@ -42,7 +41,7 @@ namespace kOS.Cli.Tests
             Assert.AreEqual(1, config.Volumes[0].Index);
             Assert.AreEqual(2, config.Volumes[1].Index);
             Assert.AreEqual("boot", config.Volumes[0].Name);
-            Assert.AreEqual(expectedName, config.Volumes[1].Name);
+            Assert.AreEqual(ProjectName, config.Volumes[1].Name);
             Assert.AreEqual(Constants.DefaultBootVolumePath, config.Volumes[0].InputPath);
             Assert.AreEqual(Constants.DefaultVolumePath, config.Volumes[1].InputPath);
 
