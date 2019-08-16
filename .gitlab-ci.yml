@@ -105,6 +105,17 @@ test/unit-testing:
 ##############################################################
 # Deployment.
 ##############################################################
+deploy/docs:
+  stage: deploy
+  image: node:latest
+  only:
+    - master
+  except:
+    - tags
+  script:
+    - npm install -g vuepress
+    - ./deploy-docs.sh
+
 deploy/npm:
   stage: deploy
   image: node:latest
@@ -115,3 +126,4 @@ deploy/npm:
   script:
     - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
     - npm publish
+

@@ -2,7 +2,9 @@
   "name": "ksc",
   "version": "1.0.1",
   "description": "Kerboscript Compiler, a command line tool to work with larger Kerboscript (kOS) projects.",
-  "scripts": {},
+  "scripts": {
+    "docs:build": "vuepress build docs"
+  },
   "cpu": [
     "x64",
     "x86"
