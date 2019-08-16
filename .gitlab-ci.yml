@@ -9,98 +9,99 @@ variables:
 ##############################################################
 # Build that shit.
 ##############################################################
-build/dev:
-  stage: build
-  image: microsoft/dotnet:latest
-  only:
-    - develop
-  except:
-    - tags
-  before_script:
-    - bash ./gen-kos-safe-core.sh
-  script:
-    - dotnet restore
-    - dotnet build
+# build/dev:
+#   stage: build
+#   image: microsoft/dotnet:latest
+#   only:
+#     - develop
+#   except:
+#     - tags
+#   before_script:
+#     - bash ./gen-kos-safe-core.sh
+#   script:
+#     - dotnet restore
+#     - dotnet build
 
 
-build/win-x64:
-  stage: build
-  image: microsoft/dotnet:latest
-  only:
-    - master
-  except:
-    - tags
-  before_script:
-    - bash ./gen-kos-safe-core.sh
-  script:
-    - dotnet publish -r win-x64 -c Release -o ../win-x64
-  artifacts:
-    paths:
-      - ./win-x64
+# build/win-x64:
+#   stage: build
+#   image: microsoft/dotnet:latest
+#   only:
+#     - master
+#   except:
+#     - tags
+#   before_script:
+#     - bash ./gen-kos-safe-core.sh
+#   script:
+#     - dotnet publish -r win-x64 -c Release -o ../win-x64
+#   artifacts:
+#     paths:
+#       - ./win-x64
 
 
-build/win-x86:
-  stage: build
-  image: microsoft/dotnet:latest
-  only:
-    - master
-  except:
-    - tags
-  before_script:
-    - export PATH="$PATH:/root/.dotnet/tools"
-    - bash ./gen-kos-safe-core.sh
-  script:
-    - dotnet publish -r win-x86 -c Release -o ../win-x86
-  artifacts:
-    paths:
-      - ./win-x86
+# build/win-x86:
+#   stage: build
+#   image: microsoft/dotnet:latest
+#   only:
+#     - master
+#   except:
+#     - tags
+#   before_script:
+#     - export PATH="$PATH:/root/.dotnet/tools"
+#     - bash ./gen-kos-safe-core.sh
+#   script:
+#     - dotnet publish -r win-x86 -c Release -o ../win-x86
+#   artifacts:
+#     paths:
+#       - ./win-x86
 
 
-build/linux-x64:
-  stage: build
-  image: microsoft/dotnet:latest
-  only:
-    - master
-  except:
-    - tags
-  before_script:
-    - export PATH="$PATH:/root/.dotnet/tools"
-    - bash ./gen-kos-safe-core.sh
-  script:
-    - dotnet publish -r linux-x64 -c Release -o ../linux-x64
-  artifacts:
-    paths:
-      - ./linux-x64
+# build/linux-x64:
+#   stage: build
+#   image: microsoft/dotnet:latest
+#   only:
+#     - master
+#   except:
+#     - tags
+#   before_script:
+#     - export PATH="$PATH:/root/.dotnet/tools"
+#     - bash ./gen-kos-safe-core.sh
+#   script:
+#     - dotnet publish -r linux-x64 -c Release -o ../linux-x64
+#   artifacts:
+#     paths:
+#       - ./linux-x64
 
 
-build/osx-x64:
-  stage: build
-  image: microsoft/dotnet:latest
-  only:
-    - master
-  except:
-    - tags
-  before_script:
-    - export PATH="$PATH:/root/.dotnet/tools"
-    - bash ./gen-kos-safe-core.sh
-  script:
-    - dotnet publish -r osx-x64 -c Release -o ../osx-x64
-  artifacts:
-    paths:
-      - ./osx-x64
+# build/osx-x64:
+#   stage: build
+#   image: microsoft/dotnet:latest
+#   only:
+#     - master
+#   except:
+#     - tags
+#   before_script:
+#     - export PATH="$PATH:/root/.dotnet/tools"
+#     - bash ./gen-kos-safe-core.sh
+#   script:
+#     - dotnet publish -r osx-x64 -c Release -o ../osx-x64
+#   artifacts:
+#     paths:
+#       - ./osx-x64
 
 ##############################################################
 # Running unit tests.
 ##############################################################
-test/unit-testing:
-  stage: test
-  image: microsoft/dotnet:latest
-  except:
-    - tags
-  before_script:
-    - bash ./gen-kos-safe-core.sh
-  script:
-    - dotnet test
+# test/unit-testing:
+#   stage: test
+#   image: microsoft/dotnet:latest
+#   except:
+#     - tags
+#   before_script:
+#     - bash ./gen-kos-safe-core.sh
+#   script:
+#     - dotnet test
+#   dependencies: []
 
 ##############################################################
 # Deployment.
@@ -115,15 +116,16 @@ deploy/docs:
   script:
     - npm install -g vuepress
     - ./deploy-docs.sh
+  dependencies: []
 
-deploy/npm:
-  stage: deploy
-  image: node:latest
-  only:
-    - master
-  except:
-    - tags
-  script:
-    - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-    - npm publish
+# deploy/npm:
+#   stage: deploy
+#   image: node:latest
+#   only:
+#     - master
+#   except:
+#     - tags
+#   script:
+#     - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+#     - npm publish
 
