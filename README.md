@@ -3,18 +3,20 @@
 
 # ksc - Kerboscript Compiler
 
-[![pipeline status](https://gitlab.com/mrbandler/ksc/badges/master/pipeline.svg)](https://gitlab.com/mrbandler/ksc/commits/master) [![npm version](https://badge.fury.io/js/ksc.svg)](https://badge.fury.io/js/ksc) [![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/3KGsDx52prxWciBkfNJYBkXaTJ6GUURP2c)](https://en.cryptobadges.io/donate/3KGsDx52prxWciBkfNJYBkXaTJ6GUURP2c) [![Donate with Litecoin](https://en.cryptobadges.io/badge/micro/LcHsJH13A8PmHJQwpbWevGUebZwhWNMXgS)](https://en.cryptobadges.io/donate/LcHsJH13A8PmHJQwpbWevGUebZwhWNMXgS) [![Donate with Ethereum](https://en.cryptobadges.io/badge/micro/0xd6Ffc89Bc87f7dFdf0ef1aefF956634d4B7451c8)](https://en.cryptobadges.io/donate/0xd6Ffc89Bc87f7dFdf0ef1aefF956634d4B7451c8) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mrbandler/)
+[![GitHub license](https://img.shields.io/github/license/mrbandler/ksc)](https://github.com/mrbandler/ksc/blob/master/LICENSE) [![pipeline status](https://gitlab.com/mrbandler/ksc/badges/master/pipeline.svg)](https://gitlab.com/mrbandler/ksc/commits/master) [![npm version](https://badge.fury.io/js/ksc.svg)](https://badge.fury.io/js/ksc) [![docs](https://img.shields.io/badge/docs-Complete%20Guide-blue)](https://mrbandler.github.io/ksc) 
 
-**A command line tool to streamline work with larger Kerboscript projects.**
+[![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/3KGsDx52prxWciBkfNJYBkXaTJ6GUURP2c)](https://en.cryptobadges.io/donate/3KGsDx52prxWciBkfNJYBkXaTJ6GUURP2c) [![Donate with Litecoin](https://en.cryptobadges.io/badge/micro/LcHsJH13A8PmHJQwpbWevGUebZwhWNMXgS)](https://en.cryptobadges.io/donate/LcHsJH13A8PmHJQwpbWevGUebZwhWNMXgS) [![Donate with Ethereum](https://en.cryptobadges.io/badge/micro/0xd6Ffc89Bc87f7dFdf0ef1aefF956634d4B7451c8)](https://en.cryptobadges.io/donate/0xd6Ffc89Bc87f7dFdf0ef1aefF956634d4B7451c8) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mrbandler/)
+
+**ksc: The Kerboscript compiler for your command line.**
 
 ## Table Of Content
 
- 1. [Idea and Use Case](#1-idea-and-use-case) 🤔
- 2. [Installation](#2-installation) 💻
- 3. [Usage](#3-usage) ⌨️
- 4. [Bugs and Features](#4-bugs-and-features) 🐞💡
- 5. [Buy me a coffee](#5-buy-me-a-coffee) ☕
- 6. [License](#6-license) 📃
+1. [Idea and Use Case](#1-idea-and-use-case) 🤔
+2. [Installation](#2-installation) 💻
+3. [Usage](#3-usage) ⌨️
+4. [Bugs and Features](#4-bugs-and-features) 🐞💡
+5. [Buy me a coffee](#5-buy-me-a-coffee) ☕
+6. [License](#6-license) 📃
 
 ---
 
@@ -28,9 +30,9 @@ This is the solution I came up with, a CLI for managing Kerboscript projects wit
 
 The CLI can easily be installed over [npm](https://www.npmjs.com/) (Node Package Manager). Which can be installed by installing [nodejs](https://nodejs.org/).
 
-````shell
+```bash
 > npm install -g ksc
-````
+```
 
 That's it, now you're up and running!
 
@@ -40,7 +42,12 @@ That's it, now you're up and running!
 
 ## 3. Usage
 
-**Coming soon...**
+For a detailed usage guide please visit the documentation page [here](https://mrbandler.github.io/ksc).
+
+However, if you the explorer type use this:
+```bash
+> ksc help
+```
 
 ## 4. Bugs and Features
 
