@@ -25,7 +25,7 @@ namespace kOS.Cli.Execution
         /// <summary>
         /// Current action configuration.
         /// </summary>
-        private Configuration _config;
+        private readonly Configuration _config;
 
         /// <summary>
         /// Shared safe objects.
@@ -35,7 +35,7 @@ namespace kOS.Cli.Execution
         /// <summary>
         /// Logger.
         /// </summary>
-        private RunnerLogger _logger;
+        private readonly  RunnerLogger _logger;
 
         /// <summary>
         /// Wheter or not a error accured.

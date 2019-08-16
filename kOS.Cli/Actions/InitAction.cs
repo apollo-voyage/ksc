@@ -16,7 +16,7 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Options for the initializer.
         /// </summary>
-        private InitOptions _options;
+        private readonly InitOptions _options;
 
         /// <summary>
         /// Constructor.

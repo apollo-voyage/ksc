@@ -1,10 +1,13 @@
-# @KS/CLI - Kerboscript Command Line Interface
+
+<img src="https://raw.githubusercontent.com/mrbandler/ksc/master/Icons/logo-text.png" alt="ksc Icon Banner" width="150" height="110" style="display: flex; justify-content: center;"/>
+
+# ksc - Kerboscript Compiler
+
+[![GitHub license](https://img.shields.io/github/license/mrbandler/ksc)](https://github.com/mrbandler/ksc/blob/master/LICENSE) [![pipeline status](https://gitlab.com/mrbandler/ksc/badges/master/pipeline.svg)](https://gitlab.com/mrbandler/ksc/commits/master) [![npm version](https://badge.fury.io/js/ksc.svg)](https://badge.fury.io/js/ksc) [![docs](https://img.shields.io/badge/docs-Complete%20Guide-blue)](https://mrbandler.github.io/ksc) 
 
 [![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/3KGsDx52prxWciBkfNJYBkXaTJ6GUURP2c)](https://en.cryptobadges.io/donate/3KGsDx52prxWciBkfNJYBkXaTJ6GUURP2c) [![Donate with Litecoin](https://en.cryptobadges.io/badge/micro/LcHsJH13A8PmHJQwpbWevGUebZwhWNMXgS)](https://en.cryptobadges.io/donate/LcHsJH13A8PmHJQwpbWevGUebZwhWNMXgS) [![Donate with Ethereum](https://en.cryptobadges.io/badge/micro/0xd6Ffc89Bc87f7dFdf0ef1aefF956634d4B7451c8)](https://en.cryptobadges.io/donate/0xd6Ffc89Bc87f7dFdf0ef1aefF956634d4B7451c8) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/mrbandler/)
 
-**A CLI to streamline development on Kerboscript projects.**
-
-> **DISCLAIMER:** This project is still in very early in development, I will add instructions on how to install and use it as soon as the feature set is final and implemented.
+**ksc: The Kerboscript compiler for your command line.**
 
 ## Table Of Content
 
@@ -25,11 +28,26 @@ This is the solution I came up with, a CLI for managing Kerboscript projects wit
 
 ## 2. Installation
 
-**Coming soon...**
+The CLI can easily be installed over [npm](https://www.npmjs.com/) (Node Package Manager). Which can be installed by installing [nodejs](https://nodejs.org/).
+
+```bash
+> npm install -g ksc
+```
+
+That's it, now you're up and running!
+
+> **NOTE**
+>
+> The package is currently rather big as .NET Core 2.2 does not let me create a self-contained executable with tree shaking. .NET Core 3.0 has all these great features so I will switch to it once it's production ready.
 
 ## 3. Usage
 
-**Coming soon...**
+For a detailed usage guide please visit the documentation page [here](https://mrbandler.github.io/ksc).
+
+However, if you the explorer type use this:
+```bash
+> ksc help
+```
 
 ## 4. Bugs and Features
 

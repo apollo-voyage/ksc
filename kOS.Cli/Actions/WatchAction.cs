@@ -18,22 +18,22 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Watch CLI options.
         /// </summary>
-        private WatchOptions _options;
+        private readonly WatchOptions _options;
 
         /// <summary>
         /// Compiler. Implements compile action, will be used to compile after file changes.
         /// </summary>
-        private CompileAction _compiler;
+        private readonly CompileAction _compiler;
         
         /// <summary>
         /// Common logger.
         /// </summary>
-        private CommonLogger _commonLogger;
+        private readonly CommonLogger _commonLogger;
 
         /// <summary>
         /// Watcher logger.
         /// </summary>
-        private WatcherLogger _logger;
+        private readonly WatcherLogger _logger;
 
         /// <summary>
         /// All file system watchers.
@@ -43,7 +43,7 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Timer to handle the change event double execution.
         /// </summary>
-        private Timer _timer;
+        private readonly Timer _timer;
 
         /// <summary>
         /// Constructor.
@@ -84,7 +84,7 @@ namespace kOS.Cli.Actions
                 _logger.InitialCompilation();
                 _compiler.Run();
 
-                while (true) ;
+                while (true) { };
             }
 
             return result;

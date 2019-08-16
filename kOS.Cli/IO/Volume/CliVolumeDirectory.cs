@@ -14,8 +14,8 @@ namespace kOS.Cli.IO
     [KOSNomenclature("CliVolumeDirectory")]
     public class CliVolumeDirectory : VolumeDirectory
     {
-        private CliVolume volume;
-        private string volumePath;
+        private readonly CliVolume volume;
+        private readonly string volumePath;
 
         public CliVolumeDirectory(CliVolume volume, VolumePath path) : base(volume, path)
         {

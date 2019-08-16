@@ -13,12 +13,12 @@ namespace kOS.Cli.Logging
         /// <summary>
         /// Flag, wheter a input was specified or not.
         /// </summary>
-        private bool _noFilesFound = false;
+        private bool _noFilesFound;
 
         /// <summary>
         /// Flag, wheter the configuration was found.
         /// </summary>
-        private bool _noConfigFound = false;
+        private readonly bool _noConfigFound;
 
         /// <summary>
         /// Prints the start script loading messages.

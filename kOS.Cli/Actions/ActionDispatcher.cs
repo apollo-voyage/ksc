@@ -14,7 +14,7 @@ namespace kOS.Cli.Actions
         /// </summary>
         /// <param name="args">Arguments to dispatch action to.</param>
         /// <param name="fromMain">Wheter or not this is called from the main method.</param>
-        /// <returns></returns>
+        /// <returns>CLI status code.</returns>
         public static int Dispatch(string[] args, bool fromMain = true)
         {
             return Parser.Default.ParseArguments<CompileOptions, WatchOptions, DeployOptions, RunOptions, InitOptions>(args)

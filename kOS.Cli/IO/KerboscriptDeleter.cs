@@ -12,7 +12,7 @@ namespace kOS.Cli.IO
         /// <summary>
         /// Compiler CLI options.
         /// </summary>
-        private CompileOptions _options;
+        private readonly CompileOptions _options;
 
         /// <summary>
         /// Constructor.

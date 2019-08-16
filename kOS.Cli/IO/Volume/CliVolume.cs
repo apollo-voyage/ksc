@@ -27,7 +27,7 @@ namespace kOS.Cli.IO
         public CliVolumeDirectory RootVolumeDirectory { get; private set; }
         public CliVolumeDirectory OutputVolumeDirectory { get; private set; }
 
-        public CliVolumeMode Mode = CliVolumeMode.Root;
+        public CliVolumeMode Mode { get; set; } = CliVolumeMode.Root;
 
         private string VolumeFolder {
             get {
@@ -41,6 +41,7 @@ namespace kOS.Cli.IO
                         break;
                     case CliVolumeMode.Output: _outputFolder = value;
                         break;
+                    default: throw new InvalidOperationException("Unexpected volume mode!");
                 }
             }
         }
