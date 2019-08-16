@@ -22,7 +22,6 @@ variables:
 #     - dotnet restore
 #     - dotnet build
 
-
 # build/win-x64:
 #   stage: build
 #   image: microsoft/dotnet:latest
@@ -37,7 +36,6 @@ variables:
 #   artifacts:
 #     paths:
 #       - ./win-x64
-
 
 # build/win-x86:
 #   stage: build
@@ -55,7 +53,6 @@ variables:
 #     paths:
 #       - ./win-x86
 
-
 # build/linux-x64:
 #   stage: build
 #   image: microsoft/dotnet:latest
@@ -71,7 +68,6 @@ variables:
 #   artifacts:
 #     paths:
 #       - ./linux-x64
-
 
 # build/osx-x64:
 #   stage: build
@@ -89,6 +85,7 @@ variables:
 #     paths:
 #       - ./osx-x64
 
+
 ##############################################################
 # Running unit tests.
 ##############################################################
@@ -103,6 +100,7 @@ variables:
 #     - dotnet test
 #   dependencies: []
 
+
 ##############################################################
 # Deployment.
 ##############################################################
@@ -115,6 +113,7 @@ deploy/docs:
     - tags
   script:
     - npm install -g vuepress
+    - chmod +x deploy-docs.sh
     - ./deploy-docs.sh
   dependencies: []
 
