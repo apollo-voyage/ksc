@@ -3,12 +3,12 @@ module.exports = {
     title: 'ksc',
     description: 'ksc: The Kerboscript compiler for your command line.',
     head: [
-        ['link', { rel: 'icon', href: '/images/logo.png' }]
+        ['link', { rel: 'icon', href: '/images/logo-symbol-transparent.png' }]
     ],
     dest: '../docs',
     serviceWorker: true,
     themeConfig: {
-        logo: '/images/logo.png',
+        logo: '/images/logo-symbol-transparent.png',
         nav: [
             {
                 text: 'GitHub',
