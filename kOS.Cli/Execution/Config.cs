@@ -28,9 +28,16 @@ namespace kOS.Cli.Execution
         public bool DebugEachOpcode { get => false; set { /* No need to set the property, but the interfaces demands the ''set'. */ } }
 
         public DateTime TimeStamp => new DateTime();
+
+        public int TerminalDefaultWidth { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int TerminalDefaultHeight { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public IList<ConfigKey> GetConfigKeys() => new List<ConfigKey>();
         public ISuffixResult GetSuffix(string suffixName) => throw new NotImplementedException();
+        public ISuffixResult GetSuffix(string suffixName, bool failOkay = false) => throw new NotImplementedException();
+
         public void SaveConfig() => throw new NotImplementedException();
         public bool SetSuffix(string suffixName, object value) => throw new NotImplementedException();
+        public bool SetSuffix(string suffixName, object value, bool failOkay = false) => throw new NotImplementedException();
     }
 }
