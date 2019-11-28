@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: /images/logo-symbol-transparent.png
+heroImage: /images/logo-symbol.png
 actionText: To Docs →
 actionLink: /hub/
 features:

@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RuntimeFrameworkVersion>2.2.6</RuntimeFrameworkVersion>
     <PackageId />
     <Authors />
     <Product />
