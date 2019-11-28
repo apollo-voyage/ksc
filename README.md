@@ -1,5 +1,5 @@
 
-<img src="https://raw.githubusercontent.com/mrbandler/ksc/master/Icons/logo-text.png" alt="ksc Icon Banner" width="150" height="150" style="display: flex; justify-content: center;"/>
+<img src="https://raw.githubusercontent.com/mrbandler/ksc/master/Icons/logo-symbol-text.png" alt="ksc Icon Banner" width="150" height="150" style="display: flex; justify-content: center;"/>
 
 # ksc - Kerboscript Compiler
 
