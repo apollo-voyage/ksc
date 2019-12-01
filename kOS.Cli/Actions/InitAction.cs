@@ -88,6 +88,7 @@ namespace kOS.Cli.Actions
             volume.Name = Ask("Project volume name (volume with your code)", GetProjectNameDefault());
             volume.InputPath = Ask("Project volume source directory", Constants.DefaultVolumePath);
             volume.OutputPath = Ask("Project volume dist directory", Constants.DistDirectory);
+            
             volume.DeployPath = Constants.CurrentDirectory;
             Console.WriteLine("You can add more volumes in the created config file!");
 

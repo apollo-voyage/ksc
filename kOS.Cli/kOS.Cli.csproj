@@ -11,8 +11,8 @@
     <Description>Kerboscript Compiler, a command line tool to work with larger Kerboscript (kOS) projects.</Description>
     <Copyright>Copyright (c) mrbandler. All rights reserved.</Copyright>
     <PackageProjectUrl>https://github.com/mrbandler/ksc</PackageProjectUrl>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>- Changed cli.js for npm package to use '__dirname'</PackageReleaseNotes>
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>Stability update</PackageReleaseNotes>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 

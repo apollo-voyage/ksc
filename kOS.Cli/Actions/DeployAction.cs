@@ -27,11 +27,6 @@ namespace kOS.Cli.Actions
         private readonly DeployerLogger _logger;
 
         /// <summary>
-        /// Common logger.
-        /// <summary>
-        private readonly CommonLogger _commonLogger;
-
-        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="options">Deploy CLI options.</param>
@@ -40,7 +35,6 @@ namespace kOS.Cli.Actions
             _options = options;
             _compiler = new CompileAction(CompileOptions.FromDeployOptions(options), true);
             _logger = new DeployerLogger();
-            _commonLogger = new CommonLogger();
         }
 
         /// <summary>
@@ -59,11 +53,6 @@ namespace kOS.Cli.Actions
                     _logger.StartScriptDeployment();
                     result = Deploy(_compiler.CompiledScripts, config);
                     _logger.StopScriptDeployment(_compiler.CompiledScripts.Count);
-                }
-                else
-                {
-                    _commonLogger.NoConfigurationFound();
-                    result = 1;
                 }
             }
 

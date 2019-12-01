@@ -26,6 +26,10 @@
     {
       "name": "deploy",
       "content": "ksc run compile && ksc run ./scripts/deploy.ks"
+    },
+    {
+      "name": "node-test",
+      "content": "ksc compile"
     }
   ]
 }

@@ -62,7 +62,7 @@ function spawnProcess(args) {
 
 // Cli main function.
 function cli() {
-    const args = process.argv.filter((a) => !a.includes("node") && !a.includes("cli.js"));
+    const args = process.argv.filter((a, i) => i > 1);
     spawnProcess(args);
 }
 

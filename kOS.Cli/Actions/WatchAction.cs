@@ -24,11 +24,6 @@ namespace kOS.Cli.Actions
         /// Compiler. Implements compile action, will be used to compile after file changes.
         /// </summary>
         private readonly CompileAction _compiler;
-        
-        /// <summary>
-        /// Common logger.
-        /// </summary>
-        private readonly CommonLogger _commonLogger;
 
         /// <summary>
         /// Watcher logger.
@@ -54,7 +49,6 @@ namespace kOS.Cli.Actions
             _options = options;
             _compiler = new CompileAction(CompileOptions.FromWatchOptions(options), true);
             _logger = new WatcherLogger();
-            _commonLogger = new CommonLogger();
 
             _timer = new Timer
             {
@@ -86,6 +80,10 @@ namespace kOS.Cli.Actions
 
                 while (true) { };
             }
+            else
+            {
+                _logger.NoWatchableFilesFound();
+            }
 
             return result;
         }
@@ -109,11 +107,26 @@ namespace kOS.Cli.Actions
                 {
                     string configPath = Path.Combine(fullPath, Constants.ConfigFileName);
                     result = ConfigIO.ReadConfigFile(configPath);
-
-                    foreach (Volume volume in result.Volumes)
+                    if (result != null)
                     {
-                        volume.InputPath = volume.InputPath.Replace(".", _options.Input);
-                        volume.OutputPath = volume.OutputPath.Replace(".", _options.Output);
+                        List<string> messages = result.IsValid();
+                        if (messages.Count == 0)
+                        {
+                            foreach (Volume volume in result.Volumes)
+                            {
+                                volume.InputPath = volume.InputPath.Replace(".", _options.Input);
+                                volume.OutputPath = volume.OutputPath.Replace(".", _options.Output);
+                            }
+                        }
+                        else
+                        {
+                            _commonLogger.ConfigurationInvalid(messages);
+                            result = null;
+                        }
+                    }
+                    else
+                    {
+                        _commonLogger.NoConfigurationFound();
                     }
                 }
             }
@@ -181,11 +194,11 @@ namespace kOS.Cli.Actions
         {
             List<string> result = new List<string>();
 
-            Configuration config = LoadConfiguration();
             if ((_options.Input == Constants.CurrentDirectory &&
-                _options.Output == Constants.CurrentDirectory) ||
+                _options.Output == Constants.CurrentDirectory) &&
                 ConfigIO.IsDirectory(_options.Input) == true)
             {
+                Configuration config = LoadConfiguration();
                 if (config != null)
                 {
                     if (_options.Volume == Constants.AllVolumes)
@@ -210,10 +223,6 @@ namespace kOS.Cli.Actions
                         }
                     }
                 }
-                else
-                {
-                    _commonLogger.NoConfigurationFound();
-                }
             }
             else
             {
@@ -221,6 +230,7 @@ namespace kOS.Cli.Actions
             }
 
             result = result.Select(p => Path.GetFullPath(p)).ToList();
+            result = result.FindAll(p => File.Exists(p) || Directory.Exists(p));
             return result;
         }
     }

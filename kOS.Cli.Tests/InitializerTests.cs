@@ -2,7 +2,6 @@
 using System.Linq;
 using NUnit.Framework;
 using kOS.Cli.Models; 
-using kOS.Cli.Options;
 using kOS.Cli.Actions;
 
 namespace kOS.Cli.Tests

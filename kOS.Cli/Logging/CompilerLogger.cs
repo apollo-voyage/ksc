@@ -16,11 +16,6 @@ namespace kOS.Cli.Logging
         private bool _noFilesFound;
 
         /// <summary>
-        /// Flag, wheter the configuration was found.
-        /// </summary>
-        private readonly bool _noConfigFound;
-
-        /// <summary>
         /// Prints the start script loading messages.
         /// </summary>
         public void StartScriptLoading()
@@ -92,11 +87,6 @@ namespace kOS.Cli.Logging
         /// <param name="options"></param>
         public void NoFilesFound(CompileOptions options) 
         {
-            if (_noConfigFound == true)
-            {
-                return;
-            }
-
             Warn(Draw.PrefixAndColor, "No Kerboscript files found.");
             if (options.Input != Constants.CurrentDirectory ||
                 options.Output != Constants.CurrentDirectory)
