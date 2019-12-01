@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kOS.Safe.Core", "kOS.Safe.Core\kOS.Safe.Core.csproj", "{24686394-CA6A-40FF-957E-2665C01F2135}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kOS.Cli", "kOS.Cli\kOS.Cli.csproj", "{4C643B30-B37B-4764-8723-20E9F5C76C55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kOS.Cli", "kOS.Cli\kOS.Cli.csproj", "{4C643B30-B37B-4764-8723-20E9F5C76C55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kOS.Cli.Tests", "kOS.Cli.Tests\kOS.Cli.Tests.csproj", "{DAA90958-6830-409A-A3CF-7AA2540DE35F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kOS.Cli.Tests", "kOS.Cli.Tests\kOS.Cli.Tests.csproj", "{DAA90958-6830-409A-A3CF-7AA2540DE35F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kOS.Safe.Core", "kOS.Safe.Core\kOS.Safe.Core.csproj", "{F5547F41-4758-4CF2-ADBE-948E50967669}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,12 +16,6 @@ Global
 		Shell|Any CPU = Shell|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{24686394-CA6A-40FF-957E-2665C01F2135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{24686394-CA6A-40FF-957E-2665C01F2135}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{24686394-CA6A-40FF-957E-2665C01F2135}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{24686394-CA6A-40FF-957E-2665C01F2135}.Release|Any CPU.Build.0 = Release|Any CPU
-		{24686394-CA6A-40FF-957E-2665C01F2135}.Shell|Any CPU.ActiveCfg = Debug|Any CPU
-		{24686394-CA6A-40FF-957E-2665C01F2135}.Shell|Any CPU.Build.0 = Debug|Any CPU
 		{4C643B30-B37B-4764-8723-20E9F5C76C55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C643B30-B37B-4764-8723-20E9F5C76C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C643B30-B37B-4764-8723-20E9F5C76C55}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -34,6 +28,12 @@ Global
 		{DAA90958-6830-409A-A3CF-7AA2540DE35F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DAA90958-6830-409A-A3CF-7AA2540DE35F}.Shell|Any CPU.ActiveCfg = Debug|Any CPU
 		{DAA90958-6830-409A-A3CF-7AA2540DE35F}.Shell|Any CPU.Build.0 = Debug|Any CPU
+		{F5547F41-4758-4CF2-ADBE-948E50967669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5547F41-4758-4CF2-ADBE-948E50967669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5547F41-4758-4CF2-ADBE-948E50967669}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5547F41-4758-4CF2-ADBE-948E50967669}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5547F41-4758-4CF2-ADBE-948E50967669}.Shell|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5547F41-4758-4CF2-ADBE-948E50967669}.Shell|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

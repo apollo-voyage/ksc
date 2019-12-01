@@ -2,10 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <PackageId />
-    <Authors />
-    <Product />
-    <Company></Company>
   </PropertyGroup>
 
   <ItemGroup>

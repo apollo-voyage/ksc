@@ -36,10 +36,6 @@ The CLI can easily be installed over [npm](https://www.npmjs.com/) (Node Package
 
 That's it, now you're up and running!
 
-> **NOTE**
->
-> The package is currently rather big as .NET Core 2.2 does not let me create a self-contained executable with tree shaking. .NET Core 3.0 has all these great features so I will switch to it once it's production ready.
-
 ## 3. Usage
 
 For a detailed usage guide please visit the documentation page [here](https://mrbandler.github.io/ksc).

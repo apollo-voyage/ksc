@@ -24,13 +24,10 @@
     "files": [
         "cli.js",
         "win-x64",
-        "!win-x64/kerboscript-project",
         "win-x86",
-        "!win-x86/kerboscript-project",
         "linux-x64",
-        "!linux-x64/kerboscript-project",
         "osx-x64",
-        "!osx-x64/kerboscript-project"
+        "!ksc.pdb"
     ],
     "repository": {
         "type": "git",
