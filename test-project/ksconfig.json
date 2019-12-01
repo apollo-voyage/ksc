@@ -1,6 +1,6 @@
 {
-  "name": "kerboscript-project",
-  "description": "kerboscript-project",
+  "name": null,
+  "description": "sdf",
   "archive": "C:/Program Files (x86)/Steam/steamapps/common/Kerbal Space Program/Ships/Scripts",
   "volumes": [
     {
@@ -12,7 +12,7 @@
     },
     {
       "index": 2,
-      "name": "kerboscript-project",
+      "name": "test-project",
       "path": "./src",
       "output": "./dist",
       "deploy": "."
@@ -26,10 +26,6 @@
     {
       "name": "deploy",
       "content": "ksc run compile && ksc run ./scripts/deploy.ks"
-    },
-    {
-      "name": "node-test",
-      "content": "ksc compile"
     }
   ]
 }

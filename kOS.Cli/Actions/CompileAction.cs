@@ -51,11 +51,6 @@ namespace kOS.Cli.Actions
         private readonly CompilerLogger _logger;
 
         /// <summary>
-        /// Common logger.
-        /// </summary>
-        private readonly CommonLogger _commonLogger;
-
-        /// <summary>
         /// Loaded project congfiguration.
         /// </summary>
         private Configuration _config;
@@ -101,7 +96,6 @@ namespace kOS.Cli.Actions
             };
 
             _logger = new CompilerLogger();
-            _commonLogger = new CommonLogger();
             _scriptLoader = new KerboscriptLoader(_shared.VolumeMgr as VolumeManager, _logger, _options);
             _scriptDeleter = new KerboscriptDeleter(_options);
         }
@@ -112,7 +106,7 @@ namespace kOS.Cli.Actions
         /// <returns></returns>
         public override int Run()
         {
-            int result = 0;
+            int result;
 
             if (_usedExternally == true)
             {
@@ -129,6 +123,7 @@ namespace kOS.Cli.Actions
             else
             {
                 _logger.NoFilesFound(_options);
+                result = 1;
             }
 
             return result;
@@ -154,10 +149,22 @@ namespace kOS.Cli.Actions
                         string configPath = Path.Combine(fullPath, Constants.ConfigFileName);
                         _config = ConfigIO.ReadConfigFile(configPath);
 
-                        foreach(Models.Volume volume in _config.Volumes)
+                        if (_config != null)
                         {
-                            volume.InputPath = volume.InputPath.Replace(".", _options.Input);
-                            volume.OutputPath = volume.OutputPath.Replace(".", _options.Output);
+                            List<string> messages = _config.IsValid();
+                            if (messages.Count == 0)
+                            {
+                                foreach (Models.Volume volume in _config.Volumes)
+                                {
+                                    volume.InputPath = volume.InputPath.Replace(".", _options.Input);
+                                    volume.OutputPath = volume.OutputPath.Replace(".", _options.Output);
+                                }
+                            }
+                            else
+                            {
+                                _commonLogger.ConfigurationInvalid(messages);
+                                _config = null;
+                            }
                         }
                     }
                 }
@@ -189,10 +196,6 @@ namespace kOS.Cli.Actions
                     if (config != null)
                     {
                         result = _scriptLoader.LoadScriptsFromConfig(config);
-                    }
-                    else
-                    {
-                        _commonLogger.NoConfigurationFound();
                     }
                 }
                 else

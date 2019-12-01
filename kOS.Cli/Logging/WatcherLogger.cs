@@ -47,5 +47,11 @@ namespace kOS.Cli.Logging
             NewLine();
             Info("Performing initial compilation...");
         }
+
+        public void NoWatchableFilesFound()
+        {
+            NewLine();
+            Error("No watchable files found");
+        }
     }
 }

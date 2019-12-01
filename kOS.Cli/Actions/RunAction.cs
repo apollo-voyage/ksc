@@ -28,11 +28,6 @@ namespace kOS.Cli.Actions
         private readonly RunnerLogger _logger;
 
         /// <summary>
-        /// Common logger.
-        /// </summary>
-        private readonly CommonLogger _commonLogger;
-
-        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="options">Run CLI options.</param>
@@ -40,7 +35,6 @@ namespace kOS.Cli.Actions
         {
             _options = options;
             _logger = new RunnerLogger();
-            _commonLogger = new CommonLogger();
         }
 
         /// <summary>
@@ -75,11 +69,6 @@ namespace kOS.Cli.Actions
                         _logger.ScriptNotFound(_options.Script);
                         result = 1;
                     }
-                }
-                else
-                {
-                    _commonLogger.NoConfigurationFound();
-                    result = 1;
                 }
             }
 

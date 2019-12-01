@@ -2,8 +2,8 @@
   "profiles": {
     "kOS.Cli": {
       "commandName": "Project",
-      "commandLineArgs": "compile",
-      "workingDirectory": "D:\\Projects\\mrbandler\\ksc\\kOS.Cli.Tests\\kerboscript-project"
+      "commandLineArgs": "init test-project ./",
+      "workingDirectory": "D:\\Projects\\mrbandler\\ksc"
     }
   }
 }
