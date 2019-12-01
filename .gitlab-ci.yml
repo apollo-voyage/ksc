@@ -11,7 +11,7 @@ variables:
 ##############################################################
 build/dev:
   stage: build
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet:3.0
   only:
     - develop
   except:
@@ -24,7 +24,7 @@ build/dev:
 
 build/win-x64:
   stage: build
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet:3.0
   only:
     - master
   except:
@@ -40,7 +40,7 @@ build/win-x64:
 
 build/win-x86:
   stage: build
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet:3.0
   only:
     - master
   except:
@@ -57,7 +57,7 @@ build/win-x86:
 
 build/linux-x64:
   stage: build
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet:3.0
   only:
     - master
   except:
@@ -74,7 +74,7 @@ build/linux-x64:
 
 build/osx-x64:
   stage: build
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet:3.0
   only:
     - master
   except:
@@ -95,7 +95,7 @@ build/osx-x64:
 ##############################################################
 test/unit-testing:
   stage: test
-  image: microsoft/dotnet:latest
+  image: microsoft/dotnet:3.0
   except:
     - tags
   before_script:
