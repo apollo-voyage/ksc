@@ -45,7 +45,7 @@
     "bugs": {
         "url": "https://github.com/mrbandler/ksc/issues"
     },
-    "homepage": "https://github.com/mrbandler/ksc#readme",
+    "homepage": "https://mrbandler.github.io/ksc/",
     "devDependencies": {
         "rimraf": "^3.0.0",
         "vuepress": "^1.0.3"
