@@ -49,7 +49,7 @@ Let's start with the most important file, the `ksconfig.json` which is the [**Pr
 
 This file holds all the information `ksc` asked you about when your created the project, like **name**, **description**, **archive** (Kerbal Space Program installation), **volumes** and **scripts**. For a detailed description read the next main section.
 
-Furthermore, it created some default directories with some file in it, let's take a look at those.
+Furthermore, it created some default directories with some files in it, let's take a look at those.
 
 #### `boot` Directory
 
@@ -58,13 +58,13 @@ The `boot` directory resembles the `boot` directory used by kOS to determin boot
 #### `src` Directory
 
 The `src` directory is intended to hold the bulk of the projects **Kerboscript**.
-That's the reason it's empty. 
+That's the reason it's empty.
 
 #### `scripts` Directory
 
-Finally the `scripts` directory is used to hold only development or project specific **Kerboscript** files that can be used to automate tasks with the use of **Kerboscript** only. 
+Finally the `scripts` directory is used to hold only development or project specific **Kerboscript** files that can be used to automate tasks with the use of **Kerboscript** only.
 
-Please refer to the [Project Scripts & Execution](/hub/run/) section for a detailed guide on how to leverage this functionality.
+Please refer to the [Project Scripts & Execution](/hub/run.html) section for a detailed guide on how to leverage this functionality.
 
 ### Addtional Parameters & Options
 
@@ -117,7 +117,7 @@ The basic information of a projects `ksconfig.json` contains the **name**, **des
 {
     "name": "project-artemis",
     "description": "To the moon and to stay!",
-    "archive": "C:/Program Files (x86)/Steam/steamapps/common/Kerbal Space Program/Ships/Scripts",
+    "archive": "C:/Program Files (x86)/Steam/steamapps/common/Kerbal Space Program/Ships/Script",
     ...
 }
 ```
@@ -130,25 +130,26 @@ The basic information of a projects `ksconfig.json` contains the **name**, **des
 {
     ...
     "volumes": [
-    {
-        "index": 1,
-        "name": "boot",
-        "path": "./boot",
-        "output": "./dist/boot",
-        "deploy": "./boot"
-    },
-    {
-        "index": 2,
-        "name": "kerboscript-project",
-        "path": "./src",
-        "output": "./dist",
-        "deploy": "."
-    }
+        {
+            "index": 1,
+            "name": "boot",
+            "path": "./boot",
+            "output": "./dist/boot",
+            "deploy": "./boot"
+        },
+        {
+            "index": 2,
+            "name": "kerboscript-project",
+            "path": "./src",
+            "output": "./dist",
+            "deploy": "."
+        }
+    ],
     ...
 }
 ```
 
-This is the default configuration of `Volumes` in a `ksc` project.
+This is the default configuration of `volumes` in a `ksc` project.
 It adds one for the `boot` section and one for all of the other **Kerboscripts** of the project.
 
 Additional `volumes` can be added to split the code into logical groups. This comes in handy when you one wants to deploy a specific part of a project, as the `deploy` verb takes a `volume` as a option. See [Deployment](/hub/deploy/) for a detailed guide. 
@@ -159,7 +160,7 @@ A `Volume` has a specific structure let's look at each property and see what the
 
 Specifies the `index` of a `volume`.
 
-The `index` will primarily be used as a option for various 'ksc' verbs it can also be used to identify the `volume` in custom project scripts.
+The `index` will primarily be used as a option for various `ksc` verbs it can also be used to identify the `volume` in custom project scripts.
 
 ::: danger
 **DANGER ZONE**
@@ -173,7 +174,7 @@ See [kOS Documentation](https://ksp-kos.github.io/KOS/general/volumes.html?#arch
 
 Specifies the `name` of a `volume`.
 
-The `name` will primarily be used as a option for various 'ksc' verbs it can also be used to identify the `volume` in custom project scripts.
+The `name` will primarily be used as a option for various `ksc` verbs it can also be used to identify the `volume` in custom project scripts.
 
 #### Path
 
@@ -198,3 +199,46 @@ The `dot` will be replaced by the `archive` path.
 :::
 
 ### Scripts
+
+`Scripts` in a projects `ksconfig.json` are used to define automation and/or utility scripts that can either be any arbitrary CLI tool or the `ksc`s `run` verb (you can find more information amout the `run` verb in the section [Project Scripts & Execution](/hub/run.html)).
+
+If you familiar with [node](https://nodejs.org/) it is very similar to the `scripts` section in a `package.json`.
+
+```json
+{
+    ...
+    "scripts": [
+        {
+            "name": "compile",
+            "content": "ksc run ./scripts/compile.ks"
+        },
+        {
+            "name": "deploy",
+            "content": "ksc run compile && ksc run ./scripts/deploy.ks"
+        },
+    ]
+}
+```
+
+This is the default configuration of `scripts` in a `ksc` project.
+Out of the box `ksc` comes with pre-written compilation and deployment scripts written in **Kerboscript** that are executed with `ksc run`.
+
+But you can also choose to write [node](https://nodejs.org/) scripts and execute them here with the `node` CLI.
+
+Additional `scripts` can be added to fullfill all your need for automation.
+
+A `Script` has a specific structure let's look at each property and see what they do.
+
+#### Name
+
+Specifies the `name` of the `script` that can be referenced via [`run` verb](/hub/run.html) to execute it.
+
+#### Content
+
+Specifies the `content` of the `script` contains the commands to be executed.
+
+## That's it!
+
+Great stuff, now we have a `ksc` project created. 
+
+Now, let's write some scripts and compile them!
