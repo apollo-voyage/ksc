@@ -28,7 +28,7 @@ namespace kOS.Cli.Tests
             Assert.IsNotNull(configContent);
 
             // Data model asserts.
-            Configuration config = Configuration.FromJson(configContent);
+            SanitizedConfiguration config = Configuration.FromJson(configContent).GetSanitized();
             Assert.IsNotNull(config);
 
             Assert.IsNotNull(config.Name);
@@ -94,7 +94,7 @@ namespace kOS.Cli.Tests
             Assert.IsNotNull(configContent);
 
             // Data model asserts.
-            Configuration config = Configuration.FromJson(configContent);
+            SanitizedConfiguration config = Configuration.FromJson(configContent).GetSanitized();
             Assert.IsNotNull(config);
 
             Assert.IsNotNull(config.Name);
@@ -147,7 +147,7 @@ namespace kOS.Cli.Tests
             Assert.IsNotNull(configContent);
 
             // Data model asserts.
-            Configuration config = Configuration.FromJson(configContent);
+            SanitizedConfiguration config = Configuration.FromJson(configContent).GetSanitized();
             Assert.IsNotNull(config);
 
             Assert.IsNotNull(config.Name);

@@ -25,21 +25,12 @@ namespace kOS.Cli.Actions
         /// Tries to load the configuration from the current directory.
         /// </summary>
         /// <returns>Read configuration.</returns>
-        virtual protected Configuration LoadConfiguration()
+        virtual protected SanitizedConfiguration LoadConfiguration()
         {
-            Configuration result;
+            SanitizedConfiguration result;
 
             result = ConfigIO.ReadConfigFileFromCurrentDirectory();
-            if (result != null)
-            {
-                List<string> messages = result.IsValid();
-                if (messages.Count > 0)
-                {
-                    _commonLogger.ConfigurationInvalid(messages);
-                    result = null;
-                }
-            }
-            else
+            if (result == null)
             {
                 _commonLogger.NoConfigurationFound();
             }

@@ -6,19 +6,19 @@ sidebarDepth: 2
 
 ## Syntax
 
-### For Single Kerboscript
+### Single Kerboscript
 
 ```bash
 > ksc compile -i <file> [-o <file>]
 ```
 
-### For Kerboscript Source Directory
+### Kerboscript Source Directory
 
 ```bash
 > ksc compile -i <dir> [-o <dir>]
 ```
 
-### For `ksc` Project
+### ksconfig.json
 
 ```bash
 > ksc compile [-v <volume>]
@@ -51,7 +51,7 @@ To compile the file simply execute the following command in the `project-artemis
 > ksc compile -i boot.ks
 ```
 
-This will create the following structure new structure:
+This will create the following new structure:
 
 ```
 project-artemis/
@@ -113,4 +113,4 @@ project-artemis/
 |   | - orbit.ks
 ```
 
-## Compiling with `ksc` Project 
+## Compiling with ksconfig.json

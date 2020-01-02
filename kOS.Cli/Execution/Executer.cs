@@ -25,7 +25,7 @@ namespace kOS.Cli.Execution
         /// <summary>
         /// Current action configuration.
         /// </summary>
-        private readonly Configuration _config;
+        private readonly SanitizedConfiguration _config;
 
         /// <summary>
         /// Shared safe objects.
@@ -52,7 +52,7 @@ namespace kOS.Cli.Execution
         /// </summary>
         /// <param name="logger">Logger.</param>
         /// <param name="config">Current configuration.</param>
-        public Executer(RunnerLogger logger, Configuration config)
+        public Executer(RunnerLogger logger, SanitizedConfiguration config)
         {
             _logger = logger;
             _config = config;

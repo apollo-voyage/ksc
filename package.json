@@ -4,6 +4,7 @@
     "description": "Kerboscript Compiler, a command line tool to work with larger Kerboscript (kOS) projects.",
     "scripts": {
         "docs:build": "cd docs-vuepress && vuepress build",
+        "docs:dev": "cd docs-vuepress && vuepress dev",
         "build": "build-all-platforms.bat",
         "build:clean": "./node_modules/.bin/rimraf ./linux-x64 && ./node_modules/.bin/rimraf ./osx-x64 && ./node_modules/.bin/rimraf ./win-x64 && ./node_modules/.bin/rimraf ./win-x86",
         "build:link": "npm run build && npm link",

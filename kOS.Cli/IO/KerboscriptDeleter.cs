@@ -27,7 +27,7 @@ namespace kOS.Cli.IO
         /// Removes compiled scripts based on either given options or configuration.
         /// </summary>
         /// <param name="config">Loaded project configuration.</param>
-        public void RemoveCompiledScripts(Configuration config)
+        public void RemoveCompiledScripts(SanitizedConfiguration config)
         {
             if (config != null)
             {

@@ -47,7 +47,7 @@ namespace kOS.Cli.Actions
 
             if (_compiler.Run() == 0)
             {
-                Configuration config = LoadConfiguration();
+                SanitizedConfiguration config = LoadConfiguration();
                 if (config != null)
                 {
                     _logger.StartScriptDeployment();
@@ -65,7 +65,7 @@ namespace kOS.Cli.Actions
         /// <param name="scripts">Scripts to deploy.</param>
         /// <param name="config">Configuration used for the deployment.</param>
         /// <returns>CLI return code.</returns>
-        private int Deploy(List<Kerboscript> scripts, Configuration config)
+        private int Deploy(List<Kerboscript> scripts, SanitizedConfiguration config)
         {
             int result = 0;
 

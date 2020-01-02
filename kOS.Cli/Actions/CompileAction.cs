@@ -53,7 +53,7 @@ namespace kOS.Cli.Actions
         /// <summary>
         /// Loaded project congfiguration.
         /// </summary>
-        private Configuration _config;
+        private SanitizedConfiguration _config;
 
         /// <summary>
         /// Previous successfully compiled scripts.
@@ -133,7 +133,7 @@ namespace kOS.Cli.Actions
         /// Loads the configuration from disk.
         /// </summary>
         /// <returns>Loaded configuration, if found on disk.</returns>
-        protected override Configuration LoadConfiguration()
+        protected override SanitizedConfiguration LoadConfiguration()
         {
             if (_config == null)
             {
@@ -151,19 +151,10 @@ namespace kOS.Cli.Actions
 
                         if (_config != null)
                         {
-                            List<string> messages = _config.IsValid();
-                            if (messages.Count == 0)
+                            foreach (Models.Volume volume in _config.Volumes)
                             {
-                                foreach (Models.Volume volume in _config.Volumes)
-                                {
-                                    volume.InputPath = volume.InputPath.Replace(".", _options.Input);
-                                    volume.OutputPath = volume.OutputPath.Replace(".", _options.Output);
-                                }
-                            }
-                            else
-                            {
-                                _commonLogger.ConfigurationInvalid(messages);
-                                _config = null;
+                                volume.InputPath = volume.InputPath.Replace(".", _options.Input);
+                                volume.OutputPath = volume.OutputPath.Replace(".", _options.Output);
                             }
                         }
                     }
@@ -192,7 +183,7 @@ namespace kOS.Cli.Actions
                         _options.Output = _options.Input;
                     }
 
-                    Configuration config = LoadConfiguration();
+                    SanitizedConfiguration config = LoadConfiguration();
                     if (config != null)
                     {
                         result = _scriptLoader.LoadScriptsFromConfig(config);

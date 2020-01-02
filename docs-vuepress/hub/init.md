@@ -237,6 +237,42 @@ Specifies the `name` of the `script` that can be referenced via [`run` verb](/hu
 
 Specifies the `content` of the `script` contains the commands to be executed.
 
+### Complete Project Definition File
+
+```json
+{
+    "name": "project-artemis",
+    "description": "To the moon and to stay!",
+    "archive": "C:/Program Files (x86)/Steam/steamapps/common/Kerbal Space Program/Ships/Script",
+    "volumes": [
+        {
+            "index": 1,
+            "name": "boot",
+            "path": "./boot",
+            "output": "./dist/boot",
+            "deploy": "./boot"
+        },
+        {
+            "index": 2,
+            "name": "kerboscript-project",
+            "path": "./src",
+            "output": "./dist",
+            "deploy": "."
+        }
+    ],
+    "scripts": [
+        {
+            "name": "compile",
+            "content": "ksc run ./scripts/compile.ks"
+        },
+        {
+            "name": "deploy",
+            "content": "ksc run compile && ksc run ./scripts/deploy.ks"
+        },
+    ]
+}
+```
+
 ## That's it!
 
 Great stuff, now we have a `ksc` project created. 
