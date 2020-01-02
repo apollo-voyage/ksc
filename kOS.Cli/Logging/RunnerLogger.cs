@@ -20,7 +20,7 @@ namespace kOS.Cli.Logging
         {
             Warn(Draw.PrefixAndColor, "A script named " + "'{0}'".Pastel(Color.DarkGray) + " could not be found.", script);
             NewLine();
-            Info(Draw.None, "Please check if the script " + "'{0}'".Pastel(Color.DarkGray) + " is defined in your " + "ksconfig.json.".Pastel(Color.DarkGray), script);
+            Info(Draw.None, "Please check if the script " + "'{0}'".Pastel(Color.DarkGray) + " is defined in your " + Constants.ConfigFileName.Pastel(Color.DarkGray), script);
         }
 
         public void StartExternalProcessExecution(ScriptPart scriptPart)

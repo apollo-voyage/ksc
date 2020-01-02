@@ -192,7 +192,7 @@ namespace kOS.Cli.Actions
         /// </summary>
         private void PrintWelcomeText()
         {
-            Console.WriteLine("This utility will walk you through the initialization process for a ksconfig.json");
+            Console.WriteLine("This utility will walk you through the initialization process for a " + Constants.ConfigFileName);
             Console.WriteLine("");
             Console.WriteLine("Press ^C at any time to quit.");
         }
