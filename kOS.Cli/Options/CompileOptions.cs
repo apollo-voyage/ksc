@@ -5,7 +5,7 @@ namespace kOS.Cli.Options
     [Verb("compile", HelpText = "Compiles a single Kerboscript or a complete Kerboscript source directory.")]
     public class CompileOptions : InputOuputOptions
     {
-        [Option('v', "volume", Default = "all", Required = false, HelpText = "Volume to compile (specified in the ksconfig.json). Will be ignored when a input file or directory is specified which does not contain a ksc project.")]
+        [Option('v', "volume", Default = "all", Required = false, HelpText = "Volume to compile (specified in the ksc.json). Will be ignored when a input file or directory is specified which does not contain a ksc project.")]
         public string Volume { get; set; }
 
         /// <summary>

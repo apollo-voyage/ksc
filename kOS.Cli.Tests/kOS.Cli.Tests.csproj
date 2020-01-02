@@ -27,9 +27,6 @@
     <None Update="kerboscript-project\ksc.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="kerboscript-project\ksconfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="kerboscript-project\scripts\compile.ks">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
