@@ -46,7 +46,7 @@ namespace kOS.Cli.IO
         /// </summary>
         /// <param name="config">Configuration to load from.</param>
         /// <returns>List of loaded Kerboscripts.</returns>
-        public List<Kerboscript> LoadScriptsFromConfig(Configuration config)
+        public List<Kerboscript> LoadScriptsFromConfig(SanitizedConfiguration config)
         {
             List<Kerboscript> result = new List<Kerboscript>();
             foreach (var volume in config.GetVolumesForOption(_compilerOptions.Volume))

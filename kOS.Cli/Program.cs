@@ -12,9 +12,6 @@ namespace kOS.Cli
         /// </summary>
         /// <param name="args">Command line arguments.</param>
         /// <returns>CLI return code.</returns>
-        static int Main(string[] args)
-        {
-            return ActionDispatcher.Dispatch(args);
-        }
+        static int Main(string[] args) => ActionDispatcher.Dispatch(args);
     }
 }

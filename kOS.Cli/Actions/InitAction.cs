@@ -36,19 +36,19 @@ namespace kOS.Cli.Actions
             int result = -1;
 
             // Create the configuration based on given options.
-            Configuration config = _options.Yes == true ? CreateDefaultConfig() : AskConfig();
+            SanitizedConfiguration config = _options.Yes == true ? CreateDefaultConfig() : AskConfig();
 
             // Write the configuration to disk based on given options.
             if (_options.ProjectPath != string.Empty && _options.ProjectPath != null)
             {
                 string path = Path.Combine(_options.ProjectPath, _options.ProjectName);
-                result = ConfigIO.WriteConfigFile(config, Path.Combine(_options.ProjectPath, _options.ProjectName), true);
+                result = ConfigIO.WriteConfigFile(config.ToConfiguration(), Path.Combine(_options.ProjectPath, _options.ProjectName), true);
                 CreateDefaultDirectoriesAndFiles(config, path);
             }
             else
             {
-                result = ConfigIO.WriteConfigFile(config, ".", true);
-                CreateDefaultDirectoriesAndFiles(config, ".");
+                result = ConfigIO.WriteConfigFile(config.ToConfiguration(), Constants.CurrentDirectory, true);
+                CreateDefaultDirectoriesAndFiles(config, basePath: Constants.CurrentDirectory);
             }
 
             return result;
@@ -62,16 +62,20 @@ namespace kOS.Cli.Actions
         /// Asks the user interactively for the config information. 
         /// </summary>
         /// <returns>Resulting configuration.</returns>
-        private Configuration AskConfig()
+        private SanitizedConfiguration AskConfig()
         {
             PrintWelcomeText();
 
-            Configuration result = new Configuration();
+            SanitizedConfiguration result = new SanitizedConfiguration();
 
             // Ask the mandatory information.
             if (_options.ProjectName == string.Empty)
             {
                 result.Name = Ask("Project name", GetProjectNameDefault());
+            } 
+            else
+            {
+                result.Name = _options.ProjectName;
             }
 
             result.Description = Ask("Project description");
@@ -98,7 +102,7 @@ namespace kOS.Cli.Actions
                 Name = "boot",
                 InputPath = Constants.DefaultBootVolumePath,
                 OutputPath = Constants.DistBootDirectory,
-                DeployPath = Constants.DefaultBootVolumePath
+                DeployPath = "./boot"
             });
             result.Volumes.Add(volume);
 
@@ -112,9 +116,9 @@ namespace kOS.Cli.Actions
         /// Creates a default configuration.
         /// </summary>
         /// <returns>Resulting configuration.</returns>
-        private Configuration CreateDefaultConfig()
+        private SanitizedConfiguration CreateDefaultConfig()
         {
-            Configuration result = new Configuration();
+            SanitizedConfiguration result = new SanitizedConfiguration();
 
             // Config info.
             result.Name = GetProjectNameDefault();
@@ -128,7 +132,7 @@ namespace kOS.Cli.Actions
                 Name = "boot",
                 InputPath = Constants.DefaultBootVolumePath,
                 OutputPath = Constants.DistBootDirectory,
-                DeployPath = "/boot"
+                DeployPath = "./boot"
             });
 
             result.Volumes.Add(new Volume
@@ -137,7 +141,7 @@ namespace kOS.Cli.Actions
                 Name = GetProjectNameDefault(),
                 InputPath = Constants.DefaultVolumePath,
                 OutputPath = Constants.DistDirectory,
-                DeployPath = "/"
+                DeployPath = "./"
             });
 
             // Scripts.
@@ -150,17 +154,17 @@ namespace kOS.Cli.Actions
         /// Adds default scripts to a configuration.
         /// </summary>
         /// <param name="config">Configuration to add it to.</param>
-        private void AddDefaultScripts(Configuration config)
+        private void AddDefaultScripts(SanitizedConfiguration config)
         {
-            config.Scripts.Add(new Script { Name = "compile", Content = "ksc run " + Constants.DefaultScriptVolumePath + "/" + Constants.DefaultCompileScriptFilename });
-            config.Scripts.Add(new Script { Name = "deploy", Content = "ksc run compile && ksc run " + Constants.DefaultScriptVolumePath + "/" + Constants.DefaultDeployScriptFilename });
+            config.Scripts.Add(new Script("compile", "ksc run " + Constants.DefaultScriptVolumePath + "/" + Constants.DefaultCompileScriptFilename));
+            config.Scripts.Add(new Script("deploy", "ksc run compile && ksc run " + Constants.DefaultScriptVolumePath + "/" + Constants.DefaultDeployScriptFilename));
         }
 
         /// <summary>
         /// Creates the default directories "./src".
         /// </summary>
         /// <param name="basePath">Base path where to create the default directories.</param>
-        private void CreateDefaultDirectoriesAndFiles(Configuration config, string basePath)
+        private void CreateDefaultDirectoriesAndFiles(SanitizedConfiguration config, string basePath)
         {
             foreach (Volume volume in config.Volumes)
             {

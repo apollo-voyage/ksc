@@ -67,14 +67,14 @@ namespace kOS.Cli.IO
         /// </summary>
         /// <param name="filepath">Filepath to the configuration file.</param>
         /// <returns>Read configuration.</returns>
-        public static Configuration ReadConfigFile(string filepath)
+        public static SanitizedConfiguration ReadConfigFile(string filepath)
         {
-            Configuration result = null;
+            SanitizedConfiguration result = null;
 
             if (File.Exists(filepath) == true)
             {
                 string configJSON = File.ReadAllText(filepath);
-                result = Configuration.FromJson(configJSON);
+                result = Configuration.FromJson(configJSON).GetSanitized();
             }
 
             return result;
@@ -84,9 +84,9 @@ namespace kOS.Cli.IO
         /// Reads the config file from the current directory.
         /// </summary>
         /// <returns>Read configuration.</returns>
-        public static Configuration ReadConfigFileFromCurrentDirectory()
+        public static SanitizedConfiguration ReadConfigFileFromCurrentDirectory()
         {
-            Configuration result = null;
+            SanitizedConfiguration result = null;
 
             string configFilepath = Path.Combine(Directory.GetCurrentDirectory(), Constants.ConfigFileName);
             if (File.Exists(configFilepath) == true)

@@ -2,8 +2,8 @@
   "profiles": {
     "kOS.Cli": {
       "commandName": "Project",
-      "commandLineArgs": "init test-project ./",
-      "workingDirectory": "D:\\Projects\\mrbandler\\ksc"
+      "commandLineArgs": "deploy",
+      "workingDirectory": "D:\\Projects\\mrbandler\\ksc\\test-project"
     }
   }
 }

@@ -1,9 +1,10 @@
 {
     "name": "ksc",
-    "version": "1.0.2",
+    "version": "2.0.0",
     "description": "Kerboscript Compiler, a command line tool to work with larger Kerboscript (kOS) projects.",
     "scripts": {
         "docs:build": "cd docs-vuepress && vuepress build",
+        "docs:dev": "cd docs-vuepress && vuepress dev",
         "build": "build-all-platforms.bat",
         "build:clean": "./node_modules/.bin/rimraf ./linux-x64 && ./node_modules/.bin/rimraf ./osx-x64 && ./node_modules/.bin/rimraf ./win-x64 && ./node_modules/.bin/rimraf ./win-x86",
         "build:link": "npm run build && npm link",
@@ -45,7 +46,7 @@
     "bugs": {
         "url": "https://github.com/mrbandler/ksc/issues"
     },
-    "homepage": "https://github.com/mrbandler/ksc#readme",
+    "homepage": "https://mrbandler.github.io/ksc/",
     "devDependencies": {
         "rimraf": "^3.0.0",
         "vuepress": "^1.0.3"

@@ -92,9 +92,9 @@ namespace kOS.Cli.Actions
         /// Loads the configuration from disk.
         /// </summary>
         /// <returns>Loaded configuration, if found on disk.</returns>
-        protected override Configuration LoadConfiguration()
+        protected override SanitizedConfiguration LoadConfiguration()
         {
-            Configuration result = null;
+            SanitizedConfiguration result = null;
 
             if (_options.Input == Constants.CurrentDirectory)
             {
@@ -109,19 +109,10 @@ namespace kOS.Cli.Actions
                     result = ConfigIO.ReadConfigFile(configPath);
                     if (result != null)
                     {
-                        List<string> messages = result.IsValid();
-                        if (messages.Count == 0)
+                        foreach (Volume volume in result.Volumes)
                         {
-                            foreach (Volume volume in result.Volumes)
-                            {
-                                volume.InputPath = volume.InputPath.Replace(".", _options.Input);
-                                volume.OutputPath = volume.OutputPath.Replace(".", _options.Output);
-                            }
-                        }
-                        else
-                        {
-                            _commonLogger.ConfigurationInvalid(messages);
-                            result = null;
+                            volume.InputPath = volume.InputPath.Replace(".", _options.Input);
+                            volume.OutputPath = volume.OutputPath.Replace(".", _options.Output);
                         }
                     }
                     else
@@ -198,7 +189,7 @@ namespace kOS.Cli.Actions
                 _options.Output == Constants.CurrentDirectory) &&
                 ConfigIO.IsDirectory(_options.Input) == true)
             {
-                Configuration config = LoadConfiguration();
+                SanitizedConfiguration config = LoadConfiguration();
                 if (config != null)
                 {
                     if (_options.Volume == Constants.AllVolumes)

@@ -45,7 +45,7 @@ namespace kOS.Cli.Actions
         {
             int result = 0;
 
-            Configuration config = LoadConfiguration();
+            SanitizedConfiguration config = LoadConfiguration();
             if (IsKerboscript(_options.Script) == true)
             {
                 string fullScriptPath = Path.GetFullPath(_options.Script);
@@ -111,7 +111,7 @@ namespace kOS.Cli.Actions
         /// </summary>
         /// <param name="filepath">Filepath to the Kerboscript to execute.</param>
         /// <returns>CLI return code.</returns>
-        private int ExecuteKerboscript(string filepath, Configuration config)
+        private int ExecuteKerboscript(string filepath, SanitizedConfiguration config)
         {
             int result = 0;
 
